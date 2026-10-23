@@ -1,0 +1,415 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:P;src:url(fonts/Pretendard-ExtraBold.otf);font-weight:800}
+@font-face{font-family:P;src:url(fonts/Pretendard-Bold.otf);font-weight:700}
+@font-face{font-family:P;src:url(fonts/Pretendard-Medium.otf);font-weight:500}
+@font-face{font-family:M;src:url(fonts/jetbrains-mono-latin-700-normal.woff2);font-weight:700}
+@font-face{font-family:M;src:url(fonts/jetbrains-mono-latin-500-normal.woff2);font-weight:500}
+html,body{margin:0;background:#07090d}
+canvas{display:block;width:540px;height:960px}
+</style></head>
+<body><canvas id="c" width="1080" height="1920"></canvas>
+<script src="timeline.js"></script>
+<script>
+// ---------- common head: palette, helpers ----------
+const W = 1080, H = 1920, FPS = 30;
+const cv = document.getElementById('c'), g = cv.getContext('2d');
+const C = {bg:'#07090d', grid:'#1b2233', red:'#ff4d5e', green:'#2ee59d', yel:'#ffd23f',
+  blue:'#4da3ff', org:'#ff9f40', wh:'#f2f4f8', gray:'#8a93a6', dim:'#3a4256', panel:'#0e131c'};
+const TL = window.TIMELINE;
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const eo = t => 1 - Math.pow(1 - clamp(t), 3);
+const eio = t => { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+const back = t => { t = clamp(t); const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); };
+const ramp = (t, a, d = .35) => clamp((t - a) / d);
+function font(sz, w = 800, fam = 'P') { g.font = `${w} ${sz}px ${fam}`; }
+function text(s, x, y, sz, col, al = 'center', w = 800, fam = 'P', a = 1) {
+  font(sz, w, fam); g.globalAlpha = a; g.fillStyle = col; g.textAlign = al; g.textBaseline = 'middle';
+  g.fillText(s, x, y); g.globalAlpha = 1;
+}
+function rr(x, y, w, h, r) { g.beginPath(); g.roundRect(x, y, w, h, r); }
+function panel(x, y, w, h, a = 1, stroke = C.dim) {
+  g.globalAlpha = a; rr(x, y, w, h, 26); g.fillStyle = C.panel; g.fill();
+  g.lineWidth = 3; g.strokeStyle = stroke; g.stroke(); g.globalAlpha = 1;
+}
+function glow(col, b) { g.shadowColor = col; g.shadowBlur = b; }
+function noGlow() { g.shadowBlur = 0; }
+function num(v, dp) { return v.toFixed(dp); }
+function arrow(x1, y1, x2, y2, col, w = 8, head = 26) {
+  g.strokeStyle = col; g.fillStyle = col; g.lineWidth = w; g.lineCap = 'round';
+  g.beginPath(); g.moveTo(x1, y1); g.lineTo(x2, y2); g.stroke();
+  const a = Math.atan2(y2 - y1, x2 - x1);
+  g.beginPath(); g.moveTo(x2 + Math.cos(a) * 6, y2 + Math.sin(a) * 6);
+  g.lineTo(x2 - Math.cos(a - .5) * head, y2 - Math.sin(a - .5) * head);
+  g.lineTo(x2 - Math.cos(a + .5) * head, y2 - Math.sin(a + .5) * head); g.closePath(); g.fill();
+}
+// deterministic pseudo-random
+function rnd(i) { const x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+// path drawn progressively: pts in px, p 0..1
+function polyline(pts, p, col, w = 8) {
+  const n = pts.length - 1, upto = p * n; g.strokeStyle = col; g.lineWidth = w; g.lineJoin = 'round'; g.lineCap = 'round';
+  g.beginPath(); g.moveTo(pts[0][0], pts[0][1]);
+  for (let i = 1; i <= Math.floor(upto); i++) g.lineTo(pts[i][0], pts[i][1]);
+  const f = upto - Math.floor(upto), k = Math.floor(upto);
+  let end = pts[k];
+  if (k < n) { end = [lerp(pts[k][0], pts[k + 1][0], f), lerp(pts[k][1], pts[k + 1][1], f)]; g.lineTo(end[0], end[1]); }
+  g.stroke(); return end;
+}
+function series(n, seed, start, endv, noise) {
+  const out = [];
+  for (let i = 0; i <= n; i++) { const t = i / n; out.push(lerp(start, endv, eio(t)) + (rnd(seed + i) - .5) * noise * (1 - t * .6)); }
+  out[n] = endv; return out;
+}
+
+// ---------- background ----------
+function bg(t) {
+  g.fillStyle = C.bg; g.fillRect(0, 0, W, H);
+  g.strokeStyle = C.grid; g.lineWidth = 2; g.globalAlpha = .55;
+  const off = (t * 18) % 60;
+  for (let x = 0; x <= W; x += 60) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke(); }
+  for (let y = -60; y <= H; y += 60) { g.beginPath(); g.moveTo(0, y + off); g.lineTo(W, y + off); g.stroke(); }
+  g.globalAlpha = 1;
+  for (let i = 0; i < 40; i++) {
+    const x = rnd(i) * W, y = (rnd(i + 99) * H - t * (12 + rnd(i + 7) * 30)) % H;
+    g.fillStyle = C.gray; g.globalAlpha = .12 + .2 * rnd(i + 3);
+    g.fillRect(x, y < 0 ? y + H : y, 3, 3);
+  }
+  g.globalAlpha = 1;
+  const v = g.createRadialGradient(W / 2, 700, 200, W / 2, 900, 1300);
+  v.addColorStop(0, 'rgba(7,9,13,0)'); v.addColorStop(1, 'rgba(7,9,13,.92)');
+  g.fillStyle = v; g.fillRect(0, 0, W, H);
+}
+
+// ---------- header + progress pills ----------
+const SECT = {hook:['오늘의 시장 · 핵심 요약',0], spx:['NEWS 1 · 미국 기술주 급락',1], why:['NEWS 2 · AI 투자 수익성 우려',2],
+  bigtech:['NEWS 2 · AI 투자 수익성 우려',2], sox:['NEWS 2 · AI 투자 수익성 우려',2], oil:['NEWS 3 · 국제유가 급등',3],
+  infl:['NEWS 3 · 국제유가 급등',3], kospi:['NEWS 4 · 한국 반도체주 하락',4], bond:['NEWS 5 · 美 국채금리 급락',5],
+  export:['한국 경제 · 반도체 수출',6], bok:['한국 경제 · 한국은행',6], core:['오늘의 결론',7], check:['오늘의 결론',7], loop:['다음 거래일 체크',7]};
+function header(id, t, lt) {
+  text('~/market-brief', 70, 118, 38, C.gray, 'left', 700, 'M');
+  font(38, 700, 'M'); const w0 = g.measureText('~/market-brief ').width;
+  text('2026.10.23 FRI', 70 + w0, 118, 38, C.wh, 'left', 700, 'M');
+  const [label, k] = SECT[id];
+  for (let i = 1; i <= 5; i++) {
+    const x = W - 70 - (5 - i) * 40, on = k >= i, cur = k === i;
+    g.beginPath(); g.arc(x, 118, cur ? 12 : 9, 0, 7);
+    g.fillStyle = on ? (cur ? C.yel : C.wh) : C.dim; g.fill();
+    if (cur) { g.globalAlpha = .35 + .25 * Math.sin(t * 6); g.beginPath(); g.arc(x, 118, 22, 0, 7); g.strokeStyle = C.yel; g.lineWidth = 3; g.stroke(); g.globalAlpha = 1; }
+  }
+  font(40, 700); const tw = g.measureText(label).width;
+  const a = eo(lt / .35);
+  g.globalAlpha = a; rr(70, 168, tw + 60, 70, 35); g.fillStyle = '#151b27'; g.fill();
+  g.strokeStyle = k >= 6 ? C.blue : C.yel; g.lineWidth = 3; g.stroke(); g.globalAlpha = 1;
+  text(label, 100, 204, 40, C.wh, 'left', 700, 'P', a);
+}
+
+// ---------- scenes: S[id](lt, d, wt) ; content stays in y 260..950 ----------
+const S = {};
+S.hook = (lt, d, wt) => {
+  text('NASDAQ COMPOSITE', W / 2, 320, 44, C.gray, 'center', 700, 'M');
+  const p = eo((lt - wt(1)) / 1.1);
+  const v = -2.6 * p, shake = lt > wt(2) && lt < wt(2) + .3 ? (rnd(Math.floor(lt * 60)) - .5) * 16 : 0;
+  glow(C.red, 40); text(num(v, 1) + '%', W / 2 + shake, 470, 210, C.red, 'center', 800, 'P'); noGlow();
+  const ys = series(24, 3, 0, 1, .25), pts = ys.map((y, i) => [110 + i * 860 / 24, 600 + y * 200]);
+  const e = polyline(pts, eo((lt - .1) / 1.6), C.red, 9);
+  g.beginPath(); g.arc(e[0], e[1], 14, 0, 7); g.fillStyle = C.red; g.fill();
+  const q = back((lt - wt(4)) / .5);
+  if (q > 0) {
+    g.save(); g.translate(W / 2, 880); g.scale(q, q);
+    panel(-300, -60, 600, 120, 1, C.org);
+    text('BRENT', -170, 0, 44, C.gray, 'center', 700, 'M');
+    glow(C.org, 24); text('$114 ▲', 90, 0, 70, C.org, 'center', 800); noGlow();
+    g.restore();
+  }
+};
+S.spx = (lt, d, wt) => {
+  const zero = 540, base = 70, items = [['NASDAQ', -2.6, 0], ['S&P 500', -1.2, wt(0)], ['DOW', .15, wt(3)]];
+  g.strokeStyle = C.gray; g.lineWidth = 4; g.beginPath(); g.moveTo(90, zero); g.lineTo(990, zero); g.stroke();
+  text('0%', 80, zero - 28, 30, C.gray, 'left', 700, 'M');
+  items.forEach(([n, v, t0], i) => {
+    const x = 240 + i * 300, p = eo((lt - t0) / .6), h = v * base * p;
+    const col = v < 0 ? C.red : C.green;
+    g.globalAlpha = clamp((lt - t0) / .2); glow(col, 26);
+    g.fillStyle = col;
+    if (h < 0) rr(x - 80, zero, 160, -h, 12); else rr(x - 80, zero - h, 160, Math.max(h, 2), 12);
+    g.fill(); noGlow();
+    text(n, x, v > 0 ? zero - h - 50 : zero - 50, 40, C.wh, 'center', 700, 'M');
+    const lbl = v > 0 ? '소폭 ▲' : num(v * p, 1) + '%';
+    text(lbl, x, v > 0 ? zero + 60 : zero - h + 55, 60, col);
+    g.globalAlpha = 1;
+  });
+  text('기술주에 매도 집중', W / 2, 900, 52, C.yel, 'center', 800, 'P', ramp(lt, wt(4), .4));
+};
+S.why = (lt, d, wt) => {
+  const a = eo(lt / .3); panel(80, 280, 920, 640, a);
+  [C.red, C.yel, C.green].forEach((c, i) => { g.beginPath(); g.arc(130 + i * 40, 325, 12, 0, 7); g.fillStyle = c; g.globalAlpha = a; g.fill(); });
+  text('ai_capex.log', W / 2, 325, 34, C.gray, 'center', 700, 'M', a);
+  g.fillStyle = C.dim; g.fillRect(80, 365, 920, 3);
+  const rows = [
+    [wt(0), '> SELL   ', '기술주 매도 집중', C.wh],
+    [wt(2), '> CAPEX  ', '▲▲▲ 데이터센터 투자', C.wh],
+    [wt(3) + .2, '> FUND   ', '막대한 자금 조달', C.wh],
+    [wt(4), '> ROI    ', '??? 회수 가능성', C.red]];
+  rows.forEach(([t0, k, v, col], i) => {
+    const y = 440 + i * 105, p = clamp((lt - t0) / .45);
+    if (p <= 0) return;
+    if (col === C.red) { g.globalAlpha = .18 + .1 * Math.sin(lt * 10); g.fillStyle = C.red; g.fillRect(100, y - 42, 880, 84); g.globalAlpha = 1; }
+    text(k, 120, y, 38, C.gray, 'left', 700, 'M');
+    const s = v.slice(0, Math.ceil(v.length * p));
+    text(s, 330, y, 46, col, 'left', 800);
+  });
+  if (lt > wt(4) + .3) text('투자 대비 수익성?', W / 2, 860, 58, C.yel, 'center', 800, 'P', ramp(lt, wt(4) + .3));
+};
+function stockCard(x, y, tk, v, approx, lt, t0, seed) {
+  const a = back((lt - t0) / .5); if (a <= 0) return;
+  g.save(); g.translate(x + 200, y + 260); g.scale(a, a); g.translate(-200, -260);
+  panel(0, 0, 400, 520, 1, C.red);
+  text(tk, 200, 70, 54, C.wh, 'center', 700, 'M');
+  const p = eo((lt - t0 - .2) / .9);
+  glow(C.red, 26); text((approx ? '약 ' : '') + num(v * p, approx ? 0 : 1) + '%', 200, 180, approx ? 88 : 100, C.red); noGlow();
+  for (let i = 0; i < 8; i++) {
+    const cx = 50 + i * 43, o = 300 + i * 22 * (Math.abs(v) / 8) + (rnd(seed + i) - .5) * 30, len = 30 + rnd(seed + i + 9) * 40;
+    const vis = clamp((lt - t0 - .25 - i * .07) / .15); g.globalAlpha = vis;
+    g.fillStyle = i % 3 === 1 ? C.green : C.red; g.fillRect(cx, o, 26, len);
+    g.fillRect(cx + 11, o - 14, 4, len + 28); g.globalAlpha = 1;
+  }
+  g.restore();
+}
+S.bigtech = (lt, d, wt) => {
+  stockCard(70, 300, 'META', -8, true, lt, 0, 11);
+  stockCard(610, 300, 'NVDA', -4.4, false, lt, wt(2), 41);
+  text('AI 인프라 대표주 동반 하락', W / 2, 900, 46, C.gray, 'center', 700, 'P', ramp(lt, wt(3)));
+};
+S.sox = (lt, d, wt) => {
+  const cx = W / 2, cy = 470, s = 250, a = back(lt / .5);
+  g.save(); g.translate(cx, cy); g.scale(a, a);
+  g.strokeStyle = C.gray; g.lineWidth = 8;
+  for (let i = 0; i < 6; i++) {
+    const o = -s / 2 + 22 + i * (s - 44) / 5;
+    [[o, -s / 2, o, -s / 2 - 40], [o, s / 2, o, s / 2 + 40], [-s / 2, o, -s / 2 - 40, o], [s / 2, o, s / 2 + 40, o]]
+      .forEach(([a1, b1, a2, b2]) => { g.beginPath(); g.moveTo(a1, b1); g.lineTo(a2, b2); g.stroke(); });
+  }
+  rr(-s / 2, -s / 2, s, s, 26); g.fillStyle = '#151b27'; g.fill(); g.strokeStyle = C.wh; g.lineWidth = 6; g.stroke();
+  text('SOX', 0, 0, 76, C.wh, 'center', 700, 'M');
+  const cp = eo((lt - wt(2)) / .4);
+  if (cp > 0) {
+    glow(C.red, 30); g.strokeStyle = C.red; g.lineWidth = 9;
+    const crack = [[-150, -170], [-40, -60], [-80, 10], [40, 70], [10, 120], [160, 180]];
+    polyline(crack, cp, C.red, 9); noGlow();
+  }
+  g.restore();
+  text('필라델피아 반도체지수', W / 2, 720, 40, C.gray, 'center', 700);
+  const p = eo((lt - wt(2)) / .7);
+  glow(C.red, 34); text(num(-6.7 * p, 1) + '%', W / 2, 840, 150, C.red); noGlow();
+  const ta = ramp(lt, wt(1), .3); if (ta > 0) { g.globalAlpha = ta; rr(800, 250, 200, 64, 32); g.fillStyle = C.red; g.fill(); g.globalAlpha = 1; text('하루 만에', 900, 283, 38, C.wh, 'center', 800, 'P', ta); }
+};
+S.oil = (lt, d, wt) => {
+  const ta = ramp(lt, 0, .3);
+  g.globalAlpha = ta; rr(80, 270, 330, 72, 36); g.fillStyle = '#2a1a10'; g.fill(); g.strokeStyle = C.org; g.lineWidth = 3; g.stroke(); g.globalAlpha = 1;
+  text('⚠ 중동 리스크', 245, 307, 38, C.org, 'center', 800, 'P', ta);
+  text('BRENT', 990, 306, 40, C.gray, 'right', 700, 'M');
+  const vals = series(30, 7, 88, 114, 7), x0 = 110, x1 = 900, y0 = 860, y1 = 420;
+  const py = v => lerp(y0, y1, (v - 85) / 32);
+  g.strokeStyle = C.dim; g.lineWidth = 2;
+  [90, 100, 110].forEach(v => { g.beginPath(); g.moveTo(x0, py(v)); g.lineTo(990, py(v)); g.stroke(); text('$' + v, 1000, py(v) - 20, 26, C.gray, 'right', 700, 'M'); });
+  const pts = vals.map((v, i) => [x0 + i * (x1 - x0) / 30, py(v)]);
+  const p = eo((lt - .1) / (wt(3) + .3));
+  glow(C.org, 30); const e = polyline(pts, p, C.org, 9); noGlow();
+  g.beginPath(); g.arc(e[0], e[1], 16, 0, 7); g.fillStyle = C.org; g.fill();
+  const cur = lerp(88, 114, p);
+  glow(C.org, 30); text('$' + num(cur, 0), 300, 440, 120, C.org); noGlow();
+  const b = back((lt - wt(2)) / .5);
+  if (b > 0) { g.save(); g.translate(300, 545); g.scale(b, b); rr(-150, -36, 300, 72, 36); g.fillStyle = C.org; g.fill(); g.restore(); text('5개월 최고', 300, 545, 40, '#1a0d00', 'center', 800, 'P', clamp(b)); }
+};
+S.infl = (lt, d, wt) => {
+  const b = back(lt / .5);
+  g.save(); g.translate(W / 2, 320); g.scale(b, b); panel(-230, -55, 460, 110, 1, C.org);
+  text('WTI', -120, 0, 44, C.gray, 'center', 700, 'M'); glow(C.org, 20); text('$101', 70, 0, 66, C.org); noGlow(); g.restore();
+  const items = [['유가', wt(0) + .2], ['물가', wt(2)], ['금리 부담', wt(3)]];
+  items.forEach(([n, t0], i) => {
+    const y = 480 + i * 165, a = back((lt - t0) / .45); if (a <= 0) return;
+    g.save(); g.translate(W / 2, y); g.scale(a, a);
+    rr(-260, -58, 520, 116, 22); g.fillStyle = i === 2 ? '#3a1218' : '#151b27'; g.fill();
+    g.strokeStyle = i === 2 ? C.red : C.org; g.lineWidth = 4; g.stroke();
+    text(n, -40, 0, 58, C.wh); text('▲', 180, 0, 54, i === 2 ? C.red : C.org); g.restore();
+    if (i < 2 && lt > items[i + 1][1] - .1) { const q = eo((lt - items[i + 1][1] + .1) / .3); arrow(W / 2, y + 62, W / 2, y + 62 + 40 * q, C.gray, 6, 18); }
+  });
+};
+function hbar(y, label, v, maxv, col, lt, t0, note) {
+  const p = eo((lt - t0) / .6), a = clamp((lt - t0) / .2); if (a <= 0) return;
+  const zx = 940, len = Math.abs(v) / maxv * 620 * p;
+  g.globalAlpha = a; text(label, 90, y - 70, 46, C.wh, 'left', 800);
+  rr(zx - 620, y - 32, 620, 64, 14); g.fillStyle = '#121824'; g.fill();
+  glow(col, 22); rr(zx - len, y - 32, Math.max(len, 1), 64, 14); g.fillStyle = col; g.fill(); noGlow();
+  text(num(v * p, 1) + '%', zx - len - 20, y, 54, col, 'right', 800); g.globalAlpha = 1;
+  if (note) text(note, 90, y - 70, 1, C.gray);
+}
+S.kospi = (lt, d, wt) => {
+  g.strokeStyle = C.gray; g.lineWidth = 4; g.beginPath(); g.moveTo(940, 300); g.lineTo(940, 820); g.stroke();
+  text('0', 960, 300, 30, C.gray, 'left', 700, 'M');
+  hbar(420, 'KOSPI (장중)', -1.7, 4.5, C.red, lt, wt(0));
+  hbar(620, 'SK하이닉스', -2.5, 4.5, C.red, lt, wt(2));
+  const a = ramp(lt, wt(4), .4);
+  if (a > 0) {
+    g.globalAlpha = a; g.setLineDash([16, 12]); rr(940 - 4.3 / 4.5 * 620, 800, 4.3 / 4.5 * 620, 56, 14);
+    g.strokeStyle = C.red; g.lineWidth = 4; g.stroke(); g.setLineDash([]); g.globalAlpha = 1;
+    text('주간 약 -4.3% 전망', 940 - 4.3 / 4.5 * 620 + 20, 828, 38, C.red, 'left', 800, 'P', a);
+  }
+};
+S.bond = (lt, d, wt) => {
+  text('US 10Y', 90, 310, 44, C.gray, 'left', 700, 'M');
+  const vals = series(20, 21, 5.13, 4.96, .03), x0 = 190, x1 = 620, py = v => lerp(820, 470, (v - 4.9) / .3);
+  g.strokeStyle = C.dim; g.lineWidth = 2;
+  [5.0, 5.1].forEach(v => { g.beginPath(); g.moveTo(x0, py(v)); g.lineTo(640, py(v)); g.stroke(); text(v.toFixed(2), 90, py(v), 26, C.gray, 'left', 700, 'M'); });
+  const p = eo((lt - .1) / (wt(2) + .4));
+  const e = polyline(vals.map((v, i) => [x0 + i * (x1 - x0) / 20, py(v)]), p, C.blue, 9);
+  g.beginPath(); g.arc(e[0], e[1], 15, 0, 7); g.fillStyle = C.blue; g.fill();
+  glow(C.blue, 30); text(num(lerp(5.13, 4.96, p), 2) + '%', 990, 340, 110, C.blue, 'right'); noGlow();
+  text('하루 15~19bp ▼', 990, 430, 38, C.gray, 'right', 700, 'P', ramp(lt, wt(2)));
+  const a = back((lt - wt(3)) / .5);
+  if (a > 0) {
+    if (a > .6) for (let i = 0; i < 10; i++) {
+      const q = ((lt - wt(3)) * 1.4 + i / 10) % 1, sx = 200 + rnd(i) * 300, sy = 900;
+      g.globalAlpha = Math.sin(q * Math.PI); g.beginPath(); g.arc(lerp(sx, 780, eo(q)), lerp(sy, 815, eo(q)), 12, 0, 7);
+      g.fillStyle = C.yel; g.fill(); g.globalAlpha = 1;
+    }
+    g.save(); g.translate(830, 680); g.scale(a, a);
+    g.beginPath(); g.moveTo(0, -120); g.lineTo(105, -80); g.lineTo(95, 40); g.quadraticCurveTo(60, 110, 0, 140);
+    g.quadraticCurveTo(-60, 110, -95, 40); g.lineTo(-105, -80); g.closePath();
+    g.fillStyle = '#0f2340'; g.fill(); g.strokeStyle = C.blue; g.lineWidth = 6; g.stroke();
+    text('안전', 0, -20, 52, C.wh); text('자산', 0, 45, 52, C.wh); g.restore();
+  }
+};
+S.export = (lt, d, wt) => {
+  text('반도체 수출 (9월, 억 달러)', W / 2, 300, 42, C.gray, 'center', 700);
+  const base = 850, k = 380 / 603;
+  [[166, '2025.9', '약 166 (역산)', wt(1)], [603, '2026.9', '603', wt(2)]].forEach(([v, lab, vs, t0], i) => {
+    const x = 330 + i * 420, p = eo((lt - t0) / .8), h = v * k * p, col = i ? C.green : C.dim;
+    if (lt < t0) return;
+    glow(i ? C.green : 'transparent', 30); rr(x - 110, base - h, 220, Math.max(h, 2), 16); g.fillStyle = col; g.fill(); noGlow();
+    text(lab, x, base + 45, 36, C.gray, 'center', 700, 'M');
+    text(i ? num(v * p, 0) : vs, x, base - h - 45, i ? 72 : 40, i ? C.green : C.gray);
+  });
+  const b = back((lt - wt(3)) / .5);
+  if (b > 0) { g.save(); g.translate(380, 520); g.scale(b, b); rr(-170, -48, 340, 96, 48); g.fillStyle = C.green; g.fill(); g.restore(); text('+262.8%', 380, 520, 58, '#04210f', 'center', 800, 'P', clamp(b)); }
+};
+S.bok = (lt, d, wt) => {
+  const tiles = [['기준금리', '3.00%', '동결', C.blue, wt(1)], ['성장률 전망', '3.3%', '상향 ▲', C.green, wt(3)]];
+  tiles.forEach(([n, v, tag, col, t0], i) => {
+    const y = 300 + i * 320, a = back((lt - t0) / .5); if (a <= 0) return;
+    g.save(); g.translate(W / 2, y + 140); g.scale(a, a); g.translate(-W / 2, -(y + 140));
+    panel(90, y, 900, 280, 1, col);
+    text(n, 140, y + 70, 44, C.gray, 'left', 700);
+    glow(col, 26); text(v, 140, y + 180, 120, col, 'left'); noGlow();
+    rr(700, y + 140, 240, 84, 42); g.fillStyle = col; g.fill();
+    text(tag, 820, y + 182, 44, '#05121f', 'center', 800);
+    if (i === 0) { g.strokeStyle = C.wh; g.lineWidth = 7; g.beginPath(); g.arc(880, y + 70, 24, Math.PI, 0); g.stroke(); rr(846, y + 66, 68, 50, 8); g.fillStyle = C.wh; g.fill(); }
+    g.restore();
+  });
+  text('한국은행 · 10월 22일', W / 2, 930, 34, C.gray, 'center', 700, 'P', ramp(lt, wt(0)));
+};
+S.core = (lt, d, wt) => {
+  const tilt = lerp(0, -.22, eio((lt - wt(1)) / 1.0)) + Math.sin(lt * 2) * .01;
+  const cx = W / 2, cy = 470;
+  g.fillStyle = C.gray; g.fillRect(cx - 8, cy, 16, 370); rr(cx - 150, 830, 300, 30, 10); g.fill();
+  g.save(); g.translate(cx, cy); g.rotate(tilt);
+  g.fillStyle = C.wh; g.fillRect(-380, -8, 760, 16); g.restore();
+  const ends = [-1, 1].map(s => [cx + Math.cos(tilt) * 380 * s, cy + Math.sin(tilt) * 380 * s]);
+  [['AI 투자', 'CAPEX', C.red, 9], ['수익', 'ROI', C.yel, 3]].forEach(([n, en, col, coins], i) => {
+    const [ex, ey] = ends[i];
+    g.strokeStyle = C.gray; g.lineWidth = 3; g.beginPath(); g.moveTo(ex, ey); g.lineTo(ex - 110, ey + 200); g.moveTo(ex, ey); g.lineTo(ex + 110, ey + 200); g.stroke();
+    g.beginPath(); g.ellipse(ex, ey + 200, 140, 26, 0, 0, 7); g.fillStyle = '#151b27'; g.fill(); g.strokeStyle = col; g.lineWidth = 4; g.stroke();
+    for (let c = 0; c < coins; c++) { g.beginPath(); g.ellipse(ex - 60 + (c % 3) * 60, ey + 180 - Math.floor(c / 3) * 26, 30, 12, 0, 0, 7); g.fillStyle = col; g.fill(); }
+    text(n, ex, ey + 270, 48, C.wh); text(en, ex, ey + 320, 32, C.gray, 'center', 700, 'M');
+  });
+  const a = ramp(lt, wt(2), .4);
+  text('투자 대비 수익', W / 2, 300, 72, C.yel, 'center', 800, 'P', a);
+};
+S.check = (lt, d, wt) => {
+  const s = ramp(lt, 0, .3);
+  text('단기 주가', W / 2, 320, 56, C.gray, 'center', 800, 'P', s * .7);
+  if (lt > wt(0) + .35) { const p = eo((lt - wt(0) - .35) / .3); g.strokeStyle = C.red; g.lineWidth = 8; g.beginPath(); g.moveTo(W / 2 - 150, 320); g.lineTo(W / 2 - 150 + 300 * p, 320); g.stroke(); }
+  [['HBM 수요', wt(1)], ['메모리 가격', wt(2)], ['실적 전망', wt(3)]].forEach(([n, t0], i) => {
+    const y = 470 + i * 160, a = clamp((lt - t0 + .1) / .3); if (a <= 0) return;
+    g.globalAlpha = a; panel(130, y - 62, 820, 124, 1, C.yel); g.globalAlpha = 1;
+    rr(170, y - 34, 68, 68, 14); g.strokeStyle = C.yel; g.lineWidth = 5; g.stroke();
+    const p = eo((lt - t0 - .15) / .3);
+    if (p > 0) polyline([[184, y], [200, y + 18], [228, y - 20]], p, C.green, 9);
+    text(n, 280, y, 56, C.wh, 'left', 800, 'P', a);
+  });
+};
+S.loop = (lt, d, wt) => {
+  text('NASDAQ · 다음 거래일', W / 2, 310, 44, C.gray, 'center', 700);
+  const pts = series(14, 3, 0, 1, .25).map((y, i) => [110 + i * 400 / 14, 470 + y * 220]);
+  polyline(pts, 1, C.red, 9);
+  const o = pts[pts.length - 1], p = eo((lt - wt(1)) / .8);
+  g.setLineDash([18, 14]);
+  polyline([o, [o[0] + 200, o[1] - 120], [o[0] + 420, o[1] - 260]], p, C.green, 8);
+  polyline([o, [o[0] + 200, o[1] + 60], [o[0] + 420, o[1] + 150]], p, C.red, 8);
+  g.setLineDash([]);
+  g.beginPath(); g.arc(o[0], o[1], 16, 0, 7); g.fillStyle = C.wh; g.fill();
+  const q = back((lt - wt(2)) / .6);
+  if (q > 0) { g.save(); g.translate(800, 560); g.scale(q, q); glow(C.yel, 40); text('?', 0, 0, 260, C.yel); noGlow(); g.restore(); }
+  text('반등 ▲', o[0] + 330, o[1] - 320, 44, C.green, 'center', 800, 'P', p);
+  text('추가 하락 ▼', o[0] + 330, o[1] + 220, 44, C.red, 'center', 800, 'P', p);
+};
+
+// ---------- common tail: subtitles + compositing ----------
+function subtitle(cut, t) {
+  const segs = cut.segs, sz = 64, lh = 88, maxw = 940;
+  font(sz, 800);
+  const parts = segs.map(s => {
+    const out = []; const re = /\*([^*]+)\*|([^*]+)/g; let m;
+    while ((m = re.exec(s.text))) out.push({s: m[1] || m[2], hl: !!m[1]});
+    const w = out.reduce((a, o) => a + g.measureText(o.s).width, 0);
+    return {t: s.t, out, w};
+  });
+  const sp = g.measureText(' ').width, lines = [[]]; let lw = 0;
+  parts.forEach(p => { if (lw + p.w > maxw && lines[lines.length - 1].length) { lines.push([]); lw = 0; } lines[lines.length - 1].push(p); lw += p.w + sp; });
+  const y0 = 1110 - (lines.length - 1) * lh / 2;
+  lines.forEach((ln, li) => {
+    const tw = ln.reduce((a, p) => a + p.w, 0) + sp * (ln.length - 1);
+    let x = W / 2 - tw / 2;
+    ln.forEach(p => {
+      const a = clamp((t - p.t + .08) / .15), sc = .85 + .15 * back((t - p.t + .08) / .25);
+      if (a > 0) {
+        g.save(); g.translate(x + p.w / 2, y0 + li * lh); g.scale(sc, sc); g.globalAlpha = a;
+        let xx = -p.w / 2;
+        p.out.forEach(o => {
+          g.textAlign = 'left'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+          g.lineWidth = 14; g.strokeStyle = '#000'; g.strokeText(o.s, xx, 0);
+          g.fillStyle = o.hl ? C.yel : C.wh; g.fillText(o.s, xx, 0); xx += g.measureText(o.s).width;
+        });
+        g.restore();
+      }
+      x += p.w + sp;
+    });
+  });
+  g.globalAlpha = 1;
+}
+function cutAt(t) {
+  let k = 0; TL.cuts.forEach((c, i) => { if (t >= c.start - .15) k = i; }); return k;
+}
+window.renderFrame = function (n) {
+  const t = n / FPS, k = cutAt(t), cut = TL.cuts[k];
+  const t0 = cut.start - .15, lt = t - t0, d = (k + 1 < TL.cuts.length ? TL.cuts[k + 1].start : TL.total) - t0;
+  const wt = i => (cut.segs[Math.min(i, cut.segs.length - 1)].t - t0);
+  bg(t);
+  header(cut.id, t, lt);
+  // scene enter: slide + fade
+  const ent = eo(lt / .35);
+  g.save(); g.globalAlpha = ent; g.translate(0, (1 - ent) * 60);
+  S[cut.id](lt, d, wt);
+  g.restore(); g.globalAlpha = 1; noGlow();
+  subtitle(cut, t);
+  // dark fade at loop start/end
+  const fin = clamp(1 - t / .4), fout = clamp((t - (TL.total - .6)) / .6), f = Math.max(fin, fout);
+  if (f > 0) { g.fillStyle = `rgba(7,9,13,${f})`; g.fillRect(0, 0, W, H); }
+  return cv.toDataURL('image/jpeg', .92);
+};
+window.ready = document.fonts.load('800 64px P').then(() => Promise.all([
+  document.fonts.load('700 40px P'), document.fonts.load('500 40px P'),
+  document.fonts.load('700 40px M'), document.fonts.load('500 40px M')]));
+</script></body></html>
