@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code To Video</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root {
+    --bg: #111111; --surface: #1b1b1b; --line: #2c2c2c;
+    --ink: #f2ede4; --muted: #8a857c; --accent: #ff5a36; --accent-2: #c6ff3d;
+    --font: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", "WenQuanYi Zen Hei", sans-serif;
+    --mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+  }
+  html, body { margin: 0; background: #000; }
+  body { display: grid; place-items: center; min-height: 100vh; }
+  body.render { display: block; min-height: 0; }
+  #stage { position: relative; overflow: hidden; width: 1080px; height: 830px; background: var(--bg); color: var(--ink);
+    font-family: var(--font); letter-spacing: -0.02em; word-break: keep-all; -webkit-font-smoothing: antialiased; }
+  #stage::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,.07) 1.2px, transparent 1.3px); background-size: 36px 36px; }
+  .abs { position: absolute; }
+  .char { display: inline-block; white-space: pre; }
+
+  #cam { position: absolute; inset: 0; transform-origin: 30% 45%; }
+  .kicker { left: 80px; top: 72px; font: 600 30px/1 var(--mono); color: var(--accent); letter-spacing: .02em; }
+  .kicker .dollar { color: var(--muted); margin-right: 14px; }
+  .caret { display: inline-block; width: 14px; height: 30px; background: var(--accent); vertical-align: -4px; margin-left: 4px; }
+  .mask { overflow: hidden; clip-path: inset(0 -40px 0 0); }
+  .hero { left: 72px; font-size: 200px; font-weight: 900; line-height: 1; letter-spacing: -0.05em; color: var(--accent); }
+  #w1 { top: 130px; } #w2 { top: 345px; }
+  .inner { display: inline-block; }
+  #arrow { left: 520px; top: 150px; width: 230px; height: 170px; }
+  .sub { left: 80px; top: 575px; font-size: 64px; font-weight: 800; line-height: 1.15; }
+  .sub .hl { color: var(--accent); position: relative; }
+  .sub .hl::after { content: ""; position: absolute; left: -4px; right: -4px; bottom: 6px; height: 16px; background: var(--accent-2); opacity: .9;
+    transform-origin: left; transform: scaleX(var(--hl, 0)); z-index: -1; mix-blend-mode: normal; }
+  .line2 { top: 650px; }
+  .foot { left: 80px; right: 80px; bottom: 40px; display: flex; justify-content: space-between; font: 500 22px/1 var(--mono); color: var(--muted); }
+  #count { font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="cam">
+    <div class="abs kicker" id="kicker"><span class="dollar">$</span><span id="ktext"></span><span class="caret" id="caret"></span></div>
+    <div class="abs hero mask" id="w1"><span class="inner" id="w1i">코드</span></div>
+    <svg class="abs" id="arrow" viewBox="0 0 230 170" fill="none" stroke="var(--accent)" stroke-width="34" stroke-linecap="butt" stroke-linejoin="miter">
+      <path id="ashaft" d="M0 85 H190" />
+      <path id="ahead" d="M120 12 L196 85 L120 158" />
+    </svg>
+    <div class="abs hero mask" id="w2"><span class="inner" id="w2i">영상</span></div>
+    <div class="abs sub mask" id="s1"><span class="inner" id="s1i">촬영이 아니라</span></div>
+    <div class="abs sub mask line2" id="s2"><span class="inner" id="s2i"><span class="hl" id="hl">코드로 그린</span> 영상</span></div>
+  </div>
+  <div class="abs foot" id="foot"><span>render(t) · 30fps</span><span><span id="count">000</span> / 210 frames</span></div>
+</div>
+
+<script>
+/* ===== MOTION ENGINE — 수정하지 말 것 =====
+   모든 움직임은 render(t) 하나가 t(초)만 보고 계산한다 (또는 일시정지된 GSAP 타임라인을 seek).
+   CSS transition/animation, setTimeout, Date.now, Math.random 금지 → 프레임 단위로 재현 가능해야 녹화된다. */
+const M = (() => {
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const ease = {
+    linear: k => k,
+    inQuad: k => k * k,
+    outQuad: k => 1 - (1 - k) * (1 - k),
+    inOutQuad: k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2,
+    outCubic: k => 1 - Math.pow(1 - k, 3),
+    inCubic: k => k * k * k,
+    inOutCubic: k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2,
+    outQuart: k => 1 - Math.pow(1 - k, 4),
+    outExpo: k => k === 1 ? 1 : 1 - Math.pow(2, -10 * k),
+    inExpo: k => k === 0 ? 0 : Math.pow(2, 10 * k - 10),
+    inOutExpo: k => k === 0 ? 0 : k === 1 ? 1 : k < .5 ? Math.pow(2, 20 * k - 10) / 2 : (2 - Math.pow(2, -20 * k + 10)) / 2,
+    outBack: (k, s = 1.70158) => 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2),
+    inBack: (k, s = 1.70158) => (s + 1) * k * k * k - s * k * k,
+    // 감쇠 스프링: 오버슈트 후 정착. damping↑ = 덜 튐
+    spring: (k, damping = 6, bounces = 1.5) => k >= 1 ? 1 : 1 - Math.exp(-damping * k) * Math.cos(bounces * Math.PI * 2 * k),
+  };
+  // [a,b] 구간에서의 진행도 0→1 (구간 밖은 0/1로 고정)
+  const p = (t, a, b, fn = ease.inOutCubic) => fn(clamp((t - a) / (b - a)));
+  // 들어왔다 나가는 진행도: in 구간에서 0→1, out 구간에서 1→0
+  const io = (t, inA, inB, outA, outB, fnIn = ease.outCubic, fnOut = ease.inCubic) =>
+    t < outA ? p(t, inA, inB, fnIn) : 1 - p(t, outA, outB, fnOut);
+  // 키프레임 보간: kf(t, [[0, 0], [1.2, 100, 'outBack'], [2, 80]])
+  const kf = (t, frames) => {
+    if (t <= frames[0][0]) return frames[0][1];
+    for (let i = 1; i < frames.length; i++) {
+      const [tb, vb, e] = frames[i], [ta, va] = frames[i - 1];
+      if (t <= tb) return lerp(va, vb, (ease[e] || ease.inOutCubic)(clamp((t - ta) / (tb - ta))));
+    }
+    return frames[frames.length - 1][1];
+  };
+  const rand = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let r = Math.imul(seed ^ seed >>> 15, 1 | seed); r = r + Math.imul(r ^ r >>> 7, 61 | r) ^ r; return ((r ^ r >>> 14) >>> 0) / 4294967296; };
+  const mixHex = (a, b, k) => {
+    const h = s => s.replace('#', '').match(/../g).map(x => parseInt(x, 16));
+    const A = h(a), B = h(b);
+    return '#' + A.map((v, i) => Math.round(lerp(v, B[i], k)).toString(16).padStart(2, '0')).join('');
+  };
+  // 글자 단위로 쪼개기 (한글 음절 단위 그대로 보존). 공백은 폭 유지.
+  const split = el => {
+    const text = el.textContent; el.textContent = '';
+    return Array.from(text).map(ch => { const s = document.createElement('span'); s.className = 'char'; s.textContent = ch; el.appendChild(s); return s; });
+  };
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const css = (el, o) => { for (const k in o) el.style[k] = o[k]; };
+
+  let scene, render;
+  const seek = t => { render(t); return new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); };
+
+  // r: render(t) 함수. s.timeline: 일시정지된 GSAP 타임라인(선택) — 둘 다 주면 타임라인 seek 후 render(t)
+  function boot(s, r) {
+    scene = s;
+    const tl = s.timeline;
+    if (tl) tl.pause(0);
+    render = tl ? t => { tl.seek(t, false); r && r(t); } : r;
+    const stage = $('#stage');
+    stage.style.width = s.w + 'px'; stage.style.height = s.h + 'px';
+    window.__scene = { w: s.w, h: s.h, fps: s.fps, duration: s.duration, beats: s.beats || [] };
+    window.__seek = seek;
+    const q = new URLSearchParams(location.search);
+    if (q.has('render')) { document.body.classList.add('render'); render(0); return; }
+    if (q.has('t')) { render(parseFloat(q.get('t'))); return; }
+    preview(q.has('debug'));
+  }
+
+  // 미리보기: 재생/일시정지(space), ←/→ 비트 이동, 하단 스크러버, ?debug 시 시간·비트 표시
+  function preview(debug) {
+    let t = 0, playing = true, last = performance.now();
+    const bar = document.createElement('input');
+    Object.assign(bar, { type: 'range', min: 0, max: scene.duration, step: 1 / scene.fps, value: 0 });
+    bar.style.cssText = 'position:fixed;left:16px;right:16px;bottom:12px;width:calc(100% - 32px)';
+    const hud = document.createElement('div');
+    hud.style.cssText = 'position:fixed;left:16px;top:12px;font:12px/1.4 monospace;color:#9f9;background:#000a;padding:4px 8px;border-radius:4px';
+    document.body.append(bar); if (debug) document.body.append(hud);
+    bar.oninput = () => { t = +bar.value; playing = false; };
+    const beatTimes = (scene.beats || []).map(b => b.t);
+    addEventListener('keydown', e => {
+      if (e.code === 'Space') { playing = !playing; e.preventDefault(); }
+      if (e.code === 'ArrowRight') { t = beatTimes.find(b => b > t + 1e-3) ?? 0; playing = false; }
+      if (e.code === 'ArrowLeft') { t = [...beatTimes].reverse().find(b => b < t - 1e-3) ?? 0; playing = false; }
+    });
+    // 화면보다 큰 스테이지는 축소해서 보여 준다
+    const fit = () => { const k = Math.min(1, (innerWidth - 32) / scene.w, (innerHeight - 64) / scene.h); $('#stage').style.transform = `scale(${k})`; };
+    addEventListener('resize', fit); fit();
+    (function loop(now) {
+      if (playing) { t = (t + (now - last) / 1000) % scene.duration; bar.value = t; }
+      last = now; render(t);
+      if (debug) { const b = [...(scene.beats || [])].reverse().find(b => b.t <= t + 1e-6); hud.textContent = `t=${t.toFixed(2)}s  f=${Math.round(t * scene.fps)}  beat=${b ? b.label : '-'}`; }
+      requestAnimationFrame(loop);
+    })(last);
+  }
+
+  return { clamp, lerp, ease, p, io, kf, rand, mixHex, split, $, $$, css, boot };
+})();
+</script>
+
+<script>
+/* ===== SCENE: 코드 → 영상 (첨부 카드 2/7 재해석) =====
+   조합: 타이핑 키커 → 마스크 리빌(코드) → 화살표 드로우+예비동작 → 스태거 스프링(영상) → 서브 리빌 + 형광펜 → 푸시 인 + 홀드 → 퇴장(루프) */
+const SCENE = {
+  w: 1080, h: 830, fps: 30, duration: 7,
+  beats: [
+    { t: 0.00, label: '빈 화면 (루프 시작)' },
+    { t: 0.75, label: '키커 타이핑 완료' },
+    { t: 1.35, label: '코드 리빌 완료' },
+    { t: 2.05, label: '화살표 도착' },
+    { t: 2.75, label: '영상 착지' },
+    { t: 3.60, label: '서브 + 형광펜' },
+    { t: 5.80, label: '홀드 끝 → 퇴장 시작' },
+  ],
+};
+const { p, io, kf, ease, lerp, clamp, $, css, split } = M;
+
+const KICK = '먼저 알아 둘 것';
+const w2chars = split($('#w2i'));
+const shaft = $('#ashaft'), head = $('#ahead');
+const shaftLen = 190, headLen = 2 * Math.hypot(76, 73);
+shaft.style.strokeDasharray = shaftLen; head.style.strokeDasharray = headLen;
+
+function render(t) {
+  // 퇴장 진행도: 5.8→6.5s 동안 전체가 위로 마스크 아웃, 6.5→7s 빈 화면 = t=0과 동일
+  const out = p(t, 5.8, 6.5, ease.inCubic);
+
+  // 1) 키커 타이핑: 0.15–0.75s, 커서는 0.5s 주기 깜빡임(타이핑 중엔 켜짐)
+  const n = Math.floor(clamp((t - 0.15) / 0.6) * Array.from(KICK).length);
+  $('#ktext').textContent = Array.from(KICK).slice(0, n).join('');
+  const typing = t > 0.15 && t < 0.8;
+  css($('#caret'), { opacity: t < 0.15 || out > 0 ? 0 : (typing || Math.floor(t / 0.5) % 2 === 0 ? 1 : 0) });
+  css($('#kicker'), { opacity: p(t, 0, 0.15) * (1 - out) });
+
+  // 2) 코드: 마스크 리빌 (아래에서 위로) 0.7–1.35s
+  const r1 = p(t, 0.7, 1.35, ease.outExpo);
+  css($('#w1i'), { transform: `translateY(${(1 - r1) * 105 - out * 105}%)` });
+
+  // 3) 화살표: 예비동작(왼쪽으로 당김) → 선 드로우 → 머리 드로우 1.35–2.05s
+  const ant = kf(t, [[1.3, 0], [1.45, -14, 'outQuad'], [1.75, 10, 'outCubic'], [2.05, 0, 'outBack']]);
+  const sd = p(t, 1.4, 1.75, ease.inOutCubic), hd = p(t, 1.65, 2.0, ease.outCubic);
+  shaft.style.strokeDashoffset = shaftLen * (1 - sd);
+  head.style.strokeDashoffset = headLen * (1 - hd);
+  css($('#arrow'), { transform: `translateX(${ant + out * 60}px)`, opacity: 1 - out });
+
+  // 4) 영상: 글자별 스프링 스케일 + y, 0.09s 스태거, 2.0–2.75s
+  w2chars.forEach((c, i) => {
+    const k = p(t, 2.0 + i * 0.09, 2.65 + i * 0.09, ease.linear);
+    const s = ease.spring(k, 6, 1.5);
+    const y = (1 - ease.outExpo(k)) * 105 - out * 105;
+    css(c, { transform: `translateY(${y}%) scale(${lerp(0.6, 1, s)})`, transformOrigin: '50% 100%' });
+  });
+
+  // 5) 서브 두 줄 리빌(0.08s 오버랩) + 형광펜 3.3–3.6s
+  const s1 = p(t, 2.9, 3.4, ease.outExpo), s2 = p(t, 2.98, 3.48, ease.outExpo);
+  css($('#s1i'), { transform: `translateY(${(1 - s1) * 110 - out * 110}%)` });
+  css($('#s2i'), { transform: `translateY(${(1 - s2) * 110 - out * 110}%)` });
+  $('#hl').style.setProperty('--hl', p(t, 3.3, 3.6, ease.outCubic) * (1 - out));
+
+  // 6) 카메라 푸시 인: 2.0–5.8s 동안 1→1.06, 퇴장 때 원위치 (멈추지 않는 느린 접근)
+  const push = p(t, 2.0, 5.8, ease.inOutQuad) * (1 - out);
+  css($('#cam'), { transform: `scale(${1 + 0.06 * push})` });
+
+  // 7) 세컨더리: 프레임 카운터
+  const f = Math.min(209, Math.round(t * SCENE.fps));
+  $('#count').textContent = String(f).padStart(3, '0');
+  css($('#foot'), { opacity: p(t, 0.2, 0.6) * (1 - out) });
+}
+
+M.boot(SCENE, render);
+</script>
+</body>
+</html>

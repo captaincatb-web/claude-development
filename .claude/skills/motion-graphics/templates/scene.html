@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scene</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  /* ===== STYLE TOKENS (references/style-system.md) ===== */
+  :root {
+    --bg: #111111;
+    --surface: #1b1b1b;
+    --line: #2c2c2c;
+    --ink: #f2ede4;
+    --muted: #8a857c;
+    --accent: #ff5a36;
+    --accent-2: #c6ff3d;
+    --font: Geist, "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", "WenQuanYi Zen Hei", sans-serif;
+    --mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+  }
+  html, body { margin: 0; background: #000; }
+  body { display: grid; place-items: center; min-height: 100vh; }
+  body.render { display: block; min-height: 0; }
+  #stage {
+    position: relative; overflow: hidden;
+    width: 1080px; height: 830px;
+    background: var(--bg); color: var(--ink);
+    font-family: var(--font); letter-spacing: -0.02em;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* 점 그리드 배경 — 화면이 비어 보이지 않게 하는 최소한의 질감 */
+  #stage::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,.07) 1.2px, transparent 1.3px);
+    background-size: 36px 36px;
+  }
+  .abs { position: absolute; }
+  .char { display: inline-block; white-space: pre; }
+
+  /* ===== SCENE STYLES ===== */
+  .title { left: 80px; top: 300px; font-size: 120px; font-weight: 800; line-height: 1.05; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <!-- ===== SCENE MARKUP ===== -->
+  <div class="abs title" id="title">여기에 메시지</div>
+</div>
+
+<script>
+/* ===== MOTION ENGINE — 수정하지 말 것 =====
+   모든 움직임은 render(t) 하나가 t(초)만 보고 계산한다 (또는 일시정지된 GSAP 타임라인을 seek).
+   CSS transition/animation, setTimeout, Date.now, Math.random 금지 → 프레임 단위로 재현 가능해야 녹화된다. */
+const M = (() => {
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const ease = {
+    linear: k => k,
+    inQuad: k => k * k,
+    outQuad: k => 1 - (1 - k) * (1 - k),
+    inOutQuad: k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2,
+    outCubic: k => 1 - Math.pow(1 - k, 3),
+    inCubic: k => k * k * k,
+    inOutCubic: k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2,
+    outQuart: k => 1 - Math.pow(1 - k, 4),
+    outExpo: k => k === 1 ? 1 : 1 - Math.pow(2, -10 * k),
+    inExpo: k => k === 0 ? 0 : Math.pow(2, 10 * k - 10),
+    inOutExpo: k => k === 0 ? 0 : k === 1 ? 1 : k < .5 ? Math.pow(2, 20 * k - 10) / 2 : (2 - Math.pow(2, -20 * k + 10)) / 2,
+    outBack: (k, s = 1.70158) => 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2),
+    inBack: (k, s = 1.70158) => (s + 1) * k * k * k - s * k * k,
+    // 감쇠 스프링: 오버슈트 후 정착. damping↑ = 덜 튐
+    spring: (k, damping = 6, bounces = 1.5) => k >= 1 ? 1 : 1 - Math.exp(-damping * k) * Math.cos(bounces * Math.PI * 2 * k),
+  };
+  // [a,b] 구간에서의 진행도 0→1 (구간 밖은 0/1로 고정)
+  const p = (t, a, b, fn = ease.inOutCubic) => fn(clamp((t - a) / (b - a)));
+  // 들어왔다 나가는 진행도: in 구간에서 0→1, out 구간에서 1→0
+  const io = (t, inA, inB, outA, outB, fnIn = ease.outCubic, fnOut = ease.inCubic) =>
+    t < outA ? p(t, inA, inB, fnIn) : 1 - p(t, outA, outB, fnOut);
+  // 키프레임 보간: kf(t, [[0, 0], [1.2, 100, 'outBack'], [2, 80]])
+  const kf = (t, frames) => {
+    if (t <= frames[0][0]) return frames[0][1];
+    for (let i = 1; i < frames.length; i++) {
+      const [tb, vb, e] = frames[i], [ta, va] = frames[i - 1];
+      if (t <= tb) return lerp(va, vb, (ease[e] || ease.inOutCubic)(clamp((t - ta) / (tb - ta))));
+    }
+    return frames[frames.length - 1][1];
+  };
+  const rand = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let r = Math.imul(seed ^ seed >>> 15, 1 | seed); r = r + Math.imul(r ^ r >>> 7, 61 | r) ^ r; return ((r ^ r >>> 14) >>> 0) / 4294967296; };
+  const mixHex = (a, b, k) => {
+    const h = s => s.replace('#', '').match(/../g).map(x => parseInt(x, 16));
+    const A = h(a), B = h(b);
+    return '#' + A.map((v, i) => Math.round(lerp(v, B[i], k)).toString(16).padStart(2, '0')).join('');
+  };
+  // 글자 단위로 쪼개기 (한글 음절 단위 그대로 보존). 공백은 폭 유지.
+  const split = el => {
+    const text = el.textContent; el.textContent = '';
+    return Array.from(text).map(ch => { const s = document.createElement('span'); s.className = 'char'; s.textContent = ch; el.appendChild(s); return s; });
+  };
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const css = (el, o) => { for (const k in o) el.style[k] = o[k]; };
+
+  let scene, render;
+  const seek = t => { render(t); return new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); };
+
+  // r: render(t) 함수. s.timeline: 일시정지된 GSAP 타임라인(선택) — 둘 다 주면 타임라인 seek 후 render(t)
+  function boot(s, r) {
+    scene = s;
+    const tl = s.timeline;
+    if (tl) tl.pause(0);
+    render = tl ? t => { tl.seek(t, false); r && r(t); } : r;
+    const stage = $('#stage');
+    stage.style.width = s.w + 'px'; stage.style.height = s.h + 'px';
+    window.__scene = { w: s.w, h: s.h, fps: s.fps, duration: s.duration, beats: s.beats || [] };
+    window.__seek = seek;
+    const q = new URLSearchParams(location.search);
+    if (q.has('render')) { document.body.classList.add('render'); render(0); return; }
+    if (q.has('t')) { render(parseFloat(q.get('t'))); return; }
+    preview(q.has('debug'));
+  }
+
+  // 미리보기: 재생/일시정지(space), ←/→ 비트 이동, 하단 스크러버, ?debug 시 시간·비트 표시
+  function preview(debug) {
+    let t = 0, playing = true, last = performance.now();
+    const bar = document.createElement('input');
+    Object.assign(bar, { type: 'range', min: 0, max: scene.duration, step: 1 / scene.fps, value: 0 });
+    bar.style.cssText = 'position:fixed;left:16px;right:16px;bottom:12px;width:calc(100% - 32px)';
+    const hud = document.createElement('div');
+    hud.style.cssText = 'position:fixed;left:16px;top:12px;font:12px/1.4 monospace;color:#9f9;background:#000a;padding:4px 8px;border-radius:4px';
+    document.body.append(bar); if (debug) document.body.append(hud);
+    bar.oninput = () => { t = +bar.value; playing = false; };
+    const beatTimes = (scene.beats || []).map(b => b.t);
+    addEventListener('keydown', e => {
+      if (e.code === 'Space') { playing = !playing; e.preventDefault(); }
+      if (e.code === 'ArrowRight') { t = beatTimes.find(b => b > t + 1e-3) ?? 0; playing = false; }
+      if (e.code === 'ArrowLeft') { t = [...beatTimes].reverse().find(b => b < t - 1e-3) ?? 0; playing = false; }
+    });
+    // 화면보다 큰 스테이지는 축소해서 보여 준다
+    const fit = () => { const k = Math.min(1, (innerWidth - 32) / scene.w, (innerHeight - 64) / scene.h); $('#stage').style.transform = `scale(${k})`; };
+    addEventListener('resize', fit); fit();
+    (function loop(now) {
+      if (playing) { t = (t + (now - last) / 1000) % scene.duration; bar.value = t; }
+      last = now; render(t);
+      if (debug) { const b = [...(scene.beats || [])].reverse().find(b => b.t <= t + 1e-6); hud.textContent = `t=${t.toFixed(2)}s  f=${Math.round(t * scene.fps)}  beat=${b ? b.label : '-'}`; }
+      requestAnimationFrame(loop);
+    })(last);
+  }
+
+  return { clamp, lerp, ease, p, io, kf, rand, mixHex, split, $, $$, css, boot };
+})();
+</script>
+
+<script>
+/* ===== SCENE ===== */
+const SCENE = {
+  w: 1080, h: 830, fps: 30, duration: 4,
+  // 비트 그리드: 상태가 바뀌는 순간. 렌더 검수(--beats)는 이 시점들을 스틸로 뽑는다.
+  beats: [
+    { t: 0.0, label: '빈 화면' },
+    { t: 1.0, label: '타이틀 등장 완료' },
+    { t: 3.0, label: '홀드 끝' },
+  ],
+};
+const { p, io, ease, $, css } = M;
+const title = $('#title');
+
+function render(t) {
+  const k = io(t, 0.2, 1.0, 3.0, 3.6, ease.outExpo, ease.inCubic);
+  css(title, { opacity: k, transform: `translateY(${(1 - k) * 40}px)` });
+}
+
+M.boot(SCENE, render);
+</script>
+</body>
+</html>
