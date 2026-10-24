@@ -167,6 +167,37 @@ const M = (() => {
   };
   // 스태거 시작 시각: 개수가 많으면 전체 폭(maxSpan)을 넘지 않게 간격 축소
   const stagger = (i, n, gap, maxSpan = Infinity) => i * Math.min(gap, n > 1 ? maxSpan / (n - 1) : gap);
+  // 닫힌 식 스프링 계단 응답: dt초 뒤 0→1 (freq Hz, zeta 감쇠비 <1 이면 살짝 오버슈트)
+  const springStep = (dt, freq = 2.2, zeta = 0.72) => {
+    if (dt <= 0) return 0;
+    const w = 2 * Math.PI * freq, wd = w * Math.sqrt(1 - zeta * zeta);
+    return 1 - Math.exp(-zeta * w * dt) * (Math.cos(wd * dt) + zeta * w / wd * Math.sin(wd * dt));
+  };
+  // 목표가 여러 번 바뀌는 값: springTo(t, 0, [[0.8, 100], [2.0, 40]]) — 바뀔 때마다 스프링 하나씩을 더함 → t만의 함수
+  const springTo = (t, v0, changes, freq, zeta) => {
+    let v = v0, prev = v0;
+    for (const [at, target, f, z] of changes) { v += (target - prev) * springStep(t - at, f ?? freq, z ?? zeta); prev = target; }
+    return v;
+  };
+  // Catmull-Rom: 키 [[t,x,y], ...]를 부드럽게 지나는 경로 위치 {x, y}
+  const catmull = (t, keys) => {
+    if (t <= keys[0][0]) return { x: keys[0][1], y: keys[0][2] };
+    const n = keys.length - 1;
+    if (t >= keys[n][0]) return { x: keys[n][1], y: keys[n][2] };
+    let i = 0; while (t > keys[i + 1][0]) i++;
+    const P = j => keys[Math.max(0, Math.min(n, j))];
+    const u = (t - keys[i][0]) / (keys[i + 1][0] - keys[i][0]), u2 = u * u, u3 = u2 * u;
+    const c = k => 0.5 * ((2 * P(i)[k]) + (-P(i - 1)[k] + P(i + 1)[k]) * u + (2 * P(i - 1)[k] - 5 * P(i)[k] + 4 * P(i + 1)[k] - P(i + 2)[k]) * u2 + (-P(i - 1)[k] + 3 * P(i)[k] - 3 * P(i + 1)[k] + P(i + 2)[k]) * u3);
+    return { x: c(1), y: c(2) };
+  };
+  // 시뮬레이션: 고정 간격(hz)으로 끝까지 한 번 계산해 저장 → sample(t)는 저장값을 읽기만 (물리·파티클·반응-확산)
+  // step(state, dt, i) 는 새 state를 반환. 큰 상태(격자)는 snapshot(state)로 필요한 것만 복사해 저장
+  const simulate = (init, step, { hz = 240, duration, every = 1, snapshot = s => structuredClone(s) }) => {
+    const dt = 1 / hz, frames = [snapshot(init)];
+    let s = init;
+    for (let i = 1; i <= Math.ceil(duration * hz); i++) { s = step(s, dt, i); if (i % every === 0) frames.push(snapshot(s)); }
+    return t => frames[Math.max(0, Math.min(frames.length - 1, Math.round(t * hz / every)))];
+  };
   // 멈추지 않는 미세 드리프트(정지 화면 방지)
   const drift = (t, amp = 2, period = 6, phase = 0) => amp * Math.sin((t / period + phase) * Math.PI * 2);
   // BPM 그리드
@@ -283,7 +314,7 @@ const M = (() => {
     })(last);
   }
 
-  return { clamp, lerp, ease, p, io, kf, stagger, drift, beat, rand, mixHex, $, $$, css, split, typer, count, cursorAt, cursor, boot };
+  return { clamp, lerp, ease, p, io, kf, stagger, springStep, springTo, catmull, simulate, drift, beat, rand, mixHex, $, $$, css, split, typer, count, cursorAt, cursor, boot };
 })();
 </script>
 

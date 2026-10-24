@@ -19,6 +19,7 @@
 ## 2. 팔레트 프리셋
 
 토큰은 `:root`에 정의하고 장면 코드에서는 `var(--*)`만 쓴다. 강조색은 **한 장면에 하나**.
+`templates/scene.html`의 기본값은 INK-LIME. 다른 프리셋은 SCENE STYLES 맨 위에 `:root { … }`를 덮어쓴다 (예: `examples/code-to-video.html`의 INK-CORAL).
 
 ### INK-LIME (다크 · 기본) — CHA Motion Kit 원문 규칙
 ```
@@ -54,8 +55,8 @@
 
 ## 3. 타이포그래피
 
-- 본문 서체: **Pretendard Variable** (CDN) → 없으면 시스템 한글 산세리프. 숫자·코드·라벨: 모노스페이스.
-- 오프라인 렌더라면 `fonts/` 폴더에 woff2를 두고 `@font-face`로 로컬 참조.
+- 서체: 영문 **Geist**, 한글 **Pretendard Variable**, 라벨·숫자 **Geist Mono** — 템플릿에 `@font-face`로 선언됨(jsdelivr npm URL). 렌더러가 오프라인에서 npm 사본으로 대체하므로 별도 설치 불필요.
+- 원문 규칙: 굵기 400–600이 기본(과한 900은 히어로 단어에만).
 - 스케일 (1080 폭 기준)
 
 | 역할 | 크기 | 굵기 | 자간 / 행간 |
