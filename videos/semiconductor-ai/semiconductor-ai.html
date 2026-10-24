@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Semiconductor AI</title>
+<!-- GSAP을 쓸 때만 주석 해제. 렌더러는 jsdelivr npm URL을 로컬 사본으로 대체하므로 오프라인에서도 동작한다.
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script> -->
+<style>
+  /* ===== BASE — 폰트 · 토큰 · 스테이지 (references/style-system.md) ===== */
+  @font-face { font-family: "Pretendard Variable"; font-weight: 45 920; font-display: block;
+    src: url("https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/woff2/PretendardVariable.woff2") format("woff2-variations"); }
+  @font-face { font-family: "Geist"; font-weight: 100 900; font-display: block;
+    src: url("https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Variable.woff2") format("woff2-variations"); }
+  @font-face { font-family: "Geist Mono"; font-weight: 100 900; font-display: block;
+    src: url("https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-mono/GeistMono-Variable.woff2") format("woff2-variations"); }
+
+  /* 팔레트 프리셋: INK-LIME(기본). 다른 프리셋은 style-system.md에서 이 블록만 교체 */
+  :root {
+    --bg: #0a0a0a;
+    --surface: #161616;
+    --line: #262626;
+    --ink: #ffffff;
+    --muted: #8c8c8c;
+    --accent: #d4f527;   /* 화면 전체에서 한 곳만 */
+    --danger: #ff4d4d;   /* 오류·거절 상태색 전용 */
+    --font: "Geist", "Pretendard Variable", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    --mono: "Geist Mono", "SF Mono", Menlo, Consolas, monospace;
+  }
+  html, body { margin: 0; background: #000; }
+  body { display: grid; place-items: center; min-height: 100vh; overflow: hidden; }
+  body.render { display: block; min-height: 0; }
+  #stage {
+    position: relative; overflow: hidden; flex: none;
+    width: 1080px; height: 1920px;
+    background: var(--bg); color: var(--ink);
+    font-family: var(--font); font-weight: 600; letter-spacing: -0.02em;
+    word-break: keep-all; -webkit-font-smoothing: antialiased;
+  }
+  /* 점 그리드 — 빈 화면을 막는 최소한의 질감 */
+  #stage::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,.06) 1.2px, transparent 1.3px);
+    background-size: 36px 36px;
+  }
+  .abs { position: absolute; }
+  .char { display: inline-block; white-space: pre; }
+  .mask { overflow: hidden; clip-path: inset(-0.08em -0.2em -0.12em -0.2em); }
+  .mask > .inner { display: inline-block; }
+  .label { font: 500 20px/1 var(--mono); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+  .label.tl { left: 56px; top: 44px; } .label.tr { right: 56px; top: 44px; }
+  .num { font-variant-numeric: tabular-nums; }
+  .cursor { position: absolute; left: 0; top: 0; width: 28px; height: 28px; z-index: 50; pointer-events: none; transform-origin: 4px 3px; }
+
+  /* ===== SCENE STYLES ===== */
+  #cv { position: absolute; inset: 0; width: 100%; height: 100%; }
+  #cam { position: absolute; inset: 0; }
+  .ch { position: absolute; left: 80px; right: 160px; top: 270px; }
+  .kick { font: 500 26px/1 var(--mono); color: var(--muted); letter-spacing: .1em; margin-bottom: 26px; }
+  .kick b { color: var(--ink); font-weight: 500; }
+  .hl { font-family: "Pretendard Variable", var(--font); font-size: 92px; font-weight: 700; line-height: 1.12; letter-spacing: -0.045em; }
+  .hl .row { display: block; }
+  .hl .mask { display: block; }
+  .sub { margin-top: 30px; font-family: "Pretendard Variable", var(--font); font-size: 38px; font-weight: 500; line-height: 1.45; color: #bdbdbd; letter-spacing: -0.02em; }
+  .dim { color: var(--muted); }
+  #bubble { position: absolute; left: 50%; top: 860px; transform: translateX(-50%); padding: 34px 44px; border-radius: 36px 36px 36px 10px;
+    background: var(--surface); box-shadow: 0 0 0 1px var(--line); font-family: "Pretendard Variable", var(--font); font-size: 54px; font-weight: 600; letter-spacing: -0.035em; white-space: nowrap; }
+  #bubble .caret { display: inline-block; width: 4px; height: 56px; background: var(--ink); margin-left: 4px; vertical-align: -8px; }
+  .tag { position: absolute; font: 500 24px/1 var(--mono); color: var(--muted); letter-spacing: .08em; white-space: nowrap; }
+  #eq { position: absolute; left: 0; right: 0; top: 1046px; text-align: center; font: 500 38px/1 var(--mono); color: #d0d0d0; letter-spacing: .02em; white-space: pre; }
+  #eq .res { color: var(--accent); }
+  #progress { position: absolute; left: 80px; right: 160px; top: 1548px; height: 3px; background: #1d1d1d; }
+  #progress i { position: absolute; left: 0; top: 0; bottom: 0; background: #6a6a6a; transform-origin: 0 50%; }
+  #counter { font-variant-numeric: tabular-nums; }
+  #final .hl { font-size: 120px; line-height: 1.08; }
+  #final .mark { position: relative; display: inline-block; }
+  #final .mark::before { content: ""; position: absolute; left: -10px; right: -10px; top: 10%; bottom: 2%; border-radius: 6px; background: var(--accent); transform-origin: 0 50%; transform: scaleX(var(--hl, 0)); }
+  #final .mark b { position: relative; font-weight: inherit; }
+  /* 대사 자막: 하단 진행선 아래 한 줄. 헤드라인과 중복되는 보조 문장(.sub)은 숨김 */
+  .sub { display: none; }
+  #cap { position: absolute; left: 50%; top: 1578px; transform: translateX(-50%); max-width: 900px; padding: 14px 28px; border-radius: 14px;
+    background: rgba(0,0,0,.72); box-shadow: 0 0 0 1px #262626; font-family: "Pretendard Variable", var(--font); font-size: 40px; font-weight: 600;
+    letter-spacing: -0.03em; white-space: nowrap; color: #fff; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <!-- ===== SCENE MARKUP ===== -->
+  <canvas id="cv"></canvas>
+  <div id="cam">
+    <div class="ch" id="c1"><div class="kick">01 · <b>칩</b></div>
+      <div class="hl"><span class="mask"><span class="inner">AI의 생각은</span></span><span class="mask"><span class="inner">칩 하나 안에서</span></span></div>
+      <div class="sub">손톱만 한 반도체 위에서 계산이 일어납니다</div></div>
+
+    <div class="ch" id="c2"><div class="kick">02 · <b>트랜지스터</b></div>
+      <div class="hl"><span class="mask"><span class="inner">수백억 개의</span></span><span class="mask"><span class="inner">작은 스위치</span></span></div>
+      <div class="sub">켜지면 1, 꺼지면 0. 이 깜빡임이 계산이 됩니다</div></div>
+
+    <div class="ch" id="c3"><div class="kick">03 · <b>연산</b></div>
+      <div class="hl"><span class="mask"><span class="inner">AI의 계산은</span></span><span class="mask"><span class="inner">곱하고 더하기</span></span></div>
+      <div class="sub">이 행렬 곱셈을 초당 수조 번 반복합니다</div></div>
+    <div id="eq"></div>
+
+    <div class="ch" id="c4"><div class="kick">04 · <b>메모리</b></div>
+      <div class="hl"><span class="mask"><span class="inner">병목은 계산보다</span></span><span class="mask"><span class="inner">데이터 이동</span></span></div>
+      <div class="sub">HBM은 메모리를 위로 쌓아 길을 넓힙니다</div></div>
+
+    <div class="ch" id="final"><div class="kick">05 · <b>결론</b></div>
+      <div class="hl"><span class="mask"><span class="inner">AI의 속도는</span></span><span class="mask"><span class="inner"><span class="mark" id="mark"><b id="markB">반도체</b></span>의 속도</span></span></div>
+      <div class="sub">더 작게, 더 빠르게, 더 가깝게</div></div>
+  </div>
+  <div class="tag" id="tagPkg" style="left:280px; top:712px">PACKAGE</div>
+  <div class="tag" id="tagDie" style="left:560px; top:1412px">DIE · 회로가 새겨진 실리콘</div>
+  <div class="abs label tl">CHA · SEMICONDUCTOR × AI</div>
+  <div class="abs label tr" style="right:160px"><span id="counter">01</span> / 05</div>
+  <div class="abs tag" style="left:80px; top:1500px" id="note">개념 설명용 재연 · 예시 값</div>
+  <div id="progress"><i id="prog"></i></div>
+  <div id="cap"></div>
+</div>
+
+<script>
+/* ===== MOTION ENGINE — 수정하지 말 것 =====
+   모든 움직임은 render(t) 하나가 t(초)만 보고 계산한다 (또는 일시정지된 GSAP 타임라인을 seek).
+   CSS transition/animation, setTimeout, Date.now, Math.random 금지 → 프레임 단위로 재현 가능해야 녹화된다. */
+const M = (() => {
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const ease = {
+    linear: k => k,
+    inQuad: k => k * k,
+    outQuad: k => 1 - (1 - k) * (1 - k),
+    inOutQuad: k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2,
+    inCubic: k => k * k * k,
+    outCubic: k => 1 - Math.pow(1 - k, 3),
+    inOutCubic: k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2,
+    outQuart: k => 1 - Math.pow(1 - k, 4),
+    inExpo: k => k === 0 ? 0 : Math.pow(2, 10 * k - 10),
+    outExpo: k => k === 1 ? 1 : 1 - Math.pow(2, -10 * k),
+    inOutExpo: k => k === 0 ? 0 : k === 1 ? 1 : k < .5 ? Math.pow(2, 20 * k - 10) / 2 : (2 - Math.pow(2, -20 * k + 10)) / 2,
+    inBack: (k, s = 1.70158) => (s + 1) * k * k * k - s * k * k,
+    outBack: (k, s = 1.70158) => 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2),
+    // 감쇠 스프링: 오버슈트 후 정착. damping↑ 덜 튐, bounces↑ 더 자주 흔들림
+    spring: (k, damping = 6, bounces = 1.5) => k >= 1 ? 1 : 1 - Math.exp(-damping * k) * Math.cos(bounces * Math.PI * 2 * k),
+  };
+  const E = f => typeof f === 'string' ? ease[f] : (f || ease.inOutCubic);
+
+  // [a,b] 구간 진행도 0→1 (구간 밖은 0/1 고정)
+  const p = (t, a, b, fn) => E(fn)(clamp((t - a) / (b - a)));
+  // 등장 후 퇴장: [inA,inB] 0→1, [outA,outB] 1→0
+  const io = (t, inA, inB, outA, outB, fnIn = 'outExpo', fnOut = 'inCubic') =>
+    t < outA ? p(t, inA, inB, fnIn) : 1 - p(t, outA, outB, fnOut);
+  // 키프레임: kf(t, [[0, 0], [1.2, 100, 'outBack'], [2, 80]]) — 각 키의 이징은 그 키로 "들어오는" 구간에 적용
+  const kf = (t, frames) => {
+    if (t <= frames[0][0]) return frames[0][1];
+    for (let i = 1; i < frames.length; i++) {
+      const [tb, vb, e] = frames[i], [ta, va] = frames[i - 1];
+      if (t <= tb) return lerp(va, vb, E(e)(clamp((t - ta) / (tb - ta))));
+    }
+    return frames[frames.length - 1][1];
+  };
+  // 스태거 시작 시각: 개수가 많으면 전체 폭(maxSpan)을 넘지 않게 간격 축소
+  const stagger = (i, n, gap, maxSpan = Infinity) => i * Math.min(gap, n > 1 ? maxSpan / (n - 1) : gap);
+  // 닫힌 식 스프링 계단 응답: dt초 뒤 0→1 (freq Hz, zeta 감쇠비 <1 이면 살짝 오버슈트)
+  const springStep = (dt, freq = 2.2, zeta = 0.72) => {
+    if (dt <= 0) return 0;
+    const w = 2 * Math.PI * freq, wd = w * Math.sqrt(1 - zeta * zeta);
+    return 1 - Math.exp(-zeta * w * dt) * (Math.cos(wd * dt) + zeta * w / wd * Math.sin(wd * dt));
+  };
+  // 목표가 여러 번 바뀌는 값: springTo(t, 0, [[0.8, 100], [2.0, 40]]) — 바뀔 때마다 스프링 하나씩을 더함 → t만의 함수
+  const springTo = (t, v0, changes, freq, zeta) => {
+    let v = v0, prev = v0;
+    for (const [at, target, f, z] of changes) { v += (target - prev) * springStep(t - at, f ?? freq, z ?? zeta); prev = target; }
+    return v;
+  };
+  // Catmull-Rom: 키 [[t,x,y], ...]를 부드럽게 지나는 경로 위치 {x, y}
+  const catmull = (t, keys) => {
+    if (t <= keys[0][0]) return { x: keys[0][1], y: keys[0][2] };
+    const n = keys.length - 1;
+    if (t >= keys[n][0]) return { x: keys[n][1], y: keys[n][2] };
+    let i = 0; while (t > keys[i + 1][0]) i++;
+    const P = j => keys[Math.max(0, Math.min(n, j))];
+    const u = (t - keys[i][0]) / (keys[i + 1][0] - keys[i][0]), u2 = u * u, u3 = u2 * u;
+    const c = k => 0.5 * ((2 * P(i)[k]) + (-P(i - 1)[k] + P(i + 1)[k]) * u + (2 * P(i - 1)[k] - 5 * P(i)[k] + 4 * P(i + 1)[k] - P(i + 2)[k]) * u2 + (-P(i - 1)[k] + 3 * P(i)[k] - 3 * P(i + 1)[k] + P(i + 2)[k]) * u3);
+    return { x: c(1), y: c(2) };
+  };
+  // 시뮬레이션: 고정 간격(hz)으로 끝까지 한 번 계산해 저장 → sample(t)는 저장값을 읽기만 (물리·파티클·반응-확산)
+  // step(state, dt, i) 는 새 state를 반환. 큰 상태(격자)는 snapshot(state)로 필요한 것만 복사해 저장
+  const simulate = (init, step, { hz = 240, duration, every = 1, snapshot = s => structuredClone(s) }) => {
+    const dt = 1 / hz, frames = [snapshot(init)];
+    let s = init;
+    for (let i = 1; i <= Math.ceil(duration * hz); i++) { s = step(s, dt, i); if (i % every === 0) frames.push(snapshot(s)); }
+    return t => frames[Math.max(0, Math.min(frames.length - 1, Math.round(t * hz / every)))];
+  };
+  // 멈추지 않는 미세 드리프트(정지 화면 방지)
+  const drift = (t, amp = 2, period = 6, phase = 0) => amp * Math.sin((t / period + phase) * Math.PI * 2);
+  // BPM 그리드
+  const beat = (bpm, n = 1) => 60 / bpm * n;
+
+  const rand = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let r = Math.imul(seed ^ seed >>> 15, 1 | seed); r = r + Math.imul(r ^ r >>> 7, 61 | r) ^ r; return ((r ^ r >>> 14) >>> 0) / 4294967296; };
+  const mixHex = (a, b, k) => {
+    const h = s => s.replace('#', '').match(/../g).map(x => parseInt(x, 16));
+    const A = h(a), B = h(b);
+    return '#' + A.map((v, i) => Math.round(lerp(v, B[i], k)).toString(16).padStart(2, '0')).join('');
+  };
+
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const css = (el, o) => { for (const k in o) el.style[k] = o[k]; };
+  // 글자 단위 분할(한글 음절 보존). 반환된 span 배열에 개별 transform 적용
+  const split = el => {
+    const text = el.textContent; el.textContent = '';
+    return Array.from(text).map(ch => { const s = document.createElement('span'); s.className = 'char'; s.textContent = ch; el.appendChild(s); return s; });
+  };
+
+  // 사람 같은 타이핑: 글자당 기본 간격 + 시드 지터, 공백·구두점 뒤 쉼. 표시할 문자열 반환
+  const typer = (text, cps = 16, seed = 7) => {
+    const r = rand(seed), chars = Array.from(text), at = [];
+    let acc = 0;
+    chars.forEach((c, i) => { acc += (1 / cps) * (0.7 + r() * 0.6) * (/[\s,.·!?]/.test(chars[i - 1] || '') ? 1.8 : 1); at.push(acc); });
+    const fn = (t, start) => chars.slice(0, at.filter(x => x <= t - start).length).join('');
+    fn.duration = acc;
+    return fn;
+  };
+  // 카운트업 문자열
+  const count = (t, a, b, from, to, fn = 'outExpo', fmt = v => Math.round(v).toLocaleString('ko-KR')) => fmt(lerp(from, to, p(t, a, b, fn)));
+
+  // 커서: keys = [[t, x, y], [t, x, y, 'click'], ...]. 키 사이를 살짝 휘는 경로 + 도착 감속, click 시 0.12s 눌림
+  const cursorAt = (t, keys) => {
+    let x = keys[0][1], y = keys[0][2];
+    for (let i = 1; i < keys.length; i++) {
+      const [t0, x0, y0] = keys[i - 1], [t1, x1, y1] = keys[i];
+      if (t >= t1) { x = x1; y = y1; continue; }
+      if (t > t0) {
+        const k = ease.inOutCubic(clamp((t - t0) / (t1 - t0)));
+        const bend = Math.sin(k * Math.PI) * Math.min(60, Math.hypot(x1 - x0, y1 - y0) * 0.12);
+        const nx = -(y1 - y0), ny = x1 - x0, nl = Math.hypot(nx, ny) || 1;
+        x = lerp(x0, x1, k) + nx / nl * bend; y = lerp(y0, y1, k) + ny / nl * bend;
+      }
+      break;
+    }
+    const clicks = keys.filter(k => k[3] === 'click').map(k => k[0]);
+    const press = Math.max(0, ...clicks.map(c => (t >= c && t < c + 0.24) ? Math.sin((t - c) / 0.24 * Math.PI) : 0));
+    return { x, y, scale: 1 - 0.18 * press, press };
+  };
+  const cursor = (el, t, keys) => { const c = cursorAt(t, keys); el.style.transform = `translate(${c.x}px, ${c.y}px) scale(${c.scale})`; return c; };
+
+  let scene, render;
+  // 비디오 슬롯 동기화: <video data-slot data-start="1.2"> → currentTime = t - start
+  const syncVideos = t => Promise.all($$('video[data-slot]').map(v => new Promise(res => {
+    const target = clamp(t - parseFloat(v.dataset.start || 0), 0, (v.duration || 1e9) - 1e-3);
+    if (Math.abs(v.currentTime - target) < 1e-4 || !v.src && !v.querySelector('source')) return res();
+    v.addEventListener('seeked', () => res(), { once: true }); v.currentTime = target;
+  })));
+  const seek = async t => { render(t); await syncVideos(t); await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); };
+
+  // r: render(t). s.timeline: 일시정지된 GSAP 타임라인(선택). 둘 다 주면 seek 후 render(t)
+  function boot(s, r) {
+    scene = s;
+    const tl = s.timeline;
+    if (tl) tl.pause(0);
+    render = tl ? t => { tl.seek(t, false); r && r(t); } : r;
+    const stage = $('#stage');
+    stage.style.width = s.w + 'px'; stage.style.height = s.h + 'px';
+    $$('video[data-slot]').forEach(v => { v.muted = true; v.pause(); });
+    window.__scene = { w: s.w, h: s.h, fps: s.fps, duration: s.duration, loop: !!s.loop, beats: s.beats || [] };
+    window.__seek = seek;
+    const q = new URLSearchParams(location.search);
+    if (q.has('render')) { document.body.classList.add('render'); render(0); return; }
+    if (q.has('t')) { fit(); render(parseFloat(q.get('t'))); return; }
+    preview(q.has('debug'));
+  }
+  function fit() {
+    const k = Math.min(1, (innerWidth - 32) / scene.w, (innerHeight - 72) / scene.h);
+    $('#stage').style.transform = `scale(${k})`;
+  }
+
+  // 미리보기: space 재생/정지, ←/→ 비트 이동, , . 프레임 이동, 하단 스크러버, ?debug 시간·비트·안전영역 표시
+  function preview(debug) {
+    let t = 0, playing = true, last = performance.now();
+    const bar = document.createElement('input');
+    Object.assign(bar, { type: 'range', min: 0, max: scene.duration, step: 1 / scene.fps, value: 0 });
+    bar.style.cssText = 'position:fixed;left:16px;bottom:12px;width:calc(100% - 32px)';
+    const hud = document.createElement('div');
+    hud.style.cssText = 'position:fixed;left:16px;top:12px;font:12px/1.4 monospace;color:#9f9;background:#000a;padding:4px 8px;border-radius:4px;z-index:9';
+    document.body.append(bar);
+    if (debug) {
+      document.body.append(hud);
+      const safe = document.createElement('div');
+      safe.style.cssText = 'position:absolute;inset:64px 80px;outline:1px dashed rgba(0,255,160,.5);pointer-events:none;z-index:99';
+      $('#stage').append(safe);
+    }
+    bar.oninput = () => { t = +bar.value; playing = false; };
+    const bt = (scene.beats || []).map(b => b.t);
+    addEventListener('keydown', e => {
+      if (e.code === 'Space') { playing = !playing; e.preventDefault(); }
+      if (e.code === 'ArrowRight') { t = bt.find(b => b > t + 1e-3) ?? 0; playing = false; }
+      if (e.code === 'ArrowLeft') { t = [...bt].reverse().find(b => b < t - 1e-3) ?? 0; playing = false; }
+      if (e.key === '.') { t = Math.min(scene.duration, t + 1 / scene.fps); playing = false; }
+      if (e.key === ',') { t = Math.max(0, t - 1 / scene.fps); playing = false; }
+    });
+    addEventListener('resize', fit); fit();
+    (function loop(now) {
+      if (playing) { t = (t + (now - last) / 1000) % scene.duration; bar.value = t; }
+      last = now; render(t);
+      if (debug) { const b = [...(scene.beats || [])].reverse().find(b => b.t <= t + 1e-6); hud.textContent = `t=${t.toFixed(2)}s  f=${Math.round(t * scene.fps)}  ${b ? b.label : ''}`; }
+      requestAnimationFrame(loop);
+    })(last);
+  }
+
+  return { clamp, lerp, ease, p, io, kf, stagger, springStep, springTo, catmull, simulate, drift, beat, rand, mixHex, $, $$, css, split, typer, count, cursorAt, cursor, boot };
+})();
+</script>
+
+<script>
+/* ===== SCENE: 반도체 × AI — 30초 세로 필름 (대사 없음) =====
+   칩 → 트랜지스터 → 행렬 곱셈 → 메모리 병목(HBM) → 결론. 점→칩 매치컷, 다이 속 줌 스루로 잇는다. */
+const CONFIG = {
+  // 대사 (자막 + 녹음/TTS 대본). [시작, 끝, 문장]
+  lines: [
+    [0.4, 2.8, 'AI는 어디서 생각할까요?'],
+    [3.0, 5.8, '바로, 손톱만 한 칩 안입니다.'],
+    [6.3, 9.0, '칩 속에는 수백억 개의 스위치, 트랜지스터.'],
+    [9.2, 11.8, '켜지면 1, 꺼지면 0. 이 깜빡임이 계산입니다.'],
+    [12.3, 15.2, 'AI가 하는 일은 대부분 곱하고 더하기.'],
+    [15.4, 18.7, '이 행렬 곱셈을 1초에 수조 번 반복하죠.'],
+    [19.3, 22.0, '그런데 진짜 병목은 계산보다 데이터 이동.'],
+    [22.2, 24.8, '그래서 메모리를 위로 쌓은 HBM이 중요해졌습니다.'],
+    [25.4, 29.6, 'AI의 속도는 결국, 반도체의 속도입니다.'],
+  ],
+  A: [[2, 0, 1], [1, 3, 2], [0, 1, 4]],
+  B: [[1, 2, 0], [3, 1, 1], [2, 0, 3]],
+};
+// 챕터 경계 (초)
+const C = { c1: [0, 6], c2: [6, 12], c3: [12, 19], c4: [19, 25], c5: [25, 30] };
+// 헤드라인 퇴장을 앞당길 챕터 (줌 스루 전에 글자가 먼저 빠짐)
+const OUT_EARLY = { c1: 4.7 };
+const SCENE = {
+  w: 1080, h: 1920, fps: 30, duration: 30, loop: false,
+  beats: [
+    { t: 1.0, label: '라임 점 → 칩으로 커짐' },
+    { t: 4.2, label: '01 칩 패키지 + 라벨' },
+    { t: 5.5, label: '다이 속으로 줌 스루' },
+    { t: 9.0, label: '02 트랜지스터 파동 + 콜아웃' },
+    { t: 16.3, label: '03 첫 칸 = 곱하고 더하기' },
+    { t: 18.3, label: '03 9칸 완성' },
+    { t: 20.8, label: '04 패킷 정체(병목)' },
+    { t: 24.4, label: '04 HBM 적층 · 흐름 개통' },
+    { t: 28.0, label: '05 결론 홀드' },
+  ],
+};
+const { p, io, kf, ease, lerp, clamp, rand, springTo, typer, $, $$, css, mixHex } = M;
+
+const LIME = '#d4f527', INK = '#ffffff', MUTED = '#8c8c8c', LINE = '#2a2a2a', SURF = '#161616';
+const CX = 540, CY = 1080;
+
+// ---- 캔버스 ----
+const cv = $('#cv'), dpr = window.devicePixelRatio || 1;
+cv.width = SCENE.w * dpr; cv.height = SCENE.h * dpr;
+const g = cv.getContext('2d');
+const rr = (x, y, w, h, r) => { g.beginPath(); g.roundRect(x, y, w, h, r); };
+
+// 챕터 가시성: 시작 0.45s 페이드 인, 끝 0.45s 페이드 아웃
+const vis = ([a, b], fin = 0.45, fout = 0.45) => io(globalT, a, a + fin, b - fout, b, 'outCubic', 'inCubic');
+let globalT = 0;
+
+// ---- 헤드라인 (챕터마다 마스크 리빌 + 줄 오버랩) ----
+const heads = ['c1', 'c2', 'c3', 'c4', 'final'];
+const spans = Object.values(C);
+function headline(id, [a, b], t) {
+  const el = $('#' + id), last = id === 'final';
+  const inner = [...el.querySelectorAll('.hl .inner')];
+  const early = OUT_EARLY[id];
+  const outA = last ? 1e9 : early ?? b - 0.55, outB = last ? 1e9 : (early ? early + 0.4 : b - 0.15);
+  inner.forEach((s, i) => {
+    const k = io(t, a + 0.25 + i * 0.09, a + 0.95 + i * 0.09, outA + i * 0.04, outB + i * 0.04, 'outExpo', 'inCubic');
+    s.style.transform = `translateY(${(1 - k) * 112}%)`;
+  });
+  const kick = el.querySelector('.kick'), sub = el.querySelector('.sub');
+  const kk = io(t, a + 0.15, a + 0.55, outA, outB);
+  css(kick, { opacity: kk, transform: `translateY(${(1 - kk) * 10}px)` });
+  if (sub) { const ks = io(t, a + 0.9, a + 1.4, outA, outB); css(sub, { opacity: ks, transform: `translateY(${(1 - ks) * 14}px)` }); }
+  el.style.visibility = t > a - 0.05 && t < (last ? 1e9 : b + 0.05) ? 'visible' : 'hidden';
+}
+
+// ---- 01 라임 점 → 칩 (매치컷) ----
+function dotToChip(t) {
+  if (t > 2.3) return;
+  const appear = ease.spring(clamp((t - 0.3) / 0.6), 6, 1.4);
+  const grow = p(t, 0.9, 2.0, 'inOutExpo');
+  const size = lerp(22 * appear * (1 + 0.08 * Math.sin(t * 9)), 520, grow);
+  const r = lerp(size / 2, 44, grow);
+  g.fillStyle = mixHex(LIME, SURF, grow); rr(CX - size / 2, CY - size / 2, size, size, r); g.fill();
+  if (grow > 0) { g.strokeStyle = `rgba(58,58,58,${grow})`; g.lineWidth = 2; g.stroke(); }
+}
+
+// ---- 02 칩 패키지 ----
+function chip(t, s = 1, alpha = 1, pinsK = 1, dieK = 1) {
+  g.save(); g.globalAlpha = alpha; g.translate(CX, CY); g.scale(s, s);
+  const S = 520;
+  // 핀 (네 변 × 12개)
+  g.strokeStyle = '#5a5a5a'; g.lineWidth = 8; g.lineCap = 'butt';
+  for (let side = 0; side < 4; side++) for (let i = 0; i < 12; i++) {
+    const k = clamp(pinsK * 1.6 - (side * 12 + i) / 48 * 0.6);
+    if (k <= 0) continue;
+    const off = -S / 2 + 46 + i * ((S - 92) / 11);
+    g.save(); g.rotate(side * Math.PI / 2);
+    g.beginPath(); g.moveTo(off, -S / 2); g.lineTo(off, -S / 2 - 46 * ease.outCubic(k)); g.stroke(); g.restore();
+  }
+  g.fillStyle = SURF; rr(-S / 2, -S / 2, S, S, 44); g.fill();
+  g.strokeStyle = '#3a3a3a'; g.lineWidth = 2; g.stroke();
+  // 다이
+  const D = 300 * ease.outExpo(dieK);
+  if (D > 1) {
+    g.fillStyle = '#1e1e1e'; rr(-D / 2, -D / 2, D, D, 10); g.fill();
+    g.strokeStyle = `rgba(255,255,255,${0.85 * dieK})`; g.lineWidth = 2; g.stroke();
+    g.strokeStyle = `rgba(255,255,255,${0.08 * dieK})`; g.lineWidth = 1;
+    for (let i = 1; i < 12; i++) { const q = -D / 2 + i * D / 12; g.beginPath(); g.moveTo(q, -D / 2); g.lineTo(q, D / 2); g.moveTo(-D / 2, q); g.lineTo(D / 2, q); g.stroke(); }
+  }
+  // 모서리 표시
+  g.fillStyle = `rgba(255,255,255,${0.5 * dieK})`; g.beginPath(); g.arc(-S / 2 + 34, -S / 2 + 34, 7, 0, 7); g.fill();
+  g.restore();
+}
+function chapter1(t) {
+  dotToChip(t);
+  [['#tagPkg', 0], ['#tagDie', 0.12]].forEach(([s, d]) => {
+    const k = io(t, 3.4 + d, 3.9 + d, 4.6, 4.9);
+    css($(s), { opacity: k, transform: `translateY(${(1 - k) * 8}px)` });
+  });
+  if (t < 2.0 || t > 6.3) return;
+  const zoom = kf(t, [[4.95, 1], [6.1, 14, 'inExpo']]);
+  chip(t, zoom * (1 + 0.02 * p(t, 2, 4.95, 'inOutQuad')), 1 - p(t, 5.6, 6.1), p(t, 1.7, 2.9, 'linear'), p(t, 2.7, 3.5));
+}
+
+// ---- 03 트랜지스터 격자 ----
+const CELL = 26, COLS = 30, ROWS = 22, R3 = rand(11);
+const phase = Array.from({ length: COLS * ROWS }, () => R3() * 6.28);
+const HOT = { c: 20, r: 8 };
+function chapter2(t) {
+  const v = vis(C.c2, 0.35, 0.5);
+  if (v <= 0) return;
+  const sc = kf(t, [[5.9, 2.6], [7.2, 1, 'outExpo']]) * (1 + 0.03 * p(t, 7.2, 12, 'inOutQuad'));
+  const W = COLS * CELL, H = ROWS * CELL;
+  g.save(); g.globalAlpha = v; g.translate(CX, CY); g.scale(sc, sc); g.translate(-W / 2, -H / 2);
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+    const on = Math.sin(c * 0.35 + r * 0.22 - t * 3.2 + phase[r * COLS + c] * 0.35) > 0.25;
+    const isHot = c === HOT.c && r === HOT.r;
+    g.fillStyle = isHot ? (Math.floor(t * 2) % 2 ? LIME : '#2e3410') : on ? 'rgba(255,255,255,.82)' : '#1b1b1b';
+    rr(c * CELL + 3, r * CELL + 3, CELL - 6, CELL - 6, 3); g.fill();
+  }
+  g.restore();
+  // 콜아웃: 라임 칸 → 확대 박스
+  const ck = p(t, 8.2, 8.9, 'outExpo') * (1 - p(t, 11.2, 11.6));
+  if (ck > 0) {
+    const hx = CX + (HOT.c * CELL + CELL / 2 - W / 2) * sc, hy = CY + (HOT.r * CELL + CELL / 2 - H / 2) * sc;
+    const bx = 620, by = 1384, bw = 300, bh = 104;
+    g.save(); g.globalAlpha = ck * v;
+    g.strokeStyle = LIME; g.lineWidth = 2;
+    g.beginPath(); g.moveTo(hx, hy + 14); g.lineTo(hx, lerp(hy + 14, by, ck)); g.stroke();
+    g.fillStyle = '#0d0d0d'; rr(bx, by, bw, bh, 18); g.fill(); g.strokeStyle = '#3a3a3a'; g.stroke();
+    const on = Math.floor(t * 2) % 2;
+    g.fillStyle = on ? LIME : '#555'; g.font = '600 64px "Geist Mono", monospace'; g.textBaseline = 'middle';
+    g.fillText(on ? '1' : '0', bx + 34, by + bh / 2 + 2);
+    g.fillStyle = '#cfcfcf'; g.font = '600 32px "Pretendard Variable", sans-serif';
+    g.fillText(on ? '켜짐' : '꺼짐', bx + 110, by + 38);
+    g.fillStyle = MUTED; g.font = '500 22px "Geist Mono", monospace'; g.fillText('TRANSISTOR × 1', bx + 110, by + 76);
+    g.restore();
+  }
+}
+
+// ---- 04 행렬 곱셈 ----
+const Cm = CONFIG.A.map((row, i) => CONFIG.B[0].map((_, j) => row.reduce((s, a, k) => s + a * CONFIG.B[k][j], 0)));
+function matrix(x, y, M3, t0, t, opts = {}) {
+  const cs = 104;
+  M3.forEach((row, i) => row.forEach((val, j) => {
+    const k = p(t, t0 + (i * 3 + j) * 0.05, t0 + 0.45 + (i * 3 + j) * 0.05, 'outBack');
+    if (k <= 0) return;
+    const hi = opts.hi ? opts.hi(i, j) : 0;
+    const cx = x + j * cs + cs / 2, cy = y + i * cs + cs / 2, s = (cs - 12) * k;
+    g.fillStyle = mixHex('#171717', '#2c2c2c', hi); rr(cx - s / 2, cy - s / 2, s, s, 12); g.fill();
+    g.strokeStyle = hi > 0 ? `rgba(255,255,255,${0.7 * hi})` : '#2a2a2a'; g.lineWidth = 2; g.stroke();
+    const shown = opts.value ? opts.value(i, j) : String(val);
+    if (shown !== null) {
+      g.fillStyle = opts.color ? opts.color(i, j) : (hi ? INK : '#9a9a9a');
+      g.font = `600 ${44 * k}px "Geist Mono", monospace`; g.textAlign = 'center'; g.textBaseline = 'middle';
+      g.fillText(shown, cx, cy + 2); g.textAlign = 'left';
+    }
+  }));
+}
+function chapter3(t) {
+  const v = vis(C.c3, 0.4, 0.5);
+  if (v <= 0) { $('#eq').style.opacity = 0; return; }
+  g.save(); g.globalAlpha = v;
+  const focus = p(t, 14.1, 14.5) * (1 - p(t, 16.5, 16.9));
+  const rowHi = (i, j) => (i === 0 ? focus : 0), colHi = (i, j) => (j === 0 ? focus : 0);
+  matrix(88, 690, CONFIG.A, 12.6, t, { hi: rowHi });
+  g.fillStyle = MUTED; g.font = '500 48px "Geist Mono", monospace'; g.textAlign = 'center'; g.fillText('×', 540, 850); g.textAlign = 'left';
+  matrix(680, 690, CONFIG.B, 12.9, t, { hi: colHi });
+  // 결과 행렬: (0,0)은 16.1에 라임으로, 나머지는 16.8부터 빠르게
+  const fillAt = (i, j) => (i === 0 && j === 0 ? 16.1 : 16.8 + (i * 3 + j - 1) * 0.16);
+  matrix(384, 1130, Cm, 13.5, t, {
+    value: (i, j) => t < fillAt(i, j) ? '' : String(Math.round(lerp(0, Cm[i][j], p(t, fillAt(i, j), fillAt(i, j) + 0.35, 'outExpo')))),
+    hi: (i, j) => (i === 0 && j === 0 ? p(t, 16.1, 16.4) * (1 - p(t, 18.3, 18.8)) : 0),
+    color: (i, j) => (i === 0 && j === 0 && t < 18.8 ? LIME : INK),
+  });
+  g.fillStyle = MUTED; g.font = '500 22px "Geist Mono", monospace';
+  g.fillText('A', 88, 672); g.fillText('B', 680, 672); g.fillText('A × B', 384, 1116);
+  g.restore();
+  // 식: 항이 하나씩 등장
+  const terms = CONFIG.A[0].map((a, k) => `${a}×${CONFIG.B[k][0]}`);
+  const n = Math.floor(clamp((t - 14.5) / 0.42, 0, 3));
+  let txt = terms.slice(0, n).join(' + ');
+  const eq = $('#eq');
+  eq.innerHTML = txt + (t >= 15.9 ? ` = <span class="res">${Cm[0][0]}</span>` : '');
+  eq.style.opacity = v * io(t, 14.4, 14.7, 18.1, 18.5) ;
+}
+
+// ---- 04 메모리 병목 · HBM ----
+const R5 = rand(23);
+const pk = Array.from({ length: 60 }, (_, i) => ({ lane: i % 6, off: R5() }));
+function chapter4(t) {
+  const v = vis(C.c4, 0.4, 0.5);
+  if (v <= 0) return;
+  g.save(); g.globalAlpha = v;
+  const open = p(t, 23.1, 24.5, 'inOutCubic');   // 0: 좁은 길 1: HBM으로 넓어진 길
+  // 연산 코어
+  const core = { x: 110, y: 820, w: 360, h: 360 };
+  g.fillStyle = SURF; rr(core.x, core.y, core.w, core.h, 26); g.fill(); g.strokeStyle = '#3a3a3a'; g.lineWidth = 2; g.stroke();
+  const busy = lerp(0.18, 1, open);
+  for (let r = 0; r < 6; r++) for (let c = 0; c < 6; c++) {
+    const on = Math.sin(c * 1.3 + r * 0.7 + t * (2 + 6 * open)) > lerp(0.75, -0.1, open);
+    g.fillStyle = on ? `rgba(255,255,255,${0.75 * busy + 0.1})` : '#202020';
+    rr(core.x + 30 + c * 52, core.y + 30 + r * 52, 40, 40, 6); g.fill();
+  }
+  g.fillStyle = MUTED; g.font = '500 22px "Geist Mono", monospace'; g.fillText('연산 코어', core.x, core.y + core.h + 40);
+  // HBM 적층: 8층, 34.0까지 위로 펼쳤다가 다시 쌓임
+  const ex = io(t, 22.5, 23.5, 24.7, 25.5, 'outExpo', 'inOutCubic');
+  const stack = { x: 700, y: 900, w: 240 };
+  for (let l = 7; l >= 0; l--) {
+    const y = stack.y + 200 - l * 26 - ex * l * 30;
+    g.fillStyle = mixHex('#1a1a1a', '#262626', l / 7); rr(stack.x, y, stack.w, 22, 5); g.fill();
+    g.strokeStyle = l === 7 && open > 0.5 ? LIME : '#3a3a3a'; g.lineWidth = 2; g.stroke();
+  }
+  g.fillStyle = MUTED; g.fillText(open > 0.5 ? 'HBM · 8단 적층' : '메모리', stack.x, stack.y + 270);
+  // 길(레인): 처음엔 1개, 열리면 6개
+  const lanes = Math.round(lerp(1, 6, open));
+  const x0 = core.x + core.w, x1 = stack.x;
+  for (let L = 0; L < 6; L++) {
+    const a = L < lanes ? 1 : 0.0;
+    if (!a) continue;
+    const y = 950 + L * 22;
+    g.strokeStyle = '#2c2c2c'; g.lineWidth = 2; g.beginPath(); g.moveTo(x0, y); g.lineTo(x1, y); g.stroke();
+  }
+  // 패킷: 메모리 → 코어. 좁을 땐 메모리 앞에 줄 서서 정체
+  const speed = lerp(0.35, 1.6, open);
+  pk.forEach((q, i) => {
+    if (q.lane >= lanes) {
+      // 대기열: 메모리 앞에 쌓임
+      if (open < 0.6) {
+        const qi = i % 18, jam = p(t, 20.1, 21.5);
+        const qx = x1 - 26 - (qi % 6) * 22, qy = 930 + Math.floor(qi / 6) * 22 + 60;
+        g.fillStyle = `rgba(255,255,255,${0.55 * jam * (1 - open)})`; rr(qx, qy, 14, 14, 3); g.fill();
+      }
+      return;
+    }
+    const u = ((t - 19) * speed * 0.5 + q.off) % 1;
+    const x = lerp(x1 - 10, x0 + 6, u), y = 950 + q.lane * 22 - 7;
+    g.fillStyle = 'rgba(255,255,255,.9)'; rr(x, y, 14, 14, 3); g.fill();
+  });
+  // 정체 표시
+  const jamK = io(t, 20.7, 21.1, 22.9, 23.3);
+  if (jamK > 0) { g.fillStyle = `rgba(255,77,77,${jamK})`; g.font = '600 26px "Geist Mono", monospace'; g.fillText('WAITING…', x1 - 190, 1150); }
+  g.restore();
+}
+
+// ---- 07 결론 ----
+function chapter5(t) {
+  const v = p(t, 24.8, 25.5);
+  if (v <= 0) return;
+  chip(t, lerp(0.62, 0.66, p(t, 25.5, 30, 'inOutQuad')), v * 0.9, 1, 1);
+  const hk = p(t, 26.6, 27.1, 'inOutCubic');
+  $('#mark').style.setProperty('--hl', hk);
+  css($('#markB'), { color: mixHex('#ffffff', '#0a0a0a', p(t, 26.75, 27.0)) });
+}
+
+function render(t) {
+  globalT = t;
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  g.clearRect(0, 0, SCENE.w, SCENE.h);
+  heads.forEach((id, i) => headline(id, spans[i], t));
+  chapter1(t); chapter2(t); chapter3(t); chapter4(t); chapter5(t);
+  // 자막: 문장마다 아래에서 0.22s 등장, 0.15s 퇴장 (겹치지 않게 간격 ≥0.2s)
+  const ln = CONFIG.lines.find(([a, b]) => t >= a - 0.05 && t < b + 0.15);
+  const cap = $('#cap');
+  if (ln) {
+    const [a, b, s] = ln, k = io(t, a, a + 0.22, b, b + 0.15, 'outCubic', 'inCubic');
+    if (cap.dataset.s !== s) { cap.textContent = s; cap.dataset.s = s; }
+    css(cap, { opacity: k, transform: `translate(-50%, ${(1 - k) * 12}px)` });
+  } else css(cap, { opacity: 0 });
+  // 공통: 카운터 · 진행선 · 주석
+  const ci = spans.findIndex(([a, b]) => t >= a && t < b);
+  $('#counter').textContent = String((ci < 0 ? 4 : ci) + 1).padStart(2, '0');
+  $('#prog').style.transform = `scaleX(${t / SCENE.duration})`;
+  css($('#note'), { opacity: p(t, 0.5, 1.0) * 0.9 * (1 - p(t, 24.6, 25.0)) });
+  // 전체가 아주 천천히 다가감 (정지 프레임 없음)
+  css($('#cam'), { transform: `translateY(${-6 * Math.sin(t / 30 * Math.PI)}px)` });
+}
+
+M.boot(SCENE, render);
+</script>
+</body>
+</html>
