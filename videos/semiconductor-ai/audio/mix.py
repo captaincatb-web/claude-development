@@ -30,7 +30,7 @@ def tone(f, dur, wave="saw", a=0.01, r=0.15, s=0.7):
     if wave == "saw": x = 2 * ((tt * f) % 1) - 1
     elif wave == "sq": x = np.sign(np.sin(2 * np.pi * f * tt))
     else: x = np.sin(2 * np.pi * f * tt)
-    sos = butter(2, min(5000, f * 6) / (SR / 2), "low", output="sos")
+    sos = butter(2, min(3200, f * 4) / (SR / 2), "low", output="sos")
     return sosfilt(sos, x) * env(n, a, 0.05, s, r)
 
 # ---- 코드 진행 (Am – F – C – G, 한 마디 = 4박) ----
@@ -124,8 +124,8 @@ for k in range(10): tick(19.8 + k * 0.28, 520, 0.14)                   # 병목 
 whoosh(22.2, 0.9, True, 0.5)           # HBM 층 펼침 → 길 개통
 ding(22.9, 1976, 0.22)
 thud(25.0, 0.95)                        # 결론 임팩트
-whoosh(26.5, 0.5, True, 0.25)          # 형광펜 지나감
-ding(27.0, 1568, 0.18)
+whoosh(26.5, 0.5, True, 0.12)          # 형광펜 지나감
+ding(27.0, 1568, 0.10)
 
 # ---- 나레이션 배치 ----
 voice = np.zeros(N); vmask = np.zeros(N)
@@ -139,10 +139,17 @@ for m_ in meta:
 
 # ---- 덕킹: 말하는 구간 배경을 −11dB 안팎으로, 0.12초 포락선 ----
 from scipy.ndimage import uniform_filter1d
-duck = 1 - 0.72 * uniform_filter1d(vmask, int(0.12 * SR))
+duck = 1 - 0.76 * uniform_filter1d(vmask, int(0.12 * SR))
 bg = (bgm + sfx * 0.9) * duck
-bg *= 10 ** (-5.5 / 20)        # 음악·효과음 전체 레벨(음성 대비 여유)
+bg *= 10 ** (0.0 / 20)        # 음악·효과음 전체 레벨(음성 대비 여유)
 mix = voice * 1.0 + bg
+# 직접 측정: 컷별 음성 대비 배경(덕킹 후) RMS 비율
+worst = 99
+for m_ in meta:
+    a = int((m_['start'] + 0.04) * SR); b = a + int(m_['dur'] * SR)
+    r = 10 * np.log10((np.mean(voice[a:b] ** 2) + 1e-12) / (np.mean(bg[a:b] ** 2) + 1e-12)); worst = min(worst, r)
+    print('cut%d 음성 대비 배경 %.1f dB' % (m_['i'], r))
+print('최악 %.1f dB' % worst)
 
 # ---- 마스터링 ----
 mix = Pedalboard([HighpassFilter(40), Compressor(threshold_db=-24, ratio=2.6, attack_ms=8, release_ms=120)])(mix[None, :].astype(np.float32), SR)[0]

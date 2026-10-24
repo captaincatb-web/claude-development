@@ -12,6 +12,6 @@
 | 22.2–24.8s | 04 메모리 | 그래서 메모리를 위로 쌓은 HBM이 중요해졌습니다. |
 | 25.4–29.6s | 05 결론 | AI의 속도는 결국, 반도체의 속도입니다. |
 
-- 자막은 영상에 들어가 있습니다. 녹음이나 TTS 음성 파일이 생기면 아래 명령으로 합칠 수 있습니다:
-  `node .claude/skills/motion-graphics/scripts/render.mjs videos/semiconductor-ai/semiconductor-ai.html --audio voice.mp3`
+- 나레이션은 합성 음성(남성)이고, `semiconductor-ai_voice.mp4`에 BGM·효과음과 함께 들어 있습니다.
+- 음성만 따로 쓰려면 `audio/voice_full.wav`, 믹스 전체는 `audio/final_audio.wav`.
 - 자막 문구·타이밍은 html의 `CONFIG.lines`에서 고치면 됩니다. 별도 자막용 SRT: `semiconductor-ai.srt`
