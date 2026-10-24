@@ -4,24 +4,59 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Code To Video</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<!-- GSAP을 쓸 때만 주석 해제. 렌더러는 jsdelivr npm URL을 로컬 사본으로 대체하므로 오프라인에서도 동작한다.
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script> -->
 <style>
+  /* ===== BASE — 폰트 · 토큰 · 스테이지 (references/style-system.md) ===== */
+  @font-face { font-family: "Pretendard Variable"; font-weight: 45 920; font-display: block;
+    src: url("https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/woff2/PretendardVariable.woff2") format("woff2-variations"); }
+  @font-face { font-family: "Geist"; font-weight: 100 900; font-display: block;
+    src: url("https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Variable.woff2") format("woff2-variations"); }
+  @font-face { font-family: "Geist Mono"; font-weight: 100 900; font-display: block;
+    src: url("https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-mono/GeistMono-Variable.woff2") format("woff2-variations"); }
+
+  /* 팔레트 프리셋: INK-LIME(기본). 다른 프리셋은 style-system.md에서 이 블록만 교체 */
   :root {
-    --bg: #111111; --surface: #1b1b1b; --line: #2c2c2c;
-    --ink: #f2ede4; --muted: #8a857c; --accent: #ff5a36; --accent-2: #c6ff3d;
-    --font: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", "WenQuanYi Zen Hei", sans-serif;
-    --mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+    --bg: #0a0a0a;
+    --surface: #161616;
+    --line: #262626;
+    --ink: #ffffff;
+    --muted: #8c8c8c;
+    --accent: #d4f527;   /* 화면 전체에서 한 곳만 */
+    --danger: #ff4d4d;   /* 오류·거절 상태색 전용 */
+    --font: "Geist", "Pretendard Variable", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    --mono: "Geist Mono", "SF Mono", Menlo, Consolas, monospace;
   }
   html, body { margin: 0; background: #000; }
-  body { display: grid; place-items: center; min-height: 100vh; }
+  body { display: grid; place-items: center; min-height: 100vh; overflow: hidden; }
   body.render { display: block; min-height: 0; }
-  #stage { position: relative; overflow: hidden; width: 1080px; height: 830px; background: var(--bg); color: var(--ink);
-    font-family: var(--font); letter-spacing: -0.02em; word-break: keep-all; -webkit-font-smoothing: antialiased; }
-  #stage::before { content: ""; position: absolute; inset: 0; pointer-events: none;
-    background-image: radial-gradient(rgba(255,255,255,.07) 1.2px, transparent 1.3px); background-size: 36px 36px; }
+  #stage {
+    position: relative; overflow: hidden; flex: none;
+    width: 1080px; height: 830px;
+    background: var(--bg); color: var(--ink);
+    font-family: var(--font); font-weight: 600; letter-spacing: -0.02em;
+    word-break: keep-all; -webkit-font-smoothing: antialiased;
+  }
+  /* 점 그리드 — 빈 화면을 막는 최소한의 질감 */
+  #stage::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,.06) 1.2px, transparent 1.3px);
+    background-size: 36px 36px;
+  }
   .abs { position: absolute; }
   .char { display: inline-block; white-space: pre; }
+  .mask { overflow: hidden; clip-path: inset(-0.08em -0.2em -0.12em -0.2em); }
+  .mask > .inner { display: inline-block; }
+  .label { font: 500 20px/1 var(--mono); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+  .label.tl { left: 56px; top: 44px; } .label.tr { right: 56px; top: 44px; }
+  .num { font-variant-numeric: tabular-nums; }
+  .cursor { position: absolute; left: 0; top: 0; width: 28px; height: 28px; z-index: 50; pointer-events: none; transform-origin: 4px 3px; }
 
+  /* ===== SCENE STYLES ===== */
+  /* 프리셋 INK-CORAL (첨부 카드뉴스 톤) — 토큰 덮어쓰기 */
+  :root { --bg: #111111; --surface: #1b1b1b; --line: #2c2c2c; --ink: #f2ede4; --muted: #8a857c; --accent: #ff5a36; 
+    --font: "Pretendard Variable", "Geist", sans-serif; }
+  #stage { font-weight: 800; }
   #cam { position: absolute; inset: 0; transform-origin: 30% 45%; }
   .kicker { left: 80px; top: 72px; font: 600 30px/1 var(--mono); color: var(--accent); letter-spacing: .02em; }
   .kicker .dollar { color: var(--muted); margin-right: 14px; }
@@ -30,11 +65,13 @@
   .hero { left: 72px; font-size: 200px; font-weight: 900; line-height: 1; letter-spacing: -0.05em; color: var(--accent); }
   #w1 { top: 130px; } #w2 { top: 345px; }
   .inner { display: inline-block; }
-  #arrow { left: 520px; top: 150px; width: 230px; height: 170px; }
+  #arrow { left: 440px; top: 150px; width: 230px; height: 170px; }
   .sub { left: 80px; top: 575px; font-size: 64px; font-weight: 800; line-height: 1.15; }
-  .sub .hl { color: var(--accent); position: relative; }
-  .sub .hl::after { content: ""; position: absolute; left: -4px; right: -4px; bottom: 6px; height: 16px; background: var(--accent-2); opacity: .9;
-    transform-origin: left; transform: scaleX(var(--hl, 0)); z-index: -1; mix-blend-mode: normal; }
+  /* 형광펜: 강조색(코랄) 띠가 지나가며 글자는 어둡게 — 강조색은 한 가지만 */
+  .sub .hl { position: relative; display: inline-block; }
+  .sub .hl::before { content: ""; position: absolute; left: -6px; right: -6px; top: 8%; bottom: 2%; border-radius: 4px; background: var(--accent);
+    transform-origin: left; transform: scaleX(var(--hl, 0)); }
+  .sub .hl b { position: relative; font-weight: inherit; }
   .line2 { top: 650px; }
   .foot { left: 80px; right: 80px; bottom: 40px; display: flex; justify-content: space-between; font: 500 22px/1 var(--mono); color: var(--muted); }
   #count { font-variant-numeric: tabular-nums; }
@@ -42,6 +79,7 @@
 </head>
 <body>
 <div id="stage">
+  <!-- ===== SCENE MARKUP ===== -->
   <div id="cam">
     <div class="abs kicker" id="kicker"><span class="dollar">$</span><span id="ktext"></span><span class="caret" id="caret"></span></div>
     <div class="abs hero mask" id="w1"><span class="inner" id="w1i">코드</span></div>
@@ -51,7 +89,7 @@
     </svg>
     <div class="abs hero mask" id="w2"><span class="inner" id="w2i">영상</span></div>
     <div class="abs sub mask" id="s1"><span class="inner" id="s1i">촬영이 아니라</span></div>
-    <div class="abs sub mask line2" id="s2"><span class="inner" id="s2i"><span class="hl" id="hl">코드로 그린</span> 영상</span></div>
+    <div class="abs sub mask line2" id="s2"><span class="inner" id="s2i"><span class="hl" id="hl"><b id="hlt">코드로 그린</b></span> 영상</span></div>
   </div>
   <div class="abs foot" id="foot"><span>render(t) · 30fps</span><span><span id="count">000</span> / 210 frames</span></div>
 </div>
@@ -68,51 +106,99 @@ const M = (() => {
     inQuad: k => k * k,
     outQuad: k => 1 - (1 - k) * (1 - k),
     inOutQuad: k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2,
-    outCubic: k => 1 - Math.pow(1 - k, 3),
     inCubic: k => k * k * k,
+    outCubic: k => 1 - Math.pow(1 - k, 3),
     inOutCubic: k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2,
     outQuart: k => 1 - Math.pow(1 - k, 4),
-    outExpo: k => k === 1 ? 1 : 1 - Math.pow(2, -10 * k),
     inExpo: k => k === 0 ? 0 : Math.pow(2, 10 * k - 10),
+    outExpo: k => k === 1 ? 1 : 1 - Math.pow(2, -10 * k),
     inOutExpo: k => k === 0 ? 0 : k === 1 ? 1 : k < .5 ? Math.pow(2, 20 * k - 10) / 2 : (2 - Math.pow(2, -20 * k + 10)) / 2,
-    outBack: (k, s = 1.70158) => 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2),
     inBack: (k, s = 1.70158) => (s + 1) * k * k * k - s * k * k,
-    // 감쇠 스프링: 오버슈트 후 정착. damping↑ = 덜 튐
+    outBack: (k, s = 1.70158) => 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2),
+    // 감쇠 스프링: 오버슈트 후 정착. damping↑ 덜 튐, bounces↑ 더 자주 흔들림
     spring: (k, damping = 6, bounces = 1.5) => k >= 1 ? 1 : 1 - Math.exp(-damping * k) * Math.cos(bounces * Math.PI * 2 * k),
   };
-  // [a,b] 구간에서의 진행도 0→1 (구간 밖은 0/1로 고정)
-  const p = (t, a, b, fn = ease.inOutCubic) => fn(clamp((t - a) / (b - a)));
-  // 들어왔다 나가는 진행도: in 구간에서 0→1, out 구간에서 1→0
-  const io = (t, inA, inB, outA, outB, fnIn = ease.outCubic, fnOut = ease.inCubic) =>
+  const E = f => typeof f === 'string' ? ease[f] : (f || ease.inOutCubic);
+
+  // [a,b] 구간 진행도 0→1 (구간 밖은 0/1 고정)
+  const p = (t, a, b, fn) => E(fn)(clamp((t - a) / (b - a)));
+  // 등장 후 퇴장: [inA,inB] 0→1, [outA,outB] 1→0
+  const io = (t, inA, inB, outA, outB, fnIn = 'outExpo', fnOut = 'inCubic') =>
     t < outA ? p(t, inA, inB, fnIn) : 1 - p(t, outA, outB, fnOut);
-  // 키프레임 보간: kf(t, [[0, 0], [1.2, 100, 'outBack'], [2, 80]])
+  // 키프레임: kf(t, [[0, 0], [1.2, 100, 'outBack'], [2, 80]]) — 각 키의 이징은 그 키로 "들어오는" 구간에 적용
   const kf = (t, frames) => {
     if (t <= frames[0][0]) return frames[0][1];
     for (let i = 1; i < frames.length; i++) {
       const [tb, vb, e] = frames[i], [ta, va] = frames[i - 1];
-      if (t <= tb) return lerp(va, vb, (ease[e] || ease.inOutCubic)(clamp((t - ta) / (tb - ta))));
+      if (t <= tb) return lerp(va, vb, E(e)(clamp((t - ta) / (tb - ta))));
     }
     return frames[frames.length - 1][1];
   };
+  // 스태거 시작 시각: 개수가 많으면 전체 폭(maxSpan)을 넘지 않게 간격 축소
+  const stagger = (i, n, gap, maxSpan = Infinity) => i * Math.min(gap, n > 1 ? maxSpan / (n - 1) : gap);
+  // 멈추지 않는 미세 드리프트(정지 화면 방지)
+  const drift = (t, amp = 2, period = 6, phase = 0) => amp * Math.sin((t / period + phase) * Math.PI * 2);
+  // BPM 그리드
+  const beat = (bpm, n = 1) => 60 / bpm * n;
+
   const rand = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let r = Math.imul(seed ^ seed >>> 15, 1 | seed); r = r + Math.imul(r ^ r >>> 7, 61 | r) ^ r; return ((r ^ r >>> 14) >>> 0) / 4294967296; };
   const mixHex = (a, b, k) => {
     const h = s => s.replace('#', '').match(/../g).map(x => parseInt(x, 16));
     const A = h(a), B = h(b);
     return '#' + A.map((v, i) => Math.round(lerp(v, B[i], k)).toString(16).padStart(2, '0')).join('');
   };
-  // 글자 단위로 쪼개기 (한글 음절 단위 그대로 보존). 공백은 폭 유지.
+
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const css = (el, o) => { for (const k in o) el.style[k] = o[k]; };
+  // 글자 단위 분할(한글 음절 보존). 반환된 span 배열에 개별 transform 적용
   const split = el => {
     const text = el.textContent; el.textContent = '';
     return Array.from(text).map(ch => { const s = document.createElement('span'); s.className = 'char'; s.textContent = ch; el.appendChild(s); return s; });
   };
-  const $ = s => document.querySelector(s);
-  const $$ = s => Array.from(document.querySelectorAll(s));
-  const css = (el, o) => { for (const k in o) el.style[k] = o[k]; };
+
+  // 사람 같은 타이핑: 글자당 기본 간격 + 시드 지터, 공백·구두점 뒤 쉼. 표시할 문자열 반환
+  const typer = (text, cps = 16, seed = 7) => {
+    const r = rand(seed), chars = Array.from(text), at = [];
+    let acc = 0;
+    chars.forEach((c, i) => { acc += (1 / cps) * (0.7 + r() * 0.6) * (/[\s,.·!?]/.test(chars[i - 1] || '') ? 1.8 : 1); at.push(acc); });
+    const fn = (t, start) => chars.slice(0, at.filter(x => x <= t - start).length).join('');
+    fn.duration = acc;
+    return fn;
+  };
+  // 카운트업 문자열
+  const count = (t, a, b, from, to, fn = 'outExpo', fmt = v => Math.round(v).toLocaleString('ko-KR')) => fmt(lerp(from, to, p(t, a, b, fn)));
+
+  // 커서: keys = [[t, x, y], [t, x, y, 'click'], ...]. 키 사이를 살짝 휘는 경로 + 도착 감속, click 시 0.12s 눌림
+  const cursorAt = (t, keys) => {
+    let x = keys[0][1], y = keys[0][2];
+    for (let i = 1; i < keys.length; i++) {
+      const [t0, x0, y0] = keys[i - 1], [t1, x1, y1] = keys[i];
+      if (t >= t1) { x = x1; y = y1; continue; }
+      if (t > t0) {
+        const k = ease.inOutCubic(clamp((t - t0) / (t1 - t0)));
+        const bend = Math.sin(k * Math.PI) * Math.min(60, Math.hypot(x1 - x0, y1 - y0) * 0.12);
+        const nx = -(y1 - y0), ny = x1 - x0, nl = Math.hypot(nx, ny) || 1;
+        x = lerp(x0, x1, k) + nx / nl * bend; y = lerp(y0, y1, k) + ny / nl * bend;
+      }
+      break;
+    }
+    const clicks = keys.filter(k => k[3] === 'click').map(k => k[0]);
+    const press = Math.max(0, ...clicks.map(c => (t >= c && t < c + 0.24) ? Math.sin((t - c) / 0.24 * Math.PI) : 0));
+    return { x, y, scale: 1 - 0.18 * press, press };
+  };
+  const cursor = (el, t, keys) => { const c = cursorAt(t, keys); el.style.transform = `translate(${c.x}px, ${c.y}px) scale(${c.scale})`; return c; };
 
   let scene, render;
-  const seek = t => { render(t); return new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); };
+  // 비디오 슬롯 동기화: <video data-slot data-start="1.2"> → currentTime = t - start
+  const syncVideos = t => Promise.all($$('video[data-slot]').map(v => new Promise(res => {
+    const target = clamp(t - parseFloat(v.dataset.start || 0), 0, (v.duration || 1e9) - 1e-3);
+    if (Math.abs(v.currentTime - target) < 1e-4 || !v.src && !v.querySelector('source')) return res();
+    v.addEventListener('seeked', () => res(), { once: true }); v.currentTime = target;
+  })));
+  const seek = async t => { render(t); await syncVideos(t); await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); };
 
-  // r: render(t) 함수. s.timeline: 일시정지된 GSAP 타임라인(선택) — 둘 다 주면 타임라인 seek 후 render(t)
+  // r: render(t). s.timeline: 일시정지된 GSAP 타임라인(선택). 둘 다 주면 seek 후 render(t)
   function boot(s, r) {
     scene = s;
     const tl = s.timeline;
@@ -120,42 +206,53 @@ const M = (() => {
     render = tl ? t => { tl.seek(t, false); r && r(t); } : r;
     const stage = $('#stage');
     stage.style.width = s.w + 'px'; stage.style.height = s.h + 'px';
-    window.__scene = { w: s.w, h: s.h, fps: s.fps, duration: s.duration, beats: s.beats || [] };
+    $$('video[data-slot]').forEach(v => { v.muted = true; v.pause(); });
+    window.__scene = { w: s.w, h: s.h, fps: s.fps, duration: s.duration, loop: !!s.loop, beats: s.beats || [] };
     window.__seek = seek;
     const q = new URLSearchParams(location.search);
     if (q.has('render')) { document.body.classList.add('render'); render(0); return; }
-    if (q.has('t')) { render(parseFloat(q.get('t'))); return; }
+    if (q.has('t')) { fit(); render(parseFloat(q.get('t'))); return; }
     preview(q.has('debug'));
   }
+  function fit() {
+    const k = Math.min(1, (innerWidth - 32) / scene.w, (innerHeight - 72) / scene.h);
+    $('#stage').style.transform = `scale(${k})`;
+  }
 
-  // 미리보기: 재생/일시정지(space), ←/→ 비트 이동, 하단 스크러버, ?debug 시 시간·비트 표시
+  // 미리보기: space 재생/정지, ←/→ 비트 이동, , . 프레임 이동, 하단 스크러버, ?debug 시간·비트·안전영역 표시
   function preview(debug) {
     let t = 0, playing = true, last = performance.now();
     const bar = document.createElement('input');
     Object.assign(bar, { type: 'range', min: 0, max: scene.duration, step: 1 / scene.fps, value: 0 });
-    bar.style.cssText = 'position:fixed;left:16px;right:16px;bottom:12px;width:calc(100% - 32px)';
+    bar.style.cssText = 'position:fixed;left:16px;bottom:12px;width:calc(100% - 32px)';
     const hud = document.createElement('div');
-    hud.style.cssText = 'position:fixed;left:16px;top:12px;font:12px/1.4 monospace;color:#9f9;background:#000a;padding:4px 8px;border-radius:4px';
-    document.body.append(bar); if (debug) document.body.append(hud);
+    hud.style.cssText = 'position:fixed;left:16px;top:12px;font:12px/1.4 monospace;color:#9f9;background:#000a;padding:4px 8px;border-radius:4px;z-index:9';
+    document.body.append(bar);
+    if (debug) {
+      document.body.append(hud);
+      const safe = document.createElement('div');
+      safe.style.cssText = 'position:absolute;inset:64px 80px;outline:1px dashed rgba(0,255,160,.5);pointer-events:none;z-index:99';
+      $('#stage').append(safe);
+    }
     bar.oninput = () => { t = +bar.value; playing = false; };
-    const beatTimes = (scene.beats || []).map(b => b.t);
+    const bt = (scene.beats || []).map(b => b.t);
     addEventListener('keydown', e => {
       if (e.code === 'Space') { playing = !playing; e.preventDefault(); }
-      if (e.code === 'ArrowRight') { t = beatTimes.find(b => b > t + 1e-3) ?? 0; playing = false; }
-      if (e.code === 'ArrowLeft') { t = [...beatTimes].reverse().find(b => b < t - 1e-3) ?? 0; playing = false; }
+      if (e.code === 'ArrowRight') { t = bt.find(b => b > t + 1e-3) ?? 0; playing = false; }
+      if (e.code === 'ArrowLeft') { t = [...bt].reverse().find(b => b < t - 1e-3) ?? 0; playing = false; }
+      if (e.key === '.') { t = Math.min(scene.duration, t + 1 / scene.fps); playing = false; }
+      if (e.key === ',') { t = Math.max(0, t - 1 / scene.fps); playing = false; }
     });
-    // 화면보다 큰 스테이지는 축소해서 보여 준다
-    const fit = () => { const k = Math.min(1, (innerWidth - 32) / scene.w, (innerHeight - 64) / scene.h); $('#stage').style.transform = `scale(${k})`; };
     addEventListener('resize', fit); fit();
     (function loop(now) {
       if (playing) { t = (t + (now - last) / 1000) % scene.duration; bar.value = t; }
       last = now; render(t);
-      if (debug) { const b = [...(scene.beats || [])].reverse().find(b => b.t <= t + 1e-6); hud.textContent = `t=${t.toFixed(2)}s  f=${Math.round(t * scene.fps)}  beat=${b ? b.label : '-'}`; }
+      if (debug) { const b = [...(scene.beats || [])].reverse().find(b => b.t <= t + 1e-6); hud.textContent = `t=${t.toFixed(2)}s  f=${Math.round(t * scene.fps)}  ${b ? b.label : ''}`; }
       requestAnimationFrame(loop);
     })(last);
   }
 
-  return { clamp, lerp, ease, p, io, kf, rand, mixHex, split, $, $$, css, boot };
+  return { clamp, lerp, ease, p, io, kf, stagger, drift, beat, rand, mixHex, $, $$, css, split, typer, count, cursorAt, cursor, boot };
 })();
 </script>
 
@@ -163,7 +260,7 @@ const M = (() => {
 /* ===== SCENE: 코드 → 영상 (첨부 카드 2/7 재해석) =====
    조합: 타이핑 키커 → 마스크 리빌(코드) → 화살표 드로우+예비동작 → 스태거 스프링(영상) → 서브 리빌 + 형광펜 → 푸시 인 + 홀드 → 퇴장(루프) */
 const SCENE = {
-  w: 1080, h: 830, fps: 30, duration: 7,
+  w: 1080, h: 830, fps: 30, duration: 7, loop: true,
   beats: [
     { t: 0.00, label: '빈 화면 (루프 시작)' },
     { t: 0.75, label: '키커 타이핑 완료' },
@@ -185,6 +282,8 @@ shaft.style.strokeDasharray = shaftLen; head.style.strokeDasharray = headLen;
 function render(t) {
   // 퇴장 진행도: 5.8→6.5s 동안 전체가 위로 마스크 아웃, 6.5→7s 빈 화면 = t=0과 동일
   const out = p(t, 5.8, 6.5, ease.inCubic);
+  // 루프 경계에서는 마스크 가장자리 1px 번짐까지 없애기 위해 장면 전체를 숨김 → t=0과 t=duration이 픽셀 단위로 같음
+  css($('#cam'), { visibility: t < 0.15 || out >= 1 ? 'hidden' : 'visible' });
 
   // 1) 키커 타이핑: 0.15–0.75s, 커서는 0.5s 주기 깜빡임(타이핑 중엔 켜짐)
   const n = Math.floor(clamp((t - 0.15) / 0.6) * Array.from(KICK).length);
@@ -216,7 +315,9 @@ function render(t) {
   const s1 = p(t, 2.9, 3.4, ease.outExpo), s2 = p(t, 2.98, 3.48, ease.outExpo);
   css($('#s1i'), { transform: `translateY(${(1 - s1) * 110 - out * 110}%)` });
   css($('#s2i'), { transform: `translateY(${(1 - s2) * 110 - out * 110}%)` });
-  $('#hl').style.setProperty('--hl', p(t, 3.3, 3.6, ease.outCubic) * (1 - out));
+  const hk = p(t, 3.3, 3.6, ease.outCubic) * (1 - out);
+  $('#hl').style.setProperty('--hl', hk);
+  css($('#hlt'), { color: M.mixHex('#f2ede4', '#111111', p(t, 3.4, 3.6) * (1 - out)) });
 
   // 6) 카메라 푸시 인: 2.0–5.8s 동안 1→1.06, 퇴장 때 원위치 (멈추지 않는 느린 접근)
   const push = p(t, 2.0, 5.8, ease.inOutQuad) * (1 - out);

@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Command Palette</title>
+<!-- GSAP을 쓸 때만 주석 해제. 렌더러는 jsdelivr npm URL을 로컬 사본으로 대체하므로 오프라인에서도 동작한다.
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script> -->
+<style>
+  /* ===== BASE — 폰트 · 토큰 · 스테이지 (references/style-system.md) ===== */
+  @font-face { font-family: "Pretendard Variable"; font-weight: 45 920; font-display: block;
+    src: url("https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/woff2/PretendardVariable.woff2") format("woff2-variations"); }
+  @font-face { font-family: "Geist"; font-weight: 100 900; font-display: block;
+    src: url("https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Variable.woff2") format("woff2-variations"); }
+  @font-face { font-family: "Geist Mono"; font-weight: 100 900; font-display: block;
+    src: url("https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-mono/GeistMono-Variable.woff2") format("woff2-variations"); }
+
+  /* 팔레트 프리셋: INK-LIME(기본). 다른 프리셋은 style-system.md에서 이 블록만 교체 */
+  :root {
+    --bg: #0a0a0a;
+    --surface: #161616;
+    --line: #262626;
+    --ink: #ffffff;
+    --muted: #8c8c8c;
+    --accent: #d4f527;   /* 화면 전체에서 한 곳만 */
+    --danger: #ff4d4d;   /* 오류·거절 상태색 전용 */
+    --font: "Geist", "Pretendard Variable", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    --mono: "Geist Mono", "SF Mono", Menlo, Consolas, monospace;
+  }
+  html, body { margin: 0; background: #000; }
+  body { display: grid; place-items: center; min-height: 100vh; overflow: hidden; }
+  body.render { display: block; min-height: 0; }
+  #stage {
+    position: relative; overflow: hidden; flex: none;
+    width: 1080px; height: 830px;
+    background: var(--bg); color: var(--ink);
+    font-family: var(--font); font-weight: 600; letter-spacing: -0.02em;
+    word-break: keep-all; -webkit-font-smoothing: antialiased;
+  }
+  /* 점 그리드 — 빈 화면을 막는 최소한의 질감 */
+  #stage::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,.06) 1.2px, transparent 1.3px);
+    background-size: 36px 36px;
+  }
+  .abs { position: absolute; }
+  .char { display: inline-block; white-space: pre; }
+  .mask { overflow: hidden; clip-path: inset(-0.08em -0.2em -0.12em -0.2em); }
+  .mask > .inner { display: inline-block; }
+  .label { font: 500 20px/1 var(--mono); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+  .label.tl { left: 56px; top: 44px; } .label.tr { right: 56px; top: 44px; }
+  .num { font-variant-numeric: tabular-nums; }
+  .cursor { position: absolute; left: 0; top: 0; width: 28px; height: 28px; z-index: 50; pointer-events: none; transform-origin: 4px 3px; }
+
+  /* ===== SCENE STYLES ===== */
+  #cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
+  .win { left: 80px; top: 108px; width: 920px; height: 640px; border-radius: 22px; background: var(--surface);
+    box-shadow: 0 0 0 1px var(--line), 0 30px 80px rgba(0,0,0,.5); overflow: hidden; }
+  .win-head { position: absolute; left: 36px; top: 30px; right: 36px; display: flex; justify-content: space-between; align-items: center; }
+  .win-head h2 { margin: 0; font-size: 34px; font-weight: 600; letter-spacing: -0.03em; }
+  .win-head .hint { font: 500 20px/1 var(--mono); color: var(--muted); }
+  .grid { position: absolute; left: 36px; top: 104px; right: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .proj { height: 230px; border-radius: 16px; background: #1d1d1d; box-shadow: inset 0 0 0 1px var(--line); position: relative; }
+  .proj b { position: absolute; left: 24px; bottom: 50px; font-size: 28px; font-weight: 600; }
+  .proj span { position: absolute; left: 24px; bottom: 22px; font: 500 18px/1 var(--mono); color: var(--muted); }
+  .proj i { position: absolute; left: 24px; top: 24px; right: 24px; height: 96px; border-radius: 10px;
+    background: repeating-linear-gradient(90deg, #262626 0 2px, transparent 2px 28px), #202020; }
+  #dim { inset: 0; background: rgba(0,0,0,.62); }
+  #pal { left: 190px; top: 170px; width: 700px; border-radius: 20px; background: #1f1f1f; box-shadow: 0 0 0 1px #333, 0 40px 100px rgba(0,0,0,.6); transform-origin: 50% 0; }
+  .pal-in { display: flex; align-items: center; gap: 16px; height: 92px; padding: 0 30px; border-bottom: 1px solid #2e2e2e; font-size: 36px; font-weight: 500; }
+  .pal-in .q { color: var(--muted); font: 500 30px/1 var(--mono); }
+  .caret { display: inline-block; width: 3px; height: 40px; background: var(--ink); margin-left: 2px; vertical-align: -6px; }
+  .ph { color: #555; }
+  .res { position: relative; padding: 12px; }
+  .row { position: relative; display: flex; align-items: center; gap: 18px; height: 76px; padding: 0 20px; border-radius: 12px; font-size: 30px; font-weight: 500; color: #cfcfcf; }
+  .row .ic, #mlabel .ic { width: 40px; height: 40px; border-radius: 10px; background: #3d3d3d; flex: none; }
+  .row .kbd { margin-left: auto; font: 500 18px/1 var(--mono); color: var(--muted); }
+  #sel-bg { position: absolute; left: 12px; top: 12px; height: 76px; right: 12px; border-radius: 12px; background: #2d2d2d; }
+  #morph { border-radius: 12px; background: #2d2d2d; overflow: hidden; }
+  #canvas-ui { position: absolute; inset: 0; }
+  #mlabel { position: absolute; left: 20px; gap: 18px; top: 0; height: 76px; display: flex; align-items: center; font-size: 30px; font-weight: 500; color: #fff; white-space: nowrap; }
+  .tool { position: absolute; left: 28px; top: 26px; display: flex; gap: 12px; }
+  .tool i { width: 44px; height: 44px; border-radius: 10px; background: #262626; box-shadow: inset 0 0 0 1px #333; }
+  .board { position: absolute; left: 28px; right: 28px; top: 96px; bottom: 28px; border-radius: 14px;
+    background-color: #151515; background-image: radial-gradient(#333 1.4px, transparent 1.5px); background-size: 28px 28px; }
+  .board .t { position: absolute; left: 50%; top: 44%; transform: translate(-50%, -50%); font-size: 46px; font-weight: 600; letter-spacing: -0.03em; white-space: nowrap; }
+  #ready { left: 50%; top: 58%; padding: 14px 26px; border-radius: 999px; background: var(--accent); color: #0a0a0a; font: 600 24px/1 var(--mono); letter-spacing: .08em; white-space: nowrap; }
+  #keys { left: 50%; bottom: 36px; display: flex; gap: 10px; }
+  .key { min-width: 64px; height: 64px; padding: 0 16px; box-sizing: border-box; border-radius: 12px; background: #1c1c1c; box-shadow: inset 0 0 0 1px #3a3a3a, 0 6px 0 #050505;
+    display: grid; place-items: center; font: 600 28px/1 var(--mono); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <!-- ===== SCENE MARKUP ===== -->
+  <div id="cam">
+    <div class="abs win" id="win">
+      <div class="win-head"><h2>프로젝트</h2><span class="hint">4 ITEMS</span></div>
+      <div class="grid">
+        <div class="proj"><i></i><b>분기 리포트</b><span>EDITED 2D</span></div>
+        <div class="proj"><i></i><b>온보딩 영상</b><span>EDITED 5D</span></div>
+        <div class="proj"><i></i><b>랜딩 리뉴얼</b><span>EDITED 1W</span></div>
+        <div class="proj"><i></i><b>주간 회의록</b><span>EDITED 2W</span></div>
+      </div>
+    </div>
+    <div class="abs" id="dim"></div>
+    <div class="abs" id="pal">
+      <div class="pal-in"><span class="q">›</span><span id="typed"></span><span class="ph" id="ph">명령 검색</span><span class="caret" id="caret"></span></div>
+      <div class="res" id="res">
+        <div id="sel-bg"></div>
+        <div class="row" id="r0"><span class="ic"></span><span id="r0t">새 캔버스 만들기</span><span class="kbd">↵</span></div>
+        <div class="row" id="r1"><span class="ic"></span><span>캔버스 템플릿 열기</span></div>
+        <div class="row" id="r2"><span class="ic"></span><span>최근 캔버스로 이동</span></div>
+      </div>
+    </div>
+    <div class="abs" id="morph"><div id="mlabel"><span class="ic"></span>새 캔버스 만들기</div><div id="canvas-ui">
+      <div class="tool"><i></i><i></i><i></i><i></i></div>
+      <div class="board"><div class="t" id="boardT">빈 캔버스에서 시작</div></div>
+    </div></div>
+    <div class="abs" id="ready">CANVAS READY</div>
+  </div>
+  <div class="abs" id="keys"><div class="key" id="k1">⌘</div><div class="key" id="k2">K</div></div>
+  <svg class="cursor" id="cur" viewBox="0 0 28 28"><path d="M4 3 L4 23 L9.5 18 L13 26 L16.5 24.5 L13 16.8 L20.5 16.8 Z" fill="#fff" stroke="#0a0a0a" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  <div class="abs label tl">CHA · COMMAND PALETTE</div>
+  <div class="abs label tr">재연 화면</div>
+</div>
+
+<script>
+/* ===== MOTION ENGINE — 수정하지 말 것 =====
+   모든 움직임은 render(t) 하나가 t(초)만 보고 계산한다 (또는 일시정지된 GSAP 타임라인을 seek).
+   CSS transition/animation, setTimeout, Date.now, Math.random 금지 → 프레임 단위로 재현 가능해야 녹화된다. */
+const M = (() => {
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const ease = {
+    linear: k => k,
+    inQuad: k => k * k,
+    outQuad: k => 1 - (1 - k) * (1 - k),
+    inOutQuad: k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2,
+    inCubic: k => k * k * k,
+    outCubic: k => 1 - Math.pow(1 - k, 3),
+    inOutCubic: k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2,
+    outQuart: k => 1 - Math.pow(1 - k, 4),
+    inExpo: k => k === 0 ? 0 : Math.pow(2, 10 * k - 10),
+    outExpo: k => k === 1 ? 1 : 1 - Math.pow(2, -10 * k),
+    inOutExpo: k => k === 0 ? 0 : k === 1 ? 1 : k < .5 ? Math.pow(2, 20 * k - 10) / 2 : (2 - Math.pow(2, -20 * k + 10)) / 2,
+    inBack: (k, s = 1.70158) => (s + 1) * k * k * k - s * k * k,
+    outBack: (k, s = 1.70158) => 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2),
+    // 감쇠 스프링: 오버슈트 후 정착. damping↑ 덜 튐, bounces↑ 더 자주 흔들림
+    spring: (k, damping = 6, bounces = 1.5) => k >= 1 ? 1 : 1 - Math.exp(-damping * k) * Math.cos(bounces * Math.PI * 2 * k),
+  };
+  const E = f => typeof f === 'string' ? ease[f] : (f || ease.inOutCubic);
+
+  // [a,b] 구간 진행도 0→1 (구간 밖은 0/1 고정)
+  const p = (t, a, b, fn) => E(fn)(clamp((t - a) / (b - a)));
+  // 등장 후 퇴장: [inA,inB] 0→1, [outA,outB] 1→0
+  const io = (t, inA, inB, outA, outB, fnIn = 'outExpo', fnOut = 'inCubic') =>
+    t < outA ? p(t, inA, inB, fnIn) : 1 - p(t, outA, outB, fnOut);
+  // 키프레임: kf(t, [[0, 0], [1.2, 100, 'outBack'], [2, 80]]) — 각 키의 이징은 그 키로 "들어오는" 구간에 적용
+  const kf = (t, frames) => {
+    if (t <= frames[0][0]) return frames[0][1];
+    for (let i = 1; i < frames.length; i++) {
+      const [tb, vb, e] = frames[i], [ta, va] = frames[i - 1];
+      if (t <= tb) return lerp(va, vb, E(e)(clamp((t - ta) / (tb - ta))));
+    }
+    return frames[frames.length - 1][1];
+  };
+  // 스태거 시작 시각: 개수가 많으면 전체 폭(maxSpan)을 넘지 않게 간격 축소
+  const stagger = (i, n, gap, maxSpan = Infinity) => i * Math.min(gap, n > 1 ? maxSpan / (n - 1) : gap);
+  // 멈추지 않는 미세 드리프트(정지 화면 방지)
+  const drift = (t, amp = 2, period = 6, phase = 0) => amp * Math.sin((t / period + phase) * Math.PI * 2);
+  // BPM 그리드
+  const beat = (bpm, n = 1) => 60 / bpm * n;
+
+  const rand = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let r = Math.imul(seed ^ seed >>> 15, 1 | seed); r = r + Math.imul(r ^ r >>> 7, 61 | r) ^ r; return ((r ^ r >>> 14) >>> 0) / 4294967296; };
+  const mixHex = (a, b, k) => {
+    const h = s => s.replace('#', '').match(/../g).map(x => parseInt(x, 16));
+    const A = h(a), B = h(b);
+    return '#' + A.map((v, i) => Math.round(lerp(v, B[i], k)).toString(16).padStart(2, '0')).join('');
+  };
+
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const css = (el, o) => { for (const k in o) el.style[k] = o[k]; };
+  // 글자 단위 분할(한글 음절 보존). 반환된 span 배열에 개별 transform 적용
+  const split = el => {
+    const text = el.textContent; el.textContent = '';
+    return Array.from(text).map(ch => { const s = document.createElement('span'); s.className = 'char'; s.textContent = ch; el.appendChild(s); return s; });
+  };
+
+  // 사람 같은 타이핑: 글자당 기본 간격 + 시드 지터, 공백·구두점 뒤 쉼. 표시할 문자열 반환
+  const typer = (text, cps = 16, seed = 7) => {
+    const r = rand(seed), chars = Array.from(text), at = [];
+    let acc = 0;
+    chars.forEach((c, i) => { acc += (1 / cps) * (0.7 + r() * 0.6) * (/[\s,.·!?]/.test(chars[i - 1] || '') ? 1.8 : 1); at.push(acc); });
+    const fn = (t, start) => chars.slice(0, at.filter(x => x <= t - start).length).join('');
+    fn.duration = acc;
+    return fn;
+  };
+  // 카운트업 문자열
+  const count = (t, a, b, from, to, fn = 'outExpo', fmt = v => Math.round(v).toLocaleString('ko-KR')) => fmt(lerp(from, to, p(t, a, b, fn)));
+
+  // 커서: keys = [[t, x, y], [t, x, y, 'click'], ...]. 키 사이를 살짝 휘는 경로 + 도착 감속, click 시 0.12s 눌림
+  const cursorAt = (t, keys) => {
+    let x = keys[0][1], y = keys[0][2];
+    for (let i = 1; i < keys.length; i++) {
+      const [t0, x0, y0] = keys[i - 1], [t1, x1, y1] = keys[i];
+      if (t >= t1) { x = x1; y = y1; continue; }
+      if (t > t0) {
+        const k = ease.inOutCubic(clamp((t - t0) / (t1 - t0)));
+        const bend = Math.sin(k * Math.PI) * Math.min(60, Math.hypot(x1 - x0, y1 - y0) * 0.12);
+        const nx = -(y1 - y0), ny = x1 - x0, nl = Math.hypot(nx, ny) || 1;
+        x = lerp(x0, x1, k) + nx / nl * bend; y = lerp(y0, y1, k) + ny / nl * bend;
+      }
+      break;
+    }
+    const clicks = keys.filter(k => k[3] === 'click').map(k => k[0]);
+    const press = Math.max(0, ...clicks.map(c => (t >= c && t < c + 0.24) ? Math.sin((t - c) / 0.24 * Math.PI) : 0));
+    return { x, y, scale: 1 - 0.18 * press, press };
+  };
+  const cursor = (el, t, keys) => { const c = cursorAt(t, keys); el.style.transform = `translate(${c.x}px, ${c.y}px) scale(${c.scale})`; return c; };
+
+  let scene, render;
+  // 비디오 슬롯 동기화: <video data-slot data-start="1.2"> → currentTime = t - start
+  const syncVideos = t => Promise.all($$('video[data-slot]').map(v => new Promise(res => {
+    const target = clamp(t - parseFloat(v.dataset.start || 0), 0, (v.duration || 1e9) - 1e-3);
+    if (Math.abs(v.currentTime - target) < 1e-4 || !v.src && !v.querySelector('source')) return res();
+    v.addEventListener('seeked', () => res(), { once: true }); v.currentTime = target;
+  })));
+  const seek = async t => { render(t); await syncVideos(t); await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); };
+
+  // r: render(t). s.timeline: 일시정지된 GSAP 타임라인(선택). 둘 다 주면 seek 후 render(t)
+  function boot(s, r) {
+    scene = s;
+    const tl = s.timeline;
+    if (tl) tl.pause(0);
+    render = tl ? t => { tl.seek(t, false); r && r(t); } : r;
+    const stage = $('#stage');
+    stage.style.width = s.w + 'px'; stage.style.height = s.h + 'px';
+    $$('video[data-slot]').forEach(v => { v.muted = true; v.pause(); });
+    window.__scene = { w: s.w, h: s.h, fps: s.fps, duration: s.duration, loop: !!s.loop, beats: s.beats || [] };
+    window.__seek = seek;
+    const q = new URLSearchParams(location.search);
+    if (q.has('render')) { document.body.classList.add('render'); render(0); return; }
+    if (q.has('t')) { fit(); render(parseFloat(q.get('t'))); return; }
+    preview(q.has('debug'));
+  }
+  function fit() {
+    const k = Math.min(1, (innerWidth - 32) / scene.w, (innerHeight - 72) / scene.h);
+    $('#stage').style.transform = `scale(${k})`;
+  }
+
+  // 미리보기: space 재생/정지, ←/→ 비트 이동, , . 프레임 이동, 하단 스크러버, ?debug 시간·비트·안전영역 표시
+  function preview(debug) {
+    let t = 0, playing = true, last = performance.now();
+    const bar = document.createElement('input');
+    Object.assign(bar, { type: 'range', min: 0, max: scene.duration, step: 1 / scene.fps, value: 0 });
+    bar.style.cssText = 'position:fixed;left:16px;bottom:12px;width:calc(100% - 32px)';
+    const hud = document.createElement('div');
+    hud.style.cssText = 'position:fixed;left:16px;top:12px;font:12px/1.4 monospace;color:#9f9;background:#000a;padding:4px 8px;border-radius:4px;z-index:9';
+    document.body.append(bar);
+    if (debug) {
+      document.body.append(hud);
+      const safe = document.createElement('div');
+      safe.style.cssText = 'position:absolute;inset:64px 80px;outline:1px dashed rgba(0,255,160,.5);pointer-events:none;z-index:99';
+      $('#stage').append(safe);
+    }
+    bar.oninput = () => { t = +bar.value; playing = false; };
+    const bt = (scene.beats || []).map(b => b.t);
+    addEventListener('keydown', e => {
+      if (e.code === 'Space') { playing = !playing; e.preventDefault(); }
+      if (e.code === 'ArrowRight') { t = bt.find(b => b > t + 1e-3) ?? 0; playing = false; }
+      if (e.code === 'ArrowLeft') { t = [...bt].reverse().find(b => b < t - 1e-3) ?? 0; playing = false; }
+      if (e.key === '.') { t = Math.min(scene.duration, t + 1 / scene.fps); playing = false; }
+      if (e.key === ',') { t = Math.max(0, t - 1 / scene.fps); playing = false; }
+    });
+    addEventListener('resize', fit); fit();
+    (function loop(now) {
+      if (playing) { t = (t + (now - last) / 1000) % scene.duration; bar.value = t; }
+      last = now; render(t);
+      if (debug) { const b = [...(scene.beats || [])].reverse().find(b => b.t <= t + 1e-6); hud.textContent = `t=${t.toFixed(2)}s  f=${Math.round(t * scene.fps)}  ${b ? b.label : ''}`; }
+      requestAnimationFrame(loop);
+    })(last);
+  }
+
+  return { clamp, lerp, ease, p, io, kf, stagger, drift, beat, rand, mixHex, $, $$, css, split, typer, count, cursorAt, cursor, boot };
+})();
+</script>
+
+<script>
+/* ===== SCENE: 명령 한 줄로 장면을 열다 (CHA 원문 프롬프트 재현) =====
+   프로젝트 목록 → 0.35 팔레트 → 0.95 "새 캔버스" 입력 → 2.2 결과 선택 → 3.5 선택한 그 행이 전체 캔버스로 확장 → CANVAS READY 홀드 */
+const CONFIG = {
+  query: '새 캔버스',
+  boardText: '빈 캔버스에서 시작',
+};
+const SCENE = {
+  w: 1080, h: 830, fps: 30, duration: 6.5, loop: false,
+  beats: [
+    { t: 0.00, label: '프로젝트 목록' },
+    { t: 0.62, label: '⌘K → 팔레트 열림' },
+    { t: 1.75, label: '입력 완료 · 결과 3개' },
+    { t: 2.20, label: '커서 클릭 → 선택' },
+    { t: 3.40, label: '다른 결과 퇴장, 선택 행만 남음' },
+    { t: 4.30, label: '행 → 캔버스 확장 완료' },
+    { t: 5.00, label: 'CANVAS READY (홀드)' },
+  ],
+};
+const { p, io, kf, ease, lerp, $, css, typer, cursor } = M;
+$('#boardT').textContent = CONFIG.boardText;
+
+const typeQ = typer(CONFIG.query, 9, 3);              // 0.95s 시작, 약 0.7s 동안 입력
+const WIN = { x: 80, y: 108, w: 920, h: 640, r: 22 };   // 확장 목표 = 프로젝트 창 자리
+// 선택 행의 화면 좌표 (팔레트 left 190 + res 패딩 12, top 170 + 입력 92 + 패딩 12)
+const ROW = { x: 202, y: 274, w: 676, h: 76, r: 12 };
+const CUR = [[0, 1120, 900], [1.55, 1120, 900], [2.05, 640, 312], [2.2, 640, 312, 'click'], [3.0, 760, 420], [3.6, 1180, 760]];
+
+function render(t) {
+  // 카메라: 끝까지 멈추지 않는 느린 접근
+  css($('#cam'), { transform: `scale(${1 + 0.035 * p(t, 0, 6.5, 'inOutQuad')})` });
+
+  // 키캡 ⌘K: 0.15 등장 → 0.3/0.38 눌림 → 0.9 퇴장
+  const kIn = io(t, 0.1, 0.3, 0.85, 1.05, 'outBack', 'inCubic');
+  css($('#keys'), { opacity: kIn, transform: `translate(-50%, ${(1 - kIn) * 30}px)` });
+  [['#k1', 0.28], ['#k2', 0.36]].forEach(([s, at]) => {
+    const d = Math.sin(Math.PI * Math.min(1, Math.max(0, (t - at) / 0.22)));
+    css($(s), { transform: `translateY(${d * 5}px)`, boxShadow: `inset 0 0 0 1px #3a3a3a, 0 ${6 - d * 5}px 0 #050505` });
+  });
+
+  // 팔레트 열림 0.35–0.62, 2.5–3.4 동안 선택 행만 남기고 퇴장
+  const pIn = p(t, 0.35, 0.62, 'outExpo');
+  const shell = 1 - p(t, 2.55, 3.1, 'inCubic');
+  css($('#dim'), { opacity: pIn * (1 - p(t, 3.5, 4.3, 'inOutCubic')) });
+  css($('#pal'), { opacity: pIn * shell, transform: `translateY(${(1 - pIn) * -16}px) scale(${lerp(0.96, 1, pIn)})` });
+
+  // 입력: placeholder → 타이핑 → 캐럿 깜빡임
+  const typed = typeQ(t, 0.95);
+  $('#typed').textContent = typed;
+  css($('#ph'), { display: typed ? 'none' : 'inline' });
+  const typing = t > 0.95 && t < 0.95 + typeQ.duration + 0.1;
+  css($('#caret'), { opacity: typing || Math.floor(t / 0.5) % 2 === 0 ? 1 : 0 });
+
+  // 결과: 첫 글자 입력 후 0.07s 스태거로 등장
+  ['#r0', '#r1', '#r2'].forEach((s, i) => {
+    const k = p(t, 1.2 + i * 0.07, 1.5 + i * 0.07, 'outCubic');
+    const out = i ? p(t, 2.5 + i * 0.06, 2.8 + i * 0.06, 'inCubic') : 0;
+    css($(s), { opacity: k * (1 - out), transform: `translateY(${(1 - k) * 10 + out * 8}px)` });
+  });
+  // 선택 하이라이트: 결과 등장과 함께 첫 행, 클릭 시 밝게
+  const hl = p(t, 1.45, 1.65, 'outCubic');
+  const click = p(t, 2.2, 2.32, 'outCubic');
+  css($('#sel-bg'), { opacity: hl, background: M.mixHex('#2d2d2d', '#3a3a3a', click) });
+
+  // 모프: 선택 행(ROW) 자리에서 시작해 창(WIN) 크기로 3.5–4.3 확장. 행 텍스트는 자체 퇴장(3.3–3.5) 후 캔버스 UI 자체 등장(4.1–4.6)
+  const showMorph = t >= 2.55;
+  const m = p(t, 3.5, 4.3, 'inOutExpo');
+  css($('#morph'), {
+    display: showMorph ? 'block' : 'none',
+    left: lerp(ROW.x, WIN.x, m) + 'px', top: lerp(ROW.y, WIN.y, m) + 'px',
+    width: lerp(ROW.w, WIN.w, m) + 'px', height: lerp(ROW.h, WIN.h, m) + 'px',
+    borderRadius: lerp(ROW.r, WIN.r, m) + 'px',
+    background: M.mixHex('#3a3a3a', '#161616', m),
+  });
+  const ui = p(t, 4.1, 4.6, 'outCubic');
+  css($('#canvas-ui'), { opacity: ui, transform: `translateY(${(1 - ui) * 14}px)` });
+  // 모프 안의 행 문구: 확장 시작 전에 스스로 퇴장 (겹침 방지)
+  css($('#mlabel'), { opacity: 1 - p(t, 3.3, 3.5, 'inCubic') });
+  css($('#r0'), { visibility: showMorph ? 'hidden' : 'visible' });
+  css($('#win'), { opacity: 1 - p(t, 3.5, 3.9) });
+
+  // CANVAS READY — 라임은 여기 한 곳. 4.7 등장, 6.5까지 1.8s 홀드
+  const r = p(t, 4.65, 5.0, 'outBack');
+  css($('#ready'), { opacity: p(t, 4.65, 4.8), transform: `translate(-50%, 0) scale(${lerp(0.8, 1, r)})` });
+
+  // 커서
+  const c = cursor($('#cur'), t, CUR);
+  css($('#cur'), { opacity: p(t, 1.5, 1.6) * (1 - p(t, 3.3, 3.6)) });
+}
+
+M.boot(SCENE, render);
+</script>
+</body>
+</html>
