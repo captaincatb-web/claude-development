@@ -1,0 +1,4 @@
+node_modules/
+__pycache__/
+out/*_silent.mp4
+out/*_beat.wav
