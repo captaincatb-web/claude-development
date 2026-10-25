@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Global Warming Presentation</title>
+<!-- GSAP을 쓸 때만 주석 해제. 렌더러는 jsdelivr npm URL을 로컬 사본으로 대체하므로 오프라인에서도 동작한다.
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script> -->
+<style>
+  /* ===== BASE — 폰트 · 토큰 · 스테이지 (references/style-system.md) ===== */
+  @font-face { font-family: "Pretendard Variable"; font-weight: 45 920; font-display: block;
+    src: url("https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/woff2/PretendardVariable.woff2") format("woff2-variations"); }
+  @font-face { font-family: "Geist"; font-weight: 100 900; font-display: block;
+    src: url("https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Variable.woff2") format("woff2-variations"); }
+  @font-face { font-family: "Geist Mono"; font-weight: 100 900; font-display: block;
+    src: url("https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-mono/GeistMono-Variable.woff2") format("woff2-variations"); }
+
+  /* 팔레트 프리셋: INK-LIME(기본). 다른 프리셋은 style-system.md에서 이 블록만 교체 */
+  :root {
+    --bg: #0a0a0a;
+    --surface: #161616;
+    --line: #262626;
+    --ink: #ffffff;
+    --muted: #8c8c8c;
+    --accent: #d4f527;   /* 화면 전체에서 한 곳만 */
+    --danger: #ff4d4d;   /* 오류·거절 상태색 전용 */
+    --font: "Geist", "Pretendard Variable", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    --mono: "Geist Mono", "SF Mono", Menlo, Consolas, monospace;
+  }
+  html, body { margin: 0; background: #000; }
+  body { display: grid; place-items: center; min-height: 100vh; overflow: hidden; }
+  body.render { display: block; min-height: 0; }
+  #stage {
+    position: relative; overflow: hidden; flex: none;
+    width: 1920px; height: 1080px;
+    background: var(--bg); color: var(--ink);
+    font-family: var(--font); font-weight: 600; letter-spacing: -0.02em;
+    word-break: keep-all; -webkit-font-smoothing: antialiased;
+  }
+  /* 점 그리드 — 빈 화면을 막는 최소한의 질감 */
+  #stage::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,.06) 1.2px, transparent 1.3px);
+    background-size: 36px 36px;
+  }
+  .abs { position: absolute; }
+  .char { display: inline-block; white-space: pre; }
+  .mask { overflow: hidden; clip-path: inset(-0.08em -0.2em -0.12em -0.2em); }
+  .mask > .inner { display: inline-block; }
+  .label { font: 500 20px/1 var(--mono); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+  .label.tl { left: 56px; top: 44px; } .label.tr { right: 56px; top: 44px; }
+  .num { font-variant-numeric: tabular-nums; }
+  .cursor { position: absolute; left: 0; top: 0; width: 28px; height: 28px; z-index: 50; pointer-events: none; transform-origin: 4px 3px; }
+
+  /* ===== SCENE STYLES ===== */
+  #cv { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .fontload { position: absolute; left: -9999px; top: 0; font-family: "Geist"; line-height: 1; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <!-- ===== SCENE MARKUP ===== -->
+  <canvas id="cv"></canvas>
+  <span class="fontload" style="font-weight:500">Aa</span><span class="fontload" style="font-weight:600">Aa</span><span class="fontload" style="font-weight:700">Aa</span><span class="fontload" style="font-weight:800">Aa</span><span class="fontload" style="font-weight:900">Aa</span>
+</div>
+
+<script>
+/* ===== MOTION ENGINE — 수정하지 말 것 =====
+   모든 움직임은 render(t) 하나가 t(초)만 보고 계산한다 (또는 일시정지된 GSAP 타임라인을 seek).
+   CSS transition/animation, setTimeout, Date.now, Math.random 금지 → 프레임 단위로 재현 가능해야 녹화된다. */
+const M = (() => {
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const ease = {
+    linear: k => k,
+    inQuad: k => k * k,
+    outQuad: k => 1 - (1 - k) * (1 - k),
+    inOutQuad: k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2,
+    inCubic: k => k * k * k,
+    outCubic: k => 1 - Math.pow(1 - k, 3),
+    inOutCubic: k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2,
+    outQuart: k => 1 - Math.pow(1 - k, 4),
+    inExpo: k => k === 0 ? 0 : Math.pow(2, 10 * k - 10),
+    outExpo: k => k === 1 ? 1 : 1 - Math.pow(2, -10 * k),
+    inOutExpo: k => k === 0 ? 0 : k === 1 ? 1 : k < .5 ? Math.pow(2, 20 * k - 10) / 2 : (2 - Math.pow(2, -20 * k + 10)) / 2,
+    inBack: (k, s = 1.70158) => (s + 1) * k * k * k - s * k * k,
+    outBack: (k, s = 1.70158) => 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2),
+    // 감쇠 스프링: 오버슈트 후 정착. damping↑ 덜 튐, bounces↑ 더 자주 흔들림
+    spring: (k, damping = 6, bounces = 1.5) => k >= 1 ? 1 : 1 - Math.exp(-damping * k) * Math.cos(bounces * Math.PI * 2 * k),
+  };
+  const E = f => typeof f === 'string' ? ease[f] : (f || ease.inOutCubic);
+
+  // [a,b] 구간 진행도 0→1 (구간 밖은 0/1 고정)
+  const p = (t, a, b, fn) => E(fn)(clamp((t - a) / (b - a)));
+  // 등장 후 퇴장: [inA,inB] 0→1, [outA,outB] 1→0
+  const io = (t, inA, inB, outA, outB, fnIn = 'outExpo', fnOut = 'inCubic') =>
+    t < outA ? p(t, inA, inB, fnIn) : 1 - p(t, outA, outB, fnOut);
+  // 키프레임: kf(t, [[0, 0], [1.2, 100, 'outBack'], [2, 80]]) — 각 키의 이징은 그 키로 "들어오는" 구간에 적용
+  const kf = (t, frames) => {
+    if (t <= frames[0][0]) return frames[0][1];
+    for (let i = 1; i < frames.length; i++) {
+      const [tb, vb, e] = frames[i], [ta, va] = frames[i - 1];
+      if (t <= tb) return lerp(va, vb, E(e)(clamp((t - ta) / (tb - ta))));
+    }
+    return frames[frames.length - 1][1];
+  };
+  // 스태거 시작 시각: 개수가 많으면 전체 폭(maxSpan)을 넘지 않게 간격 축소
+  const stagger = (i, n, gap, maxSpan = Infinity) => i * Math.min(gap, n > 1 ? maxSpan / (n - 1) : gap);
+  // 닫힌 식 스프링 계단 응답: dt초 뒤 0→1 (freq Hz, zeta 감쇠비 <1 이면 살짝 오버슈트)
+  const springStep = (dt, freq = 2.2, zeta = 0.72) => {
+    if (dt <= 0) return 0;
+    const w = 2 * Math.PI * freq, wd = w * Math.sqrt(1 - zeta * zeta);
+    return 1 - Math.exp(-zeta * w * dt) * (Math.cos(wd * dt) + zeta * w / wd * Math.sin(wd * dt));
+  };
+  // 목표가 여러 번 바뀌는 값: springTo(t, 0, [[0.8, 100], [2.0, 40]]) — 바뀔 때마다 스프링 하나씩을 더함 → t만의 함수
+  const springTo = (t, v0, changes, freq, zeta) => {
+    let v = v0, prev = v0;
+    for (const [at, target, f, z] of changes) { v += (target - prev) * springStep(t - at, f ?? freq, z ?? zeta); prev = target; }
+    return v;
+  };
+  // Catmull-Rom: 키 [[t,x,y], ...]를 부드럽게 지나는 경로 위치 {x, y}
+  const catmull = (t, keys) => {
+    if (t <= keys[0][0]) return { x: keys[0][1], y: keys[0][2] };
+    const n = keys.length - 1;
+    if (t >= keys[n][0]) return { x: keys[n][1], y: keys[n][2] };
+    let i = 0; while (t > keys[i + 1][0]) i++;
+    const P = j => keys[Math.max(0, Math.min(n, j))];
+    const u = (t - keys[i][0]) / (keys[i + 1][0] - keys[i][0]), u2 = u * u, u3 = u2 * u;
+    const c = k => 0.5 * ((2 * P(i)[k]) + (-P(i - 1)[k] + P(i + 1)[k]) * u + (2 * P(i - 1)[k] - 5 * P(i)[k] + 4 * P(i + 1)[k] - P(i + 2)[k]) * u2 + (-P(i - 1)[k] + 3 * P(i)[k] - 3 * P(i + 1)[k] + P(i + 2)[k]) * u3);
+    return { x: c(1), y: c(2) };
+  };
+  // 시뮬레이션: 고정 간격(hz)으로 끝까지 한 번 계산해 저장 → sample(t)는 저장값을 읽기만 (물리·파티클·반응-확산)
+  // step(state, dt, i) 는 새 state를 반환. 큰 상태(격자)는 snapshot(state)로 필요한 것만 복사해 저장
+  const simulate = (init, step, { hz = 240, duration, every = 1, snapshot = s => structuredClone(s) }) => {
+    const dt = 1 / hz, frames = [snapshot(init)];
+    let s = init;
+    for (let i = 1; i <= Math.ceil(duration * hz); i++) { s = step(s, dt, i); if (i % every === 0) frames.push(snapshot(s)); }
+    return t => frames[Math.max(0, Math.min(frames.length - 1, Math.round(t * hz / every)))];
+  };
+  // 멈추지 않는 미세 드리프트(정지 화면 방지)
+  const drift = (t, amp = 2, period = 6, phase = 0) => amp * Math.sin((t / period + phase) * Math.PI * 2);
+  // BPM 그리드
+  const beat = (bpm, n = 1) => 60 / bpm * n;
+
+  const rand = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let r = Math.imul(seed ^ seed >>> 15, 1 | seed); r = r + Math.imul(r ^ r >>> 7, 61 | r) ^ r; return ((r ^ r >>> 14) >>> 0) / 4294967296; };
+  const mixHex = (a, b, k) => {
+    const h = s => s.replace('#', '').match(/../g).map(x => parseInt(x, 16));
+    const A = h(a), B = h(b);
+    return '#' + A.map((v, i) => Math.round(lerp(v, B[i], k)).toString(16).padStart(2, '0')).join('');
+  };
+
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const css = (el, o) => { for (const k in o) el.style[k] = o[k]; };
+  // 글자 단위 분할(한글 음절 보존). 반환된 span 배열에 개별 transform 적용
+  const split = el => {
+    const text = el.textContent; el.textContent = '';
+    return Array.from(text).map(ch => { const s = document.createElement('span'); s.className = 'char'; s.textContent = ch; el.appendChild(s); return s; });
+  };
+
+  // 사람 같은 타이핑: 글자당 기본 간격 + 시드 지터, 공백·구두점 뒤 쉼. 표시할 문자열 반환
+  const typer = (text, cps = 16, seed = 7) => {
+    const r = rand(seed), chars = Array.from(text), at = [];
+    let acc = 0;
+    chars.forEach((c, i) => { acc += (1 / cps) * (0.7 + r() * 0.6) * (/[\s,.·!?]/.test(chars[i - 1] || '') ? 1.8 : 1); at.push(acc); });
+    const fn = (t, start) => chars.slice(0, at.filter(x => x <= t - start).length).join('');
+    fn.duration = acc;
+    return fn;
+  };
+  // 카운트업 문자열
+  const count = (t, a, b, from, to, fn = 'outExpo', fmt = v => Math.round(v).toLocaleString('ko-KR')) => fmt(lerp(from, to, p(t, a, b, fn)));
+
+  // 커서: keys = [[t, x, y], [t, x, y, 'click'], ...]. 키 사이를 살짝 휘는 경로 + 도착 감속, click 시 0.12s 눌림
+  const cursorAt = (t, keys) => {
+    let x = keys[0][1], y = keys[0][2];
+    for (let i = 1; i < keys.length; i++) {
+      const [t0, x0, y0] = keys[i - 1], [t1, x1, y1] = keys[i];
+      if (t >= t1) { x = x1; y = y1; continue; }
+      if (t > t0) {
+        const k = ease.inOutCubic(clamp((t - t0) / (t1 - t0)));
+        const bend = Math.sin(k * Math.PI) * Math.min(60, Math.hypot(x1 - x0, y1 - y0) * 0.12);
+        const nx = -(y1 - y0), ny = x1 - x0, nl = Math.hypot(nx, ny) || 1;
+        x = lerp(x0, x1, k) + nx / nl * bend; y = lerp(y0, y1, k) + ny / nl * bend;
+      }
+      break;
+    }
+    const clicks = keys.filter(k => k[3] === 'click').map(k => k[0]);
+    const press = Math.max(0, ...clicks.map(c => (t >= c && t < c + 0.24) ? Math.sin((t - c) / 0.24 * Math.PI) : 0));
+    return { x, y, scale: 1 - 0.18 * press, press };
+  };
+  const cursor = (el, t, keys) => { const c = cursorAt(t, keys); el.style.transform = `translate(${c.x}px, ${c.y}px) scale(${c.scale})`; return c; };
+
+  let scene, render;
+  // 비디오 슬롯 동기화: <video data-slot data-start="1.2"> → currentTime = t - start
+  const syncVideos = t => Promise.all($$('video[data-slot]').map(v => new Promise(res => {
+    const target = clamp(t - parseFloat(v.dataset.start || 0), 0, (v.duration || 1e9) - 1e-3);
+    if (Math.abs(v.currentTime - target) < 1e-4 || !v.src && !v.querySelector('source')) return res();
+    v.addEventListener('seeked', () => res(), { once: true }); v.currentTime = target;
+  })));
+  const seek = async t => { render(t); await syncVideos(t); await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); };
+
+  // r: render(t). s.timeline: 일시정지된 GSAP 타임라인(선택). 둘 다 주면 seek 후 render(t)
+  function boot(s, r) {
+    scene = s;
+    const tl = s.timeline;
+    if (tl) tl.pause(0);
+    render = tl ? t => { tl.seek(t, false); r && r(t); } : r;
+    const stage = $('#stage');
+    stage.style.width = s.w + 'px'; stage.style.height = s.h + 'px';
+    $$('video[data-slot]').forEach(v => { v.muted = true; v.pause(); });
+    window.__scene = { w: s.w, h: s.h, fps: s.fps, duration: s.duration, loop: !!s.loop, beats: s.beats || [] };
+    window.__seek = seek;
+    const q = new URLSearchParams(location.search);
+    if (q.has('render')) { document.body.classList.add('render'); render(0); return; }
+    if (q.has('t')) { fit(); render(parseFloat(q.get('t'))); return; }
+    preview(q.has('debug'));
+  }
+  function fit() {
+    const k = Math.min(1, (innerWidth - 32) / scene.w, (innerHeight - 72) / scene.h);
+    $('#stage').style.transform = `scale(${k})`;
+  }
+
+  // 미리보기: space 재생/정지, ←/→ 비트 이동, , . 프레임 이동, 하단 스크러버, ?debug 시간·비트·안전영역 표시
+  function preview(debug) {
+    let t = 0, playing = true, last = performance.now();
+    const bar = document.createElement('input');
+    Object.assign(bar, { type: 'range', min: 0, max: scene.duration, step: 1 / scene.fps, value: 0 });
+    bar.style.cssText = 'position:fixed;left:16px;bottom:12px;width:calc(100% - 32px)';
+    const hud = document.createElement('div');
+    hud.style.cssText = 'position:fixed;left:16px;top:12px;font:12px/1.4 monospace;color:#9f9;background:#000a;padding:4px 8px;border-radius:4px;z-index:9';
+    document.body.append(bar);
+    if (debug) {
+      document.body.append(hud);
+      const safe = document.createElement('div');
+      safe.style.cssText = 'position:absolute;inset:64px 80px;outline:1px dashed rgba(0,255,160,.5);pointer-events:none;z-index:99';
+      $('#stage').append(safe);
+    }
+    bar.oninput = () => { t = +bar.value; playing = false; };
+    const bt = (scene.beats || []).map(b => b.t);
+    addEventListener('keydown', e => {
+      if (e.code === 'Space') { playing = !playing; e.preventDefault(); }
+      if (e.code === 'ArrowRight') { t = bt.find(b => b > t + 1e-3) ?? 0; playing = false; }
+      if (e.code === 'ArrowLeft') { t = [...bt].reverse().find(b => b < t - 1e-3) ?? 0; playing = false; }
+      if (e.key === '.') { t = Math.min(scene.duration, t + 1 / scene.fps); playing = false; }
+      if (e.key === ',') { t = Math.max(0, t - 1 / scene.fps); playing = false; }
+    });
+    addEventListener('resize', fit); fit();
+    (function loop(now) {
+      if (playing) { t = (t + (now - last) / 1000) % scene.duration; bar.value = t; }
+      last = now; render(t);
+      if (debug) { const b = [...(scene.beats || [])].reverse().find(b => b.t <= t + 1e-6); hud.textContent = `t=${t.toFixed(2)}s  f=${Math.round(t * scene.fps)}  ${b ? b.label : ''}`; }
+      requestAnimationFrame(loop);
+    })(last);
+  }
+
+  return { clamp, lerp, ease, p, io, kf, stagger, springStep, springTo, catmull, simulate, drift, beat, rand, mixHex, $, $$, css, split, typer, count, cursorAt, cursor, boot };
+})();
+</script>
+
+<script>
+const TL = {"total": 86.057, "slides": [{"start": 0.0, "dur": 10.388, "ss": 1.2, "se": 8.888}, {"start": 10.388, "dur": 35.302, "ss": 11.388, "se": 43.19}, {"start": 45.69, "dur": 13.308, "ss": 46.69, "se": 57.498}, {"start": 58.998, "dur": 17.614, "ss": 59.998, "se": 73.112}, {"start": 76.612, "dur": 9.444, "ss": 77.612, "se": 82.557}], "words": [["EVERYONE", 1.2, 1], ["TODAY", 2.513, 1], ["I", 3.18, 1], ["WILL", 3.402, 1], ["TALK", 3.802, 1], ["ABOUT", 4.113, 1], ["GLOBAL", 4.558, 1], ["WARMING", 5.18, 1], ["ITS", 5.936, 1], ["CAUSES", 6.38, 1], ["EFFECTS", 7.047, 1], ["AND", 7.802, 1], ["SOLUTIONS", 8.158, 1], ["THIS", 11.388, 2], ["CHART", 11.568, 2], ["SHOWS", 12.057, 2], ["KOREA'S", 12.546, 2], ["GREENHOUSE", 13.301, 2], ["GAS", 14.057, 2], ["EMISSIONS", 14.546, 2], ["IN", 15.446, 2], ["TWO", 15.712, 2], ["THOUSAND", 16.157, 2], ["EMISSIONS", 16.69, 2], ["WERE", 17.535, 2], ["FIVE", 17.846, 2], ["HUNDRED", 18.201, 2], ["THIRTY", 18.646, 2], ["THREE", 19.135, 2], ["POINT", 19.49, 2], ["FIVE", 19.846, 2], ["MILLION", 20.335, 2], ["TONS", 20.824, 2], ["OF", 21.357, 2], ["CARBON", 21.579, 2], ["DIOXIDE", 22.112, 2], ["EQUIVALENT", 22.957, 2], ["IN", 24.012, 2], ["TWENTY", 24.457, 2], ["TEN", 25.168, 2], ["SIX", 25.701, 2], ["HUNDRED", 26.146, 2], ["EIGHTY", 26.679, 2], ["I", 27.257, 2], ["NINE", 27.524, 2], ["POINT", 27.924, 2], ["EIGHT", 28.368, 2], ["IN", 28.99, 2], ["TWENTY", 29.346, 2], ["TWENTY", 29.79, 2], ["SEVEN", 30.412, 2], ["HUNDRED", 30.946, 2], ["NINE", 31.612, 2], ["POINT", 32.19, 2], ["FIVE", 32.724, 2], ["AND", 33.301, 2], ["IN", 33.657, 2], ["TWENTY", 33.968, 2], ["TWENTY", 34.412, 2], ["SEVEN", 34.99, 2], ["HUNDRED", 35.524, 2], ["SEVEN", 36.057, 2], ["POINT", 36.679, 2], ["TWO", 37.079, 2], ["EMISSIONS", 37.524, 2], ["ROSE", 38.546, 2], ["SHARPLY", 39.035, 2], ["AFTER", 39.79, 2], ["TWO", 40.279, 2], ["THOUSAND", 40.679, 2], ["AND", 41.124, 2], ["THEY", 41.39, 2], ["ARE", 41.612, 2], ["STILL", 41.924, 2], ["HIGH", 42.324, 2], ["TODAY", 42.679, 2], ["BECAUSE", 43.19, 2], ["GREENHOUSE", 47.157, 3], ["GASES", 48.001, 3], ["ARE", 48.712, 3], ["INCREASING", 48.979, 3], ["OUR", 50.012, 3], ["PLANET", 50.368, 3], ["IS", 51.079, 3], ["GETTING", 51.434, 3], ["WARMER", 51.968, 3], ["GLACIERS", 52.768, 3], ["ARE", 53.612, 3], ["MELTING", 53.923, 3], ["AND", 54.59, 3], ["WE", 54.901, 3], ["ARE", 55.123, 3], ["SEEING", 55.434, 3], ["MORE", 55.834, 3], ["FLOODS", 56.146, 3], ["AND", 56.723, 3], ["DROUGHTS", 56.99, 3], ["SO", 59.998, 4], ["WHAT", 60.052, 4], ["CAN", 60.452, 4], ["WE", 60.808, 4], ["DO", 61.075, 4], ["WE", 61.564, 4], ["CAN", 61.83, 4], ["USE", 62.186, 4], ["PUBLIC", 62.63, 4], ["TRANSPORTATION", 63.119, 4], ["SAVE", 64.408, 4], ["ELECTRICITY", 64.941, 4], ["AND", 66.097, 4], ["WATER", 66.497, 4], ["AND", 67.252, 4], ["REUSE", 67.652, 4], ["AND", 68.452, 4], ["REPAIR", 68.764, 4], ["OUR", 69.519, 4], ["BELONGINGS", 69.83, 4], ["WHAT", 71.03, 4], ["ELSE", 71.386, 4], ["CAN", 71.875, 4], ["YOU", 72.23, 4], ["THINK", 72.541, 4], ["OF", 73.075, 4], ["LET'S", 77.612, 5], ["TAKE", 77.77, 5], ["ACTION", 78.17, 5], ["TODAY", 78.881, 5], ["SMALL", 79.77, 5], ["ACTIONS", 80.392, 5], ["BIG", 81.192, 5], ["CHANGES", 81.681, 5]]};
+/* ===== SCENE: GLOBAL WARMING 발표 영상 (원본 PPT 5장 → 모션그래픽) =====
+   음성(narration.wav, 0.9배속)의 단어 시각(TL.words)에 맞춰 연출한다. 슬라이드 문구·차트 수치는 원본 PPT 그대로. */
+const CONFIG = {
+  chart: { cats: ['2000', '2010', '2020', '2023'], vals: [533.5, 689.8, 709.5, 707.2], axisMax: 800 },   // MtCO₂e (원본 차트 데이터)
+  source: 'Source: ICAP, Korea Emissions Trading System factsheet (Korea’s national GHG inventory). Basis: total GHG emissions excluding LULUCF, in MtCO₂e.',
+};
+const ST = TL.slides.map(s => s.start), DU = TL.slides.map(s => s.dur);
+const WS = {}; TL.words.forEach(([w, t, s]) => (WS[s] = WS[s] || []).push([w, t]));
+const W = (s, i) => WS[s][i][1];                    // s번 슬라이드의 i번째 단어 시각(영상 시간, 초)
+const L = (s, i) => W(s, i) - ST[s - 1];            // 같은 시각을 슬라이드 로컬 시간으로
+const SCENE = {
+  w: 1920, h: 1080, fps: 30, duration: TL.total, loop: false,
+  beats: [
+    { t: 1.8, label: 'S1 제목 + 지구 등장' }, { t: 5.6, label: 'S1 GLOBAL WARMING 펄스' }, { t: 9.0, label: 'S1 Causes/Effects/Solutions' },
+    { t: 12.5, label: 'S2 차트 패널' }, { t: 19.5, label: 'S2 2000 막대 완료' }, { t: 27.0, label: 'S2 2010 막대' }, { t: 33.0, label: 'S2 2020 막대' }, { t: 37.8, label: 'S2 2023 막대' }, { t: 40.5, label: 'S2 rose sharply' }, { t: 44.0, label: 'S2 still high today' },
+    { t: 48.5, label: 'S3 온난화 시작' }, { t: 54.0, label: 'S3 빙하 녹음' }, { t: 57.2, label: 'S3 홍수 + 가뭄' }, { t: 58.8, label: 'S3 홀드' },
+    { t: 61.5, label: 'S4 What Can We Do?' }, { t: 64.5, label: 'S4 버스' }, { t: 68.5, label: 'S4 전기·물' }, { t: 70.5, label: 'S4 재사용' }, { t: 74.0, label: 'S4 What else…' }, { t: 76.2, label: 'S4 청중 생각 시간' },
+    { t: 79.0, label: 'S5 Let’s Take Action' }, { t: 82.0, label: 'S5 Small Actions, Big Changes' }, { t: 85.5, label: 'S5 홀드' },
+  ],
+};
+const { p, io, kf, ease, lerp, clamp, rand, mixHex, $ } = M;
+const W_ = 1920, H_ = 1080;
+const cv = $('#cv'), dpr = window.devicePixelRatio || 1;
+cv.width = W_ * dpr; cv.height = H_ * dpr;
+const g = cv.getContext('2d');
+const NAVY = '#12305a', MUTED = '#5d7197', ORANGE = '#ff8a2b', RED = '#ff4d3a', GREEN = '#22b07d', BLUE = '#2b8cff';
+const hexA = (h, a) => { const n = parseInt(h.slice(1), 16); return `rgba(${n >> 16 & 255},${n >> 8 & 255},${n & 255},${a})`; };
+const FONT = '"Geist","Pretendard Variable","Noto Sans CJK KR",sans-serif';
+const rr = (x, y, w, h, r) => { g.beginPath(); g.roundRect(x, y, w, h, r); };
+const circ = (x, y, r) => { g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); };
+const grad = (c0, c1) => { const gr = g.createLinearGradient(0, 0, 0, H_); gr.addColorStop(0, c0); gr.addColorStop(1, c1); g.fillStyle = gr; g.fillRect(0, 0, W_, H_); };
+function tw(s, size, w = 800) { g.save(); g.font = `${w} ${size}px ${FONT}`; const v = g.measureText(s).width; g.restore(); return v; }
+// 텍스트: '₂'는 아래첨자로 직접 그린다. 투명도는 현재 globalAlpha에 곱해진다.
+function T(s, x, y, size, color, o = {}) {
+  g.save(); g.font = `${o.w || 800} ${size}px ${FONT}`; g.textBaseline = 'alphabetic'; g.letterSpacing = (o.ls || 0) + 'px'; g.globalAlpha *= (o.al ?? 1);
+  const parts = s.split('₂'), sub = size * 0.62; let tot = 0;
+  parts.forEach((q, i) => { tot += g.measureText(q).width; if (i < parts.length - 1) tot += tw('2', sub, o.w || 800); });
+  let x0 = o.a === 'center' ? x - tot / 2 : o.a === 'right' ? x - tot : x; g.textAlign = 'left';
+  parts.forEach((q, i) => {
+    if (o.stroke) { g.lineWidth = o.sw || 8; g.strokeStyle = o.stroke; g.lineJoin = 'round'; g.strokeText(q, x0, y); }
+    g.fillStyle = color; g.fillText(q, x0, y); x0 += g.measureText(q).width;
+    if (i < parts.length - 1) { g.font = `${o.w || 800} ${sub}px ${FONT}`; g.fillText('2', x0, y + size * 0.16); x0 += g.measureText('2').width; g.font = `${o.w || 800} ${size}px ${FONT}`; }
+  });
+  g.restore();
+}
+function reveal(k, rect, draw) { g.save(); g.beginPath(); g.rect(...rect); g.clip(); g.translate(0, (1 - k) * rect[3] * 1.15); draw(); g.restore(); }
+function img(name, cx, cy, w, o = {}) {
+  const im = IM[name], h = w * im.height / im.width;
+  g.save(); g.globalAlpha *= (o.al ?? 1); g.translate(cx, cy); g.rotate(o.rot || 0); g.scale(o.sx ?? 1, o.sy ?? 1);
+  if (o.shadow) { g.shadowColor = 'rgba(18,48,90,.25)'; g.shadowBlur = 40; g.shadowOffsetY = 16; }
+  g.drawImage(im, -w / 2, o.bottom ? -h : -h / 2, w, h); g.restore(); return h;
+}
+const IM = {}, NAMES = ['thermo', 'warn', 'earth', 'glacier', 'flood', 'drought', 'bus', 'drop', 'bolt', 'books', 'ball', 'hands'];
+function dots(cur, al = 1) {   // 진행 점 5개
+  g.save(); g.globalAlpha *= al; let x = 1920 - 100;
+  for (let i = 4; i >= 0; i--) { const a = i === cur, w = a ? 56 : 18; x -= w; g.fillStyle = a ? NAVY : 'rgba(18,48,90,.2)'; rr(x, 52, w, 18, 9); g.fill(); x -= 14; }
+  g.restore();
+}
+function arrow(x1, y1, x2, y2, color, w = 8, head = 22) {
+  const a = Math.atan2(y2 - y1, x2 - x1);
+  g.save(); g.strokeStyle = color; g.fillStyle = color; g.lineWidth = w; g.lineCap = 'round';
+  g.beginPath(); g.moveTo(x1, y1); g.lineTo(x2 - Math.cos(a) * head * 0.6, y2 - Math.sin(a) * head * 0.6); g.stroke();
+  g.beginPath(); g.moveTo(x2, y2); g.lineTo(x2 - Math.cos(a - 0.45) * head, y2 - Math.sin(a - 0.45) * head); g.lineTo(x2 - Math.cos(a + 0.45) * head, y2 - Math.sin(a + 0.45) * head); g.closePath(); g.fill(); g.restore();
+}
+const bump = (lt, t0, d = 0.55) => lt < t0 ? 0 : Math.max(0, 1 - (lt - t0) / d) ** 2;   // 말한 순간 튀는 펄스
+
+// ================= 슬라이드 1 =================
+function S1(lt) {
+  grad('#f1f7ff', '#d8e9ff');
+  const heat = p(lt, 3, 10); const hg = g.createRadialGradient(1500, 1050, 0, 1500, 1050, 950); hg.addColorStop(0, `rgba(255,150,80,${0.28 * heat})`); hg.addColorStop(1, 'rgba(255,150,80,0)'); g.fillStyle = hg; g.fillRect(0, 0, W_, H_);
+  g.save(); const z = 1 + 0.025 * (lt / DU[0]); g.translate(960, 540); g.scale(z, z); g.translate(-960, -540);
+  // 제목: GLOBAL(펄스) WARMING(펄스)
+  const tk = p(lt, 0.3, 1.3, 'outExpo'), size = 160, wg = tw('GLOBAL', size, 900), ww = tw(' WARMING', size, 900), x0 = 960 - (wg + ww) / 2;
+  reveal(tk, [100, 120, 1720, 210], () => {
+    [['GLOBAL', x0, NAVY, L(1, 6)], [' WARMING', x0 + wg, ORANGE, L(1, 7)]].forEach(([s, x, c, t0]) => { const b = bump(lt, t0); g.save(); g.translate(x + tw(s, size, 900) / 2, 270); g.scale(1 + 0.06 * b, 1 + 0.06 * b); T(s, -tw(s, size, 900) / 2, 0, size, c, { w: 900, ls: -4 }); g.restore(); });
+  });
+  // 부제: 단어마다 말하는 순간 밑줄
+  const segs = [['Causes', ORANGE, L(1, 9)], [', ', null], ['Effects', RED, L(1, 10)], [', and ', null], ['Solutions', GREEN, L(1, 12)]];
+  const sz = 72, tot = segs.reduce((a, s) => a + tw(s[0], sz, 600), 0); let x = 960 - tot / 2; const sk = p(lt, 5.3, 6.0, 'outCubic');
+  segs.forEach(([s, c, t0]) => { const w = tw(s, sz, 600); T(s, x, 420 + (1 - sk) * 18, sz, '#3f5a8a', { w: 600, al: sk }); if (c) { const k = p(lt, t0 - 0.05, t0 + 0.5, 'outCubic'); g.fillStyle = c; rr(x, 440, w * k, 10, 5); g.fill(); } x += w; });
+  // 이미지
+  const ek = ease.spring(clamp((lt - 0.5) / 1.3), 5, 1.2), bob = Math.sin(lt * 1.3) * 10;
+  for (let k = 0; k < 3; k++) { const ph = ((lt - 2.6 - k * 0.9) / 2.7); if (ph > 0 && ph < 1) { g.strokeStyle = `rgba(255,120,50,${0.45 * (1 - ph)})`; g.lineWidth = 8; circ(1160, 770 + bob, 235 + ph * 190); g.stroke(); } }
+  img('earth', 1160, 770 + bob + (1 - ek) * 70, 470 * lerp(0.3, 1, ek), { rot: lerp(-0.4, 0, ek), al: p(lt, 0.4, 0.9), shadow: true });
+  const tk2 = ease.outBack(p(lt, 1.0, 2.0)); const gl = 0.5 + 0.5 * Math.sin(lt * 4);
+  if (lt > 2.0) { const rg = g.createRadialGradient(690, 880, 20, 690, 880, 260); rg.addColorStop(0, `rgba(255,60,40,${0.25 * gl * heat + 0.1 * gl})`); rg.addColorStop(1, 'rgba(255,60,40,0)'); g.fillStyle = rg; g.fillRect(400, 560, 600, 600); }
+  img('thermo', 690, 760 + (1 - tk2) * 260, 200, { al: p(lt, 1.0, 1.5), shadow: true });
+  const wk = ease.spring(clamp((lt - 2.0) / 0.9), 6, 1.4), shake = lt > 6 ? Math.sin(lt * 28) * 0.03 * heat : 0;
+  img('warn', 690, 850, 290 * wk * (1 + 0.05 * Math.sin(lt * 5)), { rot: shake, al: Math.min(1, wk * 2), shadow: true });
+  g.restore();
+  dots(0);
+}
+
+// ================= 슬라이드 2: 차트 =================
+const BARX = [515, 865, 1215, 1565], BASE = 820, PPU = 0.6, BW = 230;
+const BARS = [[15.6, 20.5, 'IN'], [24.2, 28.9], [29.1, 33.2], [33.8, 37.7]].map(a => [a[0] - ST[1], a[1] - ST[1]]);
+function S2(lt) {
+  grad('#f4f8ff', '#e3ecfb');
+  g.fillStyle = 'rgba(255,255,255,.55)'; circ(1760, 80, 280); g.fill(); circ(60, 960, 240); g.fill();
+  reveal(p(lt, 0.3, 1.3, 'outExpo'), [100, 60, 1500, 110], () => T('Korea’s Greenhouse Gas Emissions', 120, 140, 78, NAVY, { w: 800, ls: -1.5 }));
+  const ck = ease.outBack(p(lt, 0.8, 1.6));
+  g.save(); g.globalAlpha = p(lt, 0.8, 1.3); g.translate(960, 570); g.scale(lerp(0.96, 1, ck), lerp(0.96, 1, ck)); g.translate(-960, -570);
+  g.shadowColor = 'rgba(18,48,90,.16)'; g.shadowBlur = 40; g.shadowOffsetY = 14; g.fillStyle = '#fff'; rr(110, 190, 1700, 760, 36); g.fill(); g.shadowColor = 'transparent';
+  // 축·격자
+  const ak = p(lt, 1.4, 2.6, 'outCubic');
+  [0, 200, 400, 600, 800].forEach(v => { const y = BASE - v * PPU; g.strokeStyle = '#dbe6f7'; g.lineWidth = 2; g.globalAlpha = ak; g.beginPath(); g.moveTo(340, y); g.lineTo(340 + 1400 * ak, y); g.stroke(); T(String(v), 316, y + 11, 30, MUTED, { a: 'right', w: 600 }); });
+  g.globalAlpha = 1; g.save(); g.translate(228, 560); g.rotate(-Math.PI / 2); T('MtCO₂e', 0, 0, 32, NAVY, { a: 'center', w: 700, al: ak }); g.restore();
+  g.strokeStyle = NAVY; g.lineWidth = 4; g.beginPath(); g.moveTo(340, BASE); g.lineTo(340 + 1400 * ak, BASE); g.stroke();
+  // 막대
+  CONFIG.chart.vals.forEach((v, i) => {
+    const [a, b] = BARS[i], k = p(lt, a, b, 'outCubic'), h = v * PPU * k, x = BARX[i] - BW / 2;
+    T(CONFIG.chart.cats[i], BARX[i], 884, 44, NAVY, { a: 'center', w: 700, al: p(lt, 1.8 + i * 0.1, 2.6) });
+    if (k > 0) {
+      const act = k < 1 ? 1 : 0, bg = g.createLinearGradient(0, BASE - h, 0, BASE); bg.addColorStop(0, '#5b9bf0'); bg.addColorStop(1, '#2f6fd8');
+      if (act) { g.save(); g.shadowColor = 'rgba(43,140,255,.55)'; g.shadowBlur = 36; g.fillStyle = bg; rr(x, BASE - h, BW, h, [14, 14, 0, 0]); g.fill(); g.restore(); }
+      g.fillStyle = bg; rr(x, BASE - h, BW, h, [14, 14, 0, 0]); g.fill();
+      T(M.count(lt, a, b, 0, v, 'outCubic', q => q.toFixed(1)), BARX[i], BASE - h - 22, 58, NAVY, { a: 'center', w: 800 });
+    }
+  });
+  // 콜아웃 A: Rose sharply after 2000
+  const aT = W(2, 52) - ST[1], ak2 = p(lt, aT - 0.2, aT + 0.5, 'outBack');
+  if (ak2 > 0) {
+    g.save(); g.globalAlpha = Math.min(1, ak2); g.fillStyle = '#fff1e3'; g.strokeStyle = ORANGE; g.lineWidth = 3; rr(440, 214, 490, 62, 31); g.fill(); g.stroke(); T('Rose sharply after 2000', 685, 257, 34, '#d9560b', { a: 'center', w: 800 });
+    const dk = p(lt, aT + 0.1, aT + 1.6, 'outCubic'), pt = (u) => { const x = (1 - u) ** 2 * 640 + 2 * (1 - u) * u * 700 + u * u * 800, y = (1 - u) ** 2 * 420 + 2 * (1 - u) * u * 296 + u * u * 296; return [x, y]; };
+    g.strokeStyle = ORANGE; g.lineWidth = 9; g.lineCap = 'round'; g.setLineDash([]); g.beginPath(); for (let u = 0; u <= dk + 1e-6; u += 0.02) { const [x, y] = pt(u); u === 0 ? g.moveTo(x, y) : g.lineTo(x, y); } g.stroke();
+    if (dk > 0.05) { const [x, y] = pt(dk), [x2, y2] = pt(Math.max(0, dk - 0.04)), an = Math.atan2(y - y2, x - x2); g.fillStyle = ORANGE; g.beginPath(); g.moveTo(x + Math.cos(an) * 16, y + Math.sin(an) * 16); g.lineTo(x + Math.cos(an + 2.5) * 22, y + Math.sin(an + 2.5) * 22); g.lineTo(x + Math.cos(an - 2.5) * 22, y + Math.sin(an - 2.5) * 22); g.closePath(); g.fill(); }
+    g.restore();
+  }
+  // 콜아웃 B: Still high today
+  const bT = W(2, 58) - ST[1], bk = p(lt, bT - 0.2, bT + 0.5, 'outBack');
+  if (bk > 0) {
+    g.save(); g.globalAlpha = Math.min(1, bk); g.fillStyle = '#ffe9e6'; g.strokeStyle = RED; g.lineWidth = 3; rr(1180, 214, 420, 62, 31); g.fill(); g.stroke(); T('Still high today', 1390, 258, 36, '#c8321f', { a: 'center', w: 800 });
+    [1215, 1565].forEach(x => arrow(x, 280, x, 306 + Math.sin(lt * 6) * 4, RED, 8, 18)); g.restore();
+  }
+  g.restore();
+  // 출처 (원본 문구 그대로)
+  const sk = p(lt, 2.0, 3.0); g.save(); g.globalAlpha = sk;
+  const L1 = 'Source: ICAP, Korea Emissions Trading System factsheet (Korea’s national GHG inventory).', L2 = 'Basis: total GHG emissions excluding LULUCF, in MtCO₂e.';
+  T(L1, 120, 1010, 26, MUTED, { w: 500 }); T(L2, 120, 1046, 26, MUTED, { w: 500 }); g.restore();
+  dots(1);
+}
+
+// ================= 슬라이드 3: 영향 =================
+const CX3 = [380, 960, 1540];
+const RC = rand(41);
+const CRACKS = Array.from({ length: 9 }, (_, i) => { const a0 = i / 9 * Math.PI * 2 + RC() * 0.4; let x = 0, y = 0, a = a0; const pts = [[0, 0]]; for (let k = 0; k < 9; k++) { a += (RC() - 0.5) * 0.9; x += Math.cos(a) * (28 + RC() * 22); y += Math.sin(a) * (28 + RC() * 22); pts.push([x, y]); } return pts; });
+function partial(pts, f) { let tot = 0; const ls = []; for (let i = 1; i < pts.length; i++) { const l = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); ls.push(l); tot += l; } let d = f * tot; g.beginPath(); g.moveTo(...pts[0]); for (let i = 1; i < pts.length && d > 0; i++) { const l = ls[i - 1]; if (d >= l) { g.lineTo(...pts[i]); d -= l; } else { const u = d / l; g.lineTo(lerp(pts[i - 1][0], pts[i][0], u), lerp(pts[i - 1][1], pts[i][1], u)); d = 0; } } g.stroke(); }
+function card(cx, y, w, h, tint, k) {
+  g.save(); g.translate(cx, y + h / 2 + (1 - k) * 140); g.globalAlpha *= clamp(k * 1.6); g.translate(0, -h / 2);
+  g.shadowColor = 'rgba(18,48,90,.16)'; g.shadowBlur = 36; g.shadowOffsetY = 14; g.fillStyle = tint; rr(-w / 2, 0, w, h, 40); g.fill(); g.shadowColor = 'transparent';
+}
+function S3(lt) {
+  const warm = p(lt, 1.0, 6.5);
+  const mx = (a, b) => mixHex(a, b, warm); const sg = g.createLinearGradient(0, 0, 0, H_); sg.addColorStop(0, mx('#eaf3ff', '#ffe6cf')); sg.addColorStop(1, mx('#dce9ff', '#ffcfa3')); g.fillStyle = sg; g.fillRect(0, 0, W_, H_);
+  const hg = g.createRadialGradient(1500, 1100, 0, 1500, 1100, 1000); hg.addColorStop(0, `rgba(255,120,60,${0.3 * warm})`); hg.addColorStop(1, 'rgba(255,120,60,0)'); g.fillStyle = hg; g.fillRect(0, 0, W_, H_);
+  reveal(p(lt, 0.3, 1.3, 'outExpo'), [100, 60, 1500, 110], () => T('Effects of Global Warming', 120, 140, 78, NAVY, { w: 800, ls: -1.5 }));
+  const T0 = [L(3, 9) - 0.3, L(3, 17) - 0.45, L(3, 19) - 0.3];
+  // 'greenhouse gases are increasing… our planet is getting warmer' 구간: 지구가 달아오른다 → 카드가 나올 때 우측 상단으로 이동
+  const eIn = ease.spring(clamp((lt - 0.9) / 1.2), 5, 1.2), mv = p(lt, T0[0] - 0.2, T0[0] + 0.9, 'inOutCubic'), ex = lerp(960, 1620, mv), ey = lerp(610 + Math.sin(lt * 1.3) * 8, 175, mv), ew = lerp(430, 150, mv) * lerp(0.4, 1, eIn);
+  const hot = p(lt, 1.5, 6.5);
+  for (let r = 0; r < 3; r++) { const ph = ((lt - 1.6 - r * 0.9) / 2.8); if (ph > 0 && ph < 1 && mv < 0.6) { g.strokeStyle = `rgba(255,110,40,${0.5 * (1 - ph) * (1 - mv)})`; g.lineWidth = 8; circ(ex, ey, ew / 2 + 20 + ph * 200); g.stroke(); } }
+  const eg = g.createRadialGradient(ex, ey, ew * 0.3, ex, ey, ew * 0.95); eg.addColorStop(0, `rgba(255,90,40,${0.45 * hot})`); eg.addColorStop(1, 'rgba(255,90,40,0)'); g.fillStyle = eg; g.fillRect(ex - ew, ey - ew, ew * 2, ew * 2);
+  img('earth', ex, ey, ew, { al: p(lt, 0.9, 1.5), rot: lerp(-0.3, 0, eIn) + Math.sin(lt * 20) * 0.012 * hot, shadow: true });
+  // 빙하
+  let k = ease.spring(clamp((lt - T0[0]) / 0.9), 6, 1.2);
+  if (k > 0) {
+    card(CX3[0], 250, 520, 680, '#eaf5ff', k);
+    const m = p(lt, T0[0] + 0.7, T0[0] + 5.2, 'inOutQuad');
+    g.save(); rr(-260, 30, 520, 500, 30); g.clip();
+    const pud = g.createRadialGradient(0, 470, 0, 0, 470, 230 * m + 1); pud.addColorStop(0, 'rgba(120,190,255,.85)'); pud.addColorStop(1, 'rgba(120,190,255,0)'); g.fillStyle = pud; g.beginPath(); g.ellipse(0, 470, 230 * m + 6, 36 * m + 3, 0, 0, 7); g.fill();
+    img('glacier', 0, 470, 380, { bottom: true, sy: lerp(1, 0.72, m), sx: lerp(1, 1.06, m) });
+    for (let d = 0; d < 4; d++) { const ph = ((lt * 0.8 + d * 0.27) % 1); if (m > 0.05) { g.fillStyle = `rgba(110,180,255,${0.9 * (1 - ph) * Math.min(1, m * 4)})`; circ(-110 + d * 75, 120 + (1 - 0.28 * m) * 120 + ph * 330, 9); g.fill(); } }
+    g.restore(); T('Glacial Melting', 0, 610, 60, NAVY, { a: 'center', w: 800 }); g.restore();
+  }
+  // 홍수
+  k = ease.spring(clamp((lt - T0[1]) / 0.9), 6, 1.2);
+  if (k > 0) {
+    card(CX3[1], 250, 520, 680, '#e7efff', k);
+    const iw = 440, ih = iw * 542 / 698, rad = ih / 2, lv = p(lt, T0[1] + 0.5, T0[1] + 4.0, 'inOutCubic');
+    img('flood', 0, 270, iw);
+    g.save(); g.beginPath(); g.arc(0, 270, rad * 0.98, 0, 7); g.clip();
+    [[0.55, 'rgba(40,120,220,.55)', 2.2, 0], [0.45, 'rgba(120,190,255,.45)', -1.7, 2]].forEach(([a, c, sp, ph]) => { g.fillStyle = c; g.beginPath(); const top = 270 + rad - lv * rad * 1.5; g.moveTo(-rad, 270 + rad); for (let x = -rad; x <= rad; x += 10) g.lineTo(x, top + Math.sin(x * 0.03 + lt * sp + ph) * 12 * a * 1.6); g.lineTo(rad, 270 + rad); g.closePath(); g.fill(); });
+    g.restore(); T('Flood', 0, 610, 60, NAVY, { a: 'center', w: 800 }); g.restore();
+  }
+  // 가뭄
+  k = ease.spring(clamp((lt - T0[2]) / 0.9), 6, 1.2);
+  if (k > 0) {
+    card(CX3[2], 250, 520, 680, '#fff1e0', k);
+    const cr = p(lt, T0[2] + 0.5, T0[2] + 2.4, 'outCubic');
+    g.save(); rr(-180, 100, 360, 360, 22); g.clip(); img('drought', 0, 280, 360);
+    g.fillStyle = `rgba(255,140,40,${0.28 * p(lt, T0[2] + 0.4, T0[2] + 2.4)})`; g.fillRect(-180, 100, 360, 360);
+    g.strokeStyle = '#4a2f1d'; g.lineWidth = 5; g.lineCap = 'round'; g.lineJoin = 'round'; g.save(); g.translate(0, 280); CRACKS.forEach(c => partial(c, cr)); g.restore(); g.restore();
+    g.save(); g.translate(150, 60); const sk = p(lt, T0[2] + 0.2, T0[2] + 1.0); g.globalAlpha *= sk; g.strokeStyle = '#ffb02e'; g.lineWidth = 7; g.lineCap = 'round'; for (let r = 0; r < 10; r++) { const a = r / 10 * 6.283 + lt * 0.5; g.beginPath(); g.moveTo(Math.cos(a) * 44, Math.sin(a) * 44); g.lineTo(Math.cos(a) * 64, Math.sin(a) * 64); g.stroke(); } g.fillStyle = '#ffc93a'; circ(0, 0, 32); g.fill(); g.restore();
+    T('Drought', 0, 610, 60, NAVY, { a: 'center', w: 800 }); g.restore();
+  }
+  dots(2);
+}
+
+// ================= 슬라이드 4: 해결 =================
+function S4(lt) {
+  grad('#effcf5', '#dcf5e8'); g.fillStyle = 'rgba(255,255,255,.5)'; circ(1750, 90, 260); g.fill(); circ(80, 980, 220); g.fill();
+  reveal(p(lt, 0.3, 1.3, 'outExpo'), [100, 60, 1500, 110], () => T('What Can We Do?', 120, 140, 78, NAVY, { w: 800, ls: -1.5 }));
+  const T0 = [L(4, 7) - 0.4, L(4, 10) - 0.3, L(4, 15) - 0.3];
+  // 버스
+  let k = ease.spring(clamp((lt - T0[0]) / 0.9), 6, 1.2);
+  if (k > 0) {
+    card(CX3[0], 240, 520, 600, '#e8fbf0', k); const dr = ease.outCubic(p(lt, T0[0] + 0.1, T0[0] + 1.4));
+    for (let s = 0; s < 3; s++) { g.strokeStyle = `rgba(34,176,125,${0.45 * (1 - dr)})`; g.lineWidth = 8; g.lineCap = 'round'; g.beginPath(); g.moveTo(-250 + dr * 40 - s * 14, 150 + s * 36); g.lineTo(-170 + dr * 40 - s * 14, 150 + s * 36); g.stroke(); }
+    img('bus', lerp(-340, 0, dr), 230 + Math.sin(lt * 7) * 3, 430, { shadow: true });
+    ['Using Public', 'Transportation'].forEach((s, i) => T(s, 0, 420 + i * 62, 54, NAVY, { a: 'center', w: 800 })); g.restore();
+  }
+  // 전기·물
+  k = ease.spring(clamp((lt - T0[1]) / 0.9), 6, 1.2);
+  if (k > 0) {
+    card(CX3[1], 240, 520, 600, '#e6f4ff', k); const t0 = T0[1] + 0.5, fl = Math.sin(lt * 5) > 0.6 ? 1.12 : 1, df = clamp((lt - t0) / 1.2), dy = Math.min(1, df * df) * 0, bounce = Math.abs(Math.sin(lt * 3)) * 20;
+    img('drop', -75, 210 - bounce, 130, { shadow: true, al: p(lt, t0 - 0.3, t0) });
+    const rp = ((lt * 1.1) % 1); g.strokeStyle = `rgba(60,160,230,${0.5 * (1 - rp)})`; g.lineWidth = 5; g.beginPath(); g.ellipse(-75, 330, 20 + rp * 70, 6 + rp * 18, 0, 0, 7); g.stroke();
+    const gb = g.createRadialGradient(80, 200, 10, 80, 200, 150); gb.addColorStop(0, `rgba(255,214,60,${fl > 1 ? 0.55 : 0.18})`); gb.addColorStop(1, 'rgba(255,214,60,0)'); g.fillStyle = gb; g.fillRect(-60, 40, 280, 320);
+    img('bolt', 80, 205, 130 * fl, { shadow: true, al: p(lt, t0 - 0.2, t0 + 0.1) });
+    ['Conserving', 'electricity', 'and water'].forEach((s, i) => T(s, 0, 420 + i * 58, 54, NAVY, { a: 'center', w: 800 })); g.restore();
+  }
+  // 재사용
+  k = ease.spring(clamp((lt - T0[2]) / 0.9), 6, 1.2);
+  if (k > 0) {
+    card(CX3[2], 240, 520, 600, '#fff4e0', k); const t0 = T0[2] + 0.4, bq = Math.abs(Math.sin((lt - t0) * 3.4)), sq = 1 - 0.14 * Math.max(0, 1 - bq * 6);
+    img('books', -100, 235, 165, { shadow: true, al: p(lt, t0 - 0.3, t0), rot: Math.sin(lt * 2) * 0.03 });
+    img('ball', 105, 300 - bq * 55, 150, { sx: 1 + (1 - sq) * 1.2, sy: sq, shadow: true, al: p(lt, t0 - 0.2, t0 + 0.2) });
+    ['Reuse and', 'Repair Items'].forEach((s, i) => T(s, 0, 420 + i * 62, 54, NAVY, { a: 'center', w: 800 })); g.restore();
+  }
+  // 질문
+  const qT = L(4, 20) - 0.15, qk = p(lt, qT, qT + 0.9, 'outExpo'), pulse = lt > qT + 1 ? 1 + 0.05 * Math.sin((lt - qT) * 5) : 1;
+  const qs = 'What else could there be?', qw = tw(qs, 90, 800), qx = 960 - qw / 2 + 60;
+  if (qk > 0) {
+    reveal(qk, [300, 860, 1500, 150], () => { T(qs, qx, 960, 90, NAVY, { w: 800, ls: -1.5 }); });
+    g.save(); g.translate(qx - 80, 925); g.scale(pulse * qk, pulse * qk); g.fillStyle = GREEN; circ(0, 0, 46); g.fill(); T('?', 0, 28, 74, '#fff', { a: 'center', w: 900 }); g.restore();
+    if (lt > qT + 2.2) for (let d = 0; d < 3; d++) { const a = 0.35 + 0.65 * Math.max(0, Math.sin((lt - qT) * 4 - d * 0.9)); g.fillStyle = `rgba(34,176,125,${a})`; circ(qx + qw + 40 + d * 34, 940, 10); g.fill(); }
+  }
+  dots(3);
+}
+
+// ================= 슬라이드 5: 마무리 =================
+const RK = rand(13);
+const CONF = Array.from({ length: 90 }, () => ({ x: RK() * 1920, y0: -RK() * 800, sp: 90 + RK() * 140, c: ['#ff6b6b', '#ffd84a', '#34c759', '#3b82f6', '#a78bfa', '#ff9f43'][Math.floor(RK() * 6)], ph: RK() * 6.28, s: 10 + RK() * 14 }));
+function S5(lt) {
+  grad('#e6f5ff', '#f1fff0'); const sg = g.createRadialGradient(1650, 100, 0, 1650, 100, 420); sg.addColorStop(0, 'rgba(255,238,150,.85)'); sg.addColorStop(1, 'rgba(255,238,150,0)'); g.fillStyle = sg; g.fillRect(0, 0, W_, H_);
+  const words1 = [["Let’s", 0], ['Take', 1], ['Action', 2], ['Today!', 3]], words2 = [['Small', 4], ['Actions,', 5], ['Big', 6], ['Changes.', 7]];
+  const line = (ws, y, size, colors, hl) => {
+    const gap = size * 0.28, widths = ws.map(([s]) => tw(s, size, 800)), tot = widths.reduce((a, b) => a + b, 0) + gap * (ws.length - 1); let x = 960 - tot / 2;
+    ws.forEach(([s, wi], i) => { const t0 = L(5, wi) - 0.12, k = p(lt, t0, t0 + 0.5, 'outExpo'); reveal(k, [x - 20, y - size, widths[i] + 40, size * 1.35], () => T(s, x, y, size, colors[i], { w: 800, ls: -2 })); x += widths[i] + gap; });
+    if (hl) { const x1 = 960 - tot / 2 + widths[0] + widths[1] + gap * 2, w = widths[2] + widths[3] + gap, k = p(lt, L(5, 7) - 0.1, L(5, 7) + 0.7, 'inOutCubic'); g.fillStyle = 'rgba(94,214,150,.55)'; rr(x1 - 14, y + 14, (w + 28) * k, 22, 11); g.fill(); }
+  };
+  line(words1, 190, 112, [NAVY, NAVY, NAVY, NAVY]);
+  line(words2, 330, 112, [NAVY, NAVY, '#0b6b45', '#0b6b45'], true);
+  const hk = ease.spring(clamp((lt - 0.2) / 1.3), 5, 1.2), bob = Math.sin(lt * 1.4) * 8;
+  img('hands', 960, 760 + bob + (1 - hk) * 120, 540 * lerp(0.5, 1, hk), { al: p(lt, 0.2, 0.7), shadow: true, rot: lerp(-0.15, 0, hk) });
+  // 반짝이
+  for (let s = 0; s < 9; s++) { const a = s / 9 * 6.283 + 0.4, r = 400 + (s % 3) * 40, x = 960 + Math.cos(a) * r * 1.2, y = 700 + Math.sin(a) * r * 0.55, tw_ = 0.5 + 0.5 * Math.sin(lt * 2.4 + s * 1.7) ; if (lt > 1.2) { g.save(); g.globalAlpha = tw_ * 0.9 * p(lt, 1.2, 2); g.translate(x, y); g.rotate(lt * 0.5 + s); g.fillStyle = '#ffd84a'; g.beginPath(); for (let q = 0; q < 8; q++) { const rr_ = q % 2 ? 8 : 22; g.lineTo(Math.cos(q * Math.PI / 4) * rr_, Math.sin(q * Math.PI / 4) * rr_); } g.closePath(); g.fill(); g.restore(); } }
+  // 색종이: 'Changes' 순간부터
+  const q = lt - (L(5, 7) - 0.1);
+  if (q > 0) CONF.forEach(c => { const y = c.y0 + c.sp * q * 1.3 + 200, x = c.x + Math.sin(q * 1.6 + c.ph) * 40; if (y > -40 && y < 1120) { g.save(); g.translate(x, y); g.rotate(q * 3 + c.ph); g.fillStyle = c.c; g.globalAlpha = 0.9; rr(-c.s / 2, -c.s / 4, c.s, c.s / 2, 3); g.fill(); g.restore(); } });
+  dots(4);
+}
+
+// ================= 장면 전환 (사선 스윕) =================
+const SL = [S1, S2, S3, S4, S5];
+const SW0 = 0.35, SW1 = 0.55;
+function render(t) {
+  g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W_, H_);
+  let i = 0; ST.forEach((s, k) => { if (t >= s - SW0) i = k; });
+  const inTr = i > 0 && t < ST[i] + SW1;
+  if (inTr) {
+    SL[i - 1](t - ST[i - 1]);
+    const k = p(t, ST[i] - SW0, ST[i] + SW1, 'inOutCubic'), xf = lerp(-400, W_ + 400, k), sk = 0.22, ex = y => xf + (y - 540) * sk;
+    g.save(); g.beginPath(); g.moveTo(-1, 0); g.lineTo(ex(0), 0); g.lineTo(ex(H_), H_); g.lineTo(-1, H_); g.closePath(); g.clip(); SL[i](t - ST[i]); g.restore();
+    const bg = g.createLinearGradient(xf - 120, 0, xf + 120, 0); bg.addColorStop(0, BLUE); bg.addColorStop(1, GREEN);
+    g.fillStyle = bg; g.beginPath(); g.moveTo(ex(0) - 110, 0); g.lineTo(ex(0), 0); g.lineTo(ex(H_), H_); g.lineTo(ex(H_) - 110, H_); g.closePath(); g.fill();
+  } else SL[i](t - ST[i]);
+}
+Promise.all(NAMES.map(n => new Promise((res, rej) => { const im = new Image(); im.onload = () => res(); im.onerror = () => rej(new Error('image ' + n)); im.src = 'assets/' + n + '.png'; IM[n] = im; }))).then(() => M.boot(SCENE, render));
+</script>
+</body>
+</html>
