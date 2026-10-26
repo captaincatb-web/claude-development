@@ -15,6 +15,10 @@ import semisData from './shorts/data/semis.json';
 import aiData from './shorts/data/ai.json';
 import {ShortBrief1024} from './shorts/Brief1024';
 import brief1024Data from './shorts/data/brief1024.json';
+import {ShortWk1Chips, ShortWk2Bigtech, ShortWk3Fomc} from './shorts/Weekly1026';
+import wk1 from './shorts/data/wk1_chips.json';
+import wk2 from './shorts/data/wk2_bigtech.json';
+import wk3 from './shorts/data/wk3_fomc.json';
 export const Root = () => (
   <>
     <Composition id="Reel" component={Reel} durationInFrames={450} fps={30} width={1920} height={1080} />
@@ -26,5 +30,8 @@ export const Root = () => (
     <Composition id="ShortAiEn" component={ShortAiEn} durationInFrames={aiEnData.total} fps={30} width={1080} height={1920} />
     <Composition id="ShortRoadster" component={ShortRoadster} durationInFrames={roadsterData.total} fps={30} width={1080} height={1920} />
     <Composition id="ShortBrief1024" component={ShortBrief1024} durationInFrames={brief1024Data.total} fps={30} width={1080} height={1920} />
+    <Composition id="ShortWk1Chips" component={ShortWk1Chips} durationInFrames={wk1.total} fps={30} width={1080} height={1920} />
+    <Composition id="ShortWk2Bigtech" component={ShortWk2Bigtech} durationInFrames={wk2.total} fps={30} width={1080} height={1920} />
+    <Composition id="ShortWk3Fomc" component={ShortWk3Fomc} durationInFrames={wk3.total} fps={30} width={1080} height={1920} />
   </>
 );
