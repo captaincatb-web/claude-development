@@ -630,6 +630,67 @@ dl.facts dd { margin: 0; }
     ]
   };
 
+  /* 2차 보강 자료: 회사별로 기존 데이터에 덧붙인다 (conf/one은 교체) */
+  [["x_dk", "e4ds, 다이킨 당진 특수가스 공장 준공(2022.08)", "https://www.e4ds.com/sub_view.asp?idx=15344&orig=1"],
+   ["x_kd", "Kanto Denka Kogyo 특수가스 제품(본사)", "https://www.kantodenka.co.jp/english/product/gas/"],
+   ["x_kc", "사람인 기업정보, 케이씨인더스트리얼(NICE평가정보)", "https://www.saramin.co.kr/zf_user/company-info/view/csn/UEc1WjFVSjIyTTZmMGU0Rk5DNjNUdz09/company_nm/(%EC%A3%BC)%EC%BC%80%EC%9D%B4%EC%94%A8%EC%9D%B8%EB%8D%94%EC%8A%A4%ED%8A%B8%EB%A6%AC%EC%96%BC"],
+   ["x_hy", "효성, NF3 증설 발표(2016.01)", "https://www.hyosung.com/en/newsroom/view/13108"],
+   ["x_hy2", "Korea Herald, NF3 수요(2021.02)", "https://www.koreaherald.com/article/2552855"],
+   ["x_sl", "Solstice 스퍼터링 타겟", "https://www.solstice.com/us/en/initiative/sputtering-targets"],
+   ["x_sl2", "Solstice 반도체 소재(Honeywell 분사 안내)", "https://www.solstice.com/us/en/products/advanced-semiconductor-materials"],
+   ["x_am", "AGC, AMMK 개요", "https://www.agc-multimaterial.kr/ammk-information"],
+   ["x_am2", "AMMK 회사소개", "https://www.ammk.co.kr/company"],
+   ["x_ys", "인크루트 기업정보, 영신쿼츠", "https://www.incruit.com/company/24161133"],
+   ["x_dt", "캐치 재무평가, 디에스테크노(NICE평가정보)", "https://www.catch.co.kr/Comp/CompInfo/426288"],
+   ["x_dn", "WISEreport 디엔에프 기업현황", "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=092070"],
+   ["x_dn2", "AWAKEPLUS, 디엔에프 반기보고서(2026.08)", "https://www.awakeplus.co.kr/data/view/20260814002889"],
+   ["x_ts1", "DS투자증권 티에스이(2026.07.02)", "https://stock.mk.co.kr/uploads/20260702/1782971391_9584529b79784649f62e.pdf"],
+   ["x_ts2", "뉴스핌, LS증권 티에스이(2026.08.28)", "https://member.newspim.com/news/view/20260828000083"],
+   ["x_tm", "WISEreport 티이엠씨 기업현황", "https://comp.wisereport.co.kr/samsung/company/c1010001.aspx?cmp_cd=425040"],
+   ["x_fn", "버핏연구소, SK증권 에프엔에스테크(2026.03)", "https://buffettlab.co.kr/news/view.php?idx=53239"],
+   ["x_qn", "Qnity 2026년 2분기 실적 발표", "https://ir.qnityelectronics.com/press-releases/detail/69/qnity-reports-second-quarter-2026-results-raises-full-year-financial-guidance"],
+   ["x_sh", "WISEreport 삼화전기 기업현황", "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=009470"]
+  ].forEach(function (r) { S[r[0]] = [r[1], r[2]]; });
+  var PATCH = {
+    "다이킨첨단머티리얼즈": { conf: "B", one: "일본 Daikin 자회사. 당진에서 반도체 드라이 에칭가스를 생산",
+      facts: [["모회사", "Daikin Industries(일본)"], ["공장", "당진 송산2산업단지, 약 1만 평, 2022.08 준공"]],
+      tech: ["주력: 반도체용 드라이 에칭가스(불소계)", "냉매로 쌓은 불소화학 기술 기반. 같은 부지에 기술센터 설립 계획"], mkt: ["미세화·적층화로 불소 재료(에칭가스·불소수지) 수요 확대를 투자 배경으로 제시"], watch: ["구체 가스 품목과 국내 고객사"], src: ["x_dk"] },
+    "칸토덴카": { conf: "B", one: "불소가스 정제부터 특수가스 제조까지 일괄 생산하는 일본 Kanto Denka Kogyo 계열",
+      facts: [["모회사", "Kanto Denka Kogyo(일본, 도쿄증권거래소 상장)"]],
+      tech: ["에칭·세정 가스: CF4, CHF3, CH2F2, CH3F, C3F8, C4F8, C4F6, SF6, NF3, ClF3, F2 혼합가스", "증착: WF6, SiF4, COS", "신제품 KSG 시리즈(반도체 특수가스)"], mkt: ["원료 불소가스 정제부터 내재화한 것이 경쟁력(회사 설명)"], watch: ["천안 사업장의 생산 품목(본사 자료로 대신함)"], src: ["x_kd"] },
+    "㈜케이씨인더스트리얼": { conf: "B", one: "KC그룹 계열. 진천에서 반도체용 산업·특수가스를 생산하는 중견기업",
+      facts: [["설립", "2008년 11월"], ["그룹", "㈜케이씨 계열"], ["매출", "약 1,426억 원(NICE)"], ["인원", "39명(국민연금)"]],
+      tech: ["반도체 산업용 가스·특수가스, 헬륨, Clean Bottle(특수 용기)", "SiC 파우더 공급", "반도체·2차전지 공장 물류 자동화 솔루션"], mkt: ["2014년 진천 신척산단 가스 생산시설 완공, 2016년 혼합가스 공장 증축"], watch: ["가스 품목별 매출과 고객사"], src: ["x_kc"] },
+    "효성네오켐": { tech: ["2016년 울산 용연 NF3 1,250톤 증설, 중국 취저우 2,500톤 신설 발표", "2020년 NF3 생산능력 4,550톤으로 세계 2위(Korea Herald, 2021)"], src: ["x_hy", "x_hy2"] },
+    "Solstice": { conf: "B", one: "Honeywell 첨단소재 사업이 2025년 분사한 Solstice Advanced Materials. 세계 최대 스퍼터링 타겟 제조사(회사 주장)",
+      facts: [["출범", "2025년 Honeywell International에서 분사"]],
+      tech: ["스퍼터링 타겟·코일: Cu, Co, Ti, W, Al/Ti, Cu/Ta, TiW, TiAl", "ECAE 공법 초미세 결정립 타겟, 서브마이크론 미세조직 제어로 파티클 최소화", "세계 최대급 전자급 티타늄 정련 설비 보유", "전자 화학·SOG 폴리머·열계면 소재도 공급"], mkt: ["R&D 거점: 미국 스포캔·서니베일, 태국 촌부리, 중국 상하이"], watch: ["진천 사업장 역할(생산·재생·물류)은 확인하지 못함"], src: ["x_sl", "x_sl2"] },
+    "AMMK": { conf: "B", one: "AGC 그룹의 천안 불소수지(PTFE) 소재 공장. 구 한국타코닉",
+      facts: [["설립", "1996년 한국타코닉"], ["지배구조", "2019년 AGC Inc. 인수, 2024.05 사명 AMMK로 변경"], ["공장", "천안 서북구 1·2·3공장"]],
+      tech: ["PTFE 코팅 유리섬유 원단, 내열·이형 테이프, 불소수지 벨트 (IPD 사업부)", "PTFE 기반 CCL 등 RF 회로기판 소재 (RF 사업부)", "목록 품목 HBM 내열필름은 PTFE 내열·이형 소재로 추정"], mkt: [], watch: ["HBM 공정 적용 위치(본딩·몰딩 이형 등) 확인 필요"], src: ["x_am", "x_am2"] },
+    "영신쿼츠": { conf: "A", one: "Heraeus와 Shin-Etsu 합작 석영 부품 기업. 매출 1,000억 원대",
+      facts: [["설립", "1985년 2월, Heraeus Quarzglas·Shin-Etsu Quartz 합작 외투법인"], ["2025년", "매출 1,017억 원, 순이익 86억 원"], ["인원", "203명"], ["주소", "진천 광혜원면(목록상 청주)"]],
+      tech: ["2007년 TEL 초고순도(INDY) 인증, 2015년 특수표면처리(SST) 국산화", "2010년 실린더 모재로 튜브 원자재 국내 최초 생산", "2014년 국내 최초 1.5m 석영 판재 절단 능력"], mkt: ["2023.12 신공장 준공, 2008년 Saint-Gobain 첨단소재 코리아 인수"], src: ["x_ys"] },
+    "디에스테크노": { facts: [["최근 연도 실적", "매출 1,573억 원(+24.4%), 영업이익 180억 원(+36.8%), NICE 기준"], ["인원", "459명"]], src: ["x_dt"] },
+    "디엔에프": { facts: [["주요 주주", "솔브레인 35.03%, 삼성전자 7.00%"], ["2025년", "매출 791억 원, 영업손실 7억 원"], ["2026년 분기", "1Q 매출 209억/영업이익 7억, 2Q 217억/7억 원"], ["매출 구성", "DPT·HCDS·High-k·ACL·확산방지막 제품 94%"]], src: ["x_dn", "x_dn2"] },
+    "TSE": { facts: [["2025년", "매출 4,289억 원, 영업이익 492억 원"], ["매출 구성", "인터페이스 보드 43%, 프로브카드 28%, 테스트 소켓 23%, OLED 검사장비 5%"]], src: ["x_ts1", "x_ts2"] },
+    "티이엠씨": { facts: [["상장", "2023년 1월 코스닥"], ["종속회사", "티이엠씨씨엔에스(구 오션브릿지), 티이엠씨에이엠, 티이엠씨솔빅스"], ["2026년 상반기", "매출 -2.4%, 영업이익 -56% (설비투자 둔화 영향)"]], tech: ["가스 합성, 수전해, 희귀가스 추출·분리, 정제·혼합·충전 전 공정 내재화", "SK하이닉스와 기술협력, 재활용 기술로 공급망 안정화 추진"], src: ["x_tm"] },
+    "FNSTech (에프엔에스테크)": { facts: [["2025년", "매출 737억 원, 영업이익 105억 원"]], tech: ["2025년 3분기 대만 아사히램프 인수(할로겐·UV 램프)", "HBM용 CMP 패드 개발, TSMC·SK하이닉스향 UV 램프 교차판매", "유리기판 신사업 2026년 2분기부터 가시화 전망(SK증권)"], src: ["x_fn"] },
+    "Qnity": { facts: [["2026년 2분기", "매출 14억 달러(+22%), 반도체 부문 7.44억 달러, 조정 EBITDA 4.31억 달러"], ["2026년 가이던스", "매출 55.5억~56.5억 달러(상향)"]], src: ["x_qn"] },
+    "삼화전기": { facts: [["상장", "코스피, 2대주주 일본 Nichicon 22.8%"], ["2026년 상반기", "매출 -8.2%, 영업이익 -27% (중국·동남아 저가품 경쟁)"]], src: ["x_sh"] }
+  };
+  B.forEach(function (b) {
+    var p = PATCH[b.n]; if (!p || b.ref) return;
+    if (p.conf) b.conf = p.conf; if (p.one) b.one = p.one;
+    ["facts", "tech", "mkt", "src"].forEach(function (k) { if (p[k]) b[k] = b[k].concat(p[k]); });
+    if (p.watch) b.watch = p.watch;
+  });
+  REP["TSE"] = [
+    { by: "LS증권", date: "2026.08.28", tp: "매수, 목표가 40만 원", s: "x_ts2", pts: ["프로브카드 매출 1Q26 479억 원 → 2Q26 703억 원. 증가분 대부분이 국내 S사 HBM4·NAND", "3·4분기 프로브카드 각 700억~900억 원, 인터페이스 보드 각 400억~500억 원 전망", "2026년 매출 6,726억 원, 영업이익 1,780억 원 → 2027년 8,302억 원, 2,120억 원", "비메모리 A사·I사 보드 공급 확대, 고대역폭플래시(HBF)도 중장기 수혜"] },
+    { by: "DS투자증권", date: "2026.07.02", tp: "매수, 목표가 36만 원", s: "x_ts1", pts: ["글로벌 DRAM 고객 두 곳 확보, DDR4·DDR5·HBM3E 대응, HBM4/4E 개발 중", "2026년 프로브카드 매출 2,180억 원(+52%), 보드 1,590억 원(+68%)", "자회사 타이거일렉 매출 1,190억/영업이익 238억 원 사상 최대 전망"] }
+  ].concat(REP["TSE"] || []);
+  REP["FNSTech"] = [{ by: "SK증권", date: "2026.03.17", tp: "매수, 목표가 3만 원", s: "x_fn", pts: ["2025년 매출 737억 원, 영업이익 105억 원. 램프·CMP 패드 등 소재·부품이 고성장", "2026년 매출 903억 원, 영업이익 192억 원 전망", "아사히램프 연결 효과, HBM·첨단공정 CMP 패드 수요, 유리기판 신사업"] }];
+
   /* 책 필드(books.json 구조 참고): 품목군 코드, 주제 칩, 관련 SemiBooks 교과서 */
   var SB = {
     IND: ["ChipIndustryBook", "반도체 산업 지도", "https://semi.euiyun.com/industry/chapters/materials.html"],
