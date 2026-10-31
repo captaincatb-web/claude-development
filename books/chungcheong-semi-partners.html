@@ -649,7 +649,21 @@ dl.facts dd { margin: 0; }
    ["x_tm", "WISEreport 티이엠씨 기업현황", "https://comp.wisereport.co.kr/samsung/company/c1010001.aspx?cmp_cd=425040"],
    ["x_fn", "버핏연구소, SK증권 에프엔에스테크(2026.03)", "https://buffettlab.co.kr/news/view.php?idx=53239"],
    ["x_qn", "Qnity 2026년 2분기 실적 발표", "https://ir.qnityelectronics.com/press-releases/detail/69/qnity-reports-second-quarter-2026-results-raises-full-year-financial-guidance"],
-   ["x_sh", "WISEreport 삼화전기 기업현황", "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=009470"]
+   ["x_sh", "WISEreport 삼화전기 기업현황", "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=009470"],
+   ["y_nk1", "엔씨케이 연혁", "https://www.nckco.kr/company/history.php"],
+   ["y_nk2", "엔씨케이 홈페이지(사업분야)", "https://nckco.kr/"],
+   ["y_nk3", "당진신문, 엔씨케이 당진 공장 투자(2021.04)", "https://www.idjnews.kr/news/articleView.html?idxno=129827"],
+   ["y_ld1", "온라인가스저널, 린데코리아 2024 실적(2025.05)", "https://www.igasnet.com/news/articleView.html?idxno=22239"],
+   ["y_ld2", "가스신문, 린데코리아 평택 ASU 가동(2020.04)", "https://www.gasnews.com/news/articleView.html?idxno=91198"],
+   ["y_ld3", "전자신문, 린데·PST 충남 투자 MOU(2023.04)", "https://www.etnews.com/20230419000094"],
+   ["y_ld4", "Linde AMT 스퍼터링 타겟 브로슈어(천안 공장 연혁)", "http://assets.linde.com/-/media/global/advanced-material-technologies/advanced-material-technologies/literature/p-40-5163-linde_pvd_targets_general-brochure.pdf"],
+   ["y_gs1", "잡코리아 기업정보, 거성(NICE평가정보)", "https://www.jobkorea.co.kr/company/45842440"],
+   ["y_gs2", "거성 주요사업", "http://gursung.com/business"],
+   ["y_gs3", "거성 디스플레이 제품", "https://www.gursung.com/display"],
+   ["y_ed1", "사람인 기업정보, 에드워드코리아(NICE평가정보)", "https://www.saramin.co.kr/zf_user/company-info/view/csn/RDVuVzVBVm00M1NScmkrN2dzUVFwZz09/company_nm/%EC%97%90%EB%93%9C%EC%9B%8C%EB%93%9C%EC%BD%94%EB%A6%AC%EC%95%84(%EC%A3%BC)"],
+   ["y_ed2", "이투데이, 윤재홍 에드워드코리아 대표 인터뷰(2026.08)", "https://www.etoday.co.kr/news/view/2613052"],
+   ["y_ed3", "Edwards, 아산 신공장 개소", "https://www.edwardsvacuum.com/en-us/news-and-events/edwards-opens-new-vacuum-pump-manufacturing-facility-in-asan-city-korea"],
+   ["y_ed4", "세계일보, 에드워드 천안공장 이전(2011.05)", "https://www.segye.com/newsView/20110526001945"]
   ].forEach(function (r) { S[r[0]] = [r[1], r[2]]; });
   var PATCH = {
     "다이킨첨단머티리얼즈": { conf: "B", one: "일본 Daikin 자회사. 당진에서 반도체 드라이 에칭가스를 생산",
@@ -677,6 +691,24 @@ dl.facts dd { margin: 0; }
     "티이엠씨": { facts: [["상장", "2023년 1월 코스닥"], ["종속회사", "티이엠씨씨엔에스(구 오션브릿지), 티이엠씨에이엠, 티이엠씨솔빅스"], ["2026년 상반기", "매출 -2.4%, 영업이익 -56% (설비투자 둔화 영향)"]], tech: ["가스 합성, 수전해, 희귀가스 추출·분리, 정제·혼합·충전 전 공정 내재화", "SK하이닉스와 기술협력, 재활용 기술로 공급망 안정화 추진"], src: ["x_tm"] },
     "FNSTech (에프엔에스테크)": { facts: [["2025년", "매출 737억 원, 영업이익 105억 원"]], tech: ["2025년 3분기 대만 아사히램프 인수(할로겐·UV 램프)", "HBM용 CMP 패드 개발, TSMC·SK하이닉스향 UV 램프 교차판매", "유리기판 신사업 2026년 2분기부터 가시화 전망(SK증권)"], src: ["x_fn"] },
     "Qnity": { facts: [["2026년 2분기", "매출 14억 달러(+22%), 반도체 부문 7.44억 달러, 조정 EBITDA 4.31억 달러"], ["2026년 가이던스", "매출 55.5억~56.5억 달러(상향)"]], src: ["x_qn"] },
+    "NCK": { conf: "A", one: "일본 Nissan Chemical의 한국 법인. 반도체 노광용 반사방지 코팅액(ARC)을 만든다",
+      facts: [["정식 법인", "엔씨케이 주식회사 (사업자 125-81-37085)"], ["설립", "2001년 4월 한국일산화학 → 2007년 사명 변경"], ["본사", "평택 팽성읍 추팔산단, 당진은 신규 공장"], ["매출", "약 3,979억 원(NICE, 3월 결산)"], ["인원", "300명 이상(2026년 창립 25주년)"]],
+      tech: ["반도체 재료: ArF용 반사방지 코팅액 ARC® (다양한 선폭 대응), 다층재료", "디스플레이 재료: LCD 액정배향제(PI), TN·IPS·PVA 패널용", "목록 품목 PR은 정확히는 포토 공정의 하부 반사방지막 소재"],
+      mkt: ["2021.04 당진 송산2산단 외투지역 약 1만2천 평에 440억 원(3,700만 달러) 투자 협약", "2023.09 반도체 재료 제3공장(당진) 준공", "삼성전자·SK하이닉스 등 국내 대기업과 직접 거래"],
+      watch: ["당진 3공장 이후 추가 증설", "EUV용 하부막 제품 확대 여부"], src: ["y_nk1", "y_nk2", "y_nk3"] },
+    "린데": { conf: "A", one: "목록의 린데코리아는 국내 1위 산업용 가스사. 천안에는 계열 Linde AMT의 스퍼터링 타겟 공장이 있다",
+      facts: [["정식 법인", "린데코리아 주식회사 (사업자 120-81-17541)"], ["설립", "1975년 유니온가스 → 1996년 프렉스에어코리아 → 2020년 린데코리아"], ["2024년", "매출 1조 1,660억 원(+12.2%), 영업이익 2,931억 원, 순이익 2,346억 원"], ["인원", "약 450명, 사업장 26곳"]],
+      tech: ["산소·질소·아르곤·헬륨·수소, 고순도 가스, 반도체 특수가스, F2, N2O 등", "2020.04 삼성전자 평택캠퍼스용 ASU 가동. 전자 분야 단일 투자로 린데 그룹 사상 최대", "타겟: 계열사 Linde Advanced Material Technologies(구 Praxair Surface Technologies)가 1997년 천안 공장 건설, 2010~2012 확장, 2024년 신공장 개설"],
+      mkt: ["2023.04 아산 탕정 외투지역 산업가스 공장 1억 달러 증설 MOU, 같은 날 PST 천안 스퍼터링 타겟 공장 증축 MOU", "2031년까지 평택에 희귀가스(크립톤·제논) 생산시설 1,500억 원 투자 계획"],
+      watch: ["목록 품목(타겟)은 린데코리아가 아닌 Linde AMT 천안 공장일 가능성. 법인 구분 확인 필요"], src: ["y_ld1", "y_ld2", "y_ld3", "y_ld4"] },
+    "거성": { conf: "A", one: "이온주입 소스헤드 등 반도체·디스플레이 장비 핵심부품을 가공하는 아산 강소기업",
+      facts: [["정식 법인", "(주)거성 (사업자 312-81-82563)"], ["설립", "1994년 2월(안양), 2006년 법인 전환·아산 이전"], ["2025년", "매출 392억 원(+16%)"], ["인원", "115~120명"], ["인증", "강소기업, Inno-biz, 부품·소재 전문기업"]],
+      tech: ["반도체: 이온주입(IMP) 소스헤드·매니퓰레이터. W·Mo·TZM·Graphite 등 고융점 소재 가공", "식각·금속·CVD 공정 부품, 확산·RTP 공정용 Si·Al2O3·Quartz 부품", "디스플레이: SPU 방착판(Shield), CVD 서셉터(전극), 도핑용 전극. 7세대 SPU-Tray·ITO-Carrier·CVD-Susceptor 국산화"],
+      mkt: ["1995년 삼성전자 반도체, 1996년 LCD 사업부 협력사 등록. LG디스플레이 협력사"], watch: ["반도체 매출 비중과 이온주입 부품 점유율"], src: ["y_gs1", "y_gs2", "y_gs3"] },
+    "EDWARDS": { conf: "A", one: "Atlas Copco 그룹 Edwards의 한국 법인. 천안·아산에서 반도체용 진공펌프를 생산하는 매출 1조 원대 기업",
+      facts: [["정식 법인", "에드워드 코리아 주식회사 (사업자 312-81-12960)"], ["설립", "1992년 성원에드워드 → 2007년 사명 변경"], ["매출", "약 1조 2,062억 원(NICE)"], ["인원", "약 1,533명(국민연금)"], ["공장", "천안 1·2·3공장(서북구), 아산 신공장(1만 6천 m²)"]],
+      tech: ["반도체용 건식 진공펌프, 가스처리장치(abatement), 계측장치, 화공약품 공급장치, F2 발생기", "2011년 천안 3공장 준공으로 영국 본사의 건식 진공펌프 생산을 한국으로 이전", "가스처리장치는 계열사 CSK와 통합 운영"],
+      mkt: ["Edwards 진공펌프·가스처리 사업 매출 약 6조 원 중 한국 비중 약 25%(대표 인터뷰)", "아산 신공장으로 국내 생산능력 약 2배, 공급망 현지화 약 85%", "고객: 삼성전자, SK하이닉스, TSMC, Intel, Micron"], watch: ["아산 공장 가동률과 EUV용 진공 수요"], src: ["y_ed1", "y_ed2", "y_ed3", "y_ed4"] },
     "삼화전기": { facts: [["상장", "코스피, 2대주주 일본 Nichicon 22.8%"], ["2026년 상반기", "매출 -8.2%, 영업이익 -27% (중국·동남아 저가품 경쟁)"]], src: ["x_sh"] }
   };
   B.forEach(function (b) {
