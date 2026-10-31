@@ -6,7 +6,7 @@
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
 <body>
-<title>충청권 반도체 협력사 기술조사서</title>
+<title>소부품 회사</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@500;700&display=swap">
 <style>
@@ -720,7 +720,7 @@ dl.facts dd { margin: 0; }
   function renderShelf() {
     var cnt = { A: 0, B: 0, C: 0 };
     B.forEach(function (b) { if (!b.ref) cnt[b.conf]++; });
-    var h = '<div class="kicker">기술조사서 · 2026.10.31 기준</div><h1>충청권 반도체 협력사 기술조사서</h1>' +
+    var h = '<div class="kicker">2026.10.31 기준</div><h1>소부품 회사</h1>' +
       '<p class="lede">협력사 46행(중복 1곳 제외 45개 사)을 품목별 책장에 꽂았습니다. 책등을 누르면 회사 한 권이 열립니다.</p>' +
       '<div class="legend"><span><span class="chip A">자료 확인</span> ' + cnt.A + '개 사</span><span><span class="chip B">부분 확인</span> ' + cnt.B + '개 사</span><span><span class="chip C">미검증</span> ' + cnt.C + '개 사</span><span style="color:var(--muted)">책등의 점: 꽉 참 = 확인, 반 = 부분, 빈 원 = 미검증</span></div>' +
       viewTabs("shelf") +
@@ -774,7 +774,7 @@ dl.facts dd { margin: 0; }
     return '<a class="mchip" href="#b' + i + '" style="--c:var(' + g.c + ')"><span class="d ' + b.conf + '"></span>' + esc(b.n.replace(/\s*\(.*\)$/, "")) + '<small>' + esc(b.item) + "</small></a>";
   }
   function renderMap() {
-    var h = '<div class="kicker">기술조사서 · 2026.10.31 기준</div><h1>충청권 반도체 협력사 기술조사서</h1>' +
+    var h = '<div class="kicker">2026.10.31 기준</div><h1>소부품 회사</h1>' +
       '<p class="lede">협력사를 반도체 공정 순서에 놓았습니다. 한 회사가 여러 단계에 걸치면 각 단계에 모두 표시했습니다. 이름을 누르면 그 회사 책이 열립니다.</p>' + viewTabs("map") +
       '<div class="flow">';
     MAP.forEach(function (st, k) {
@@ -838,7 +838,7 @@ dl.facts dd { margin: 0; }
       '<div class="head">' + esc(GX[b.g].head) + '</div>' +
       '<div class="item">' + esc(b.reg) + ' · ' + esc(b.item) + '</div><div class="one">' + esc(b.one) + '</div>' +
       '<div class="topics">' + GX[b.g].topics.map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") + '</div>' + coverArt(b) +
-      '<div class="foot"><span class="conf">' + chips[b.conf] + '</span><br><br>충청권 반도체 협력사 기술조사서<br>2026.10.31 기준</div></div>' +
+      '<div class="foot"><span class="conf">' + chips[b.conf] + '</span><br><br>소부품 회사<br>2026.10.31 기준</div></div>' +
       '<div class="leaf"><nav class="tabs" aria-label="이 책의 목차">' + P.map(function (p, k) { return '<button type="button" data-p="' + k + '"' + (k === cur.p ? ' aria-current="page"' : "") + ">" + (k + 1) + ". " + esc(p[0]) + "</button>"; }).join("") + '</nav>' +
       '<div class="page' + (dir ? " " + dir : "") + '" id="pg">' + P[cur.p][1] + '</div>' +
       '<div class="folio"><button class="btn" id="pp" type="button"' + (cur.p === 0 ? " disabled" : "") + '>‹ 앞쪽</button><span>' + (cur.p + 1) + ' / ' + P.length + ' 쪽</span><button class="btn" id="np" type="button"' + (cur.p === P.length - 1 ? " disabled" : "") + '>뒤쪽 ›</button></div></div></article></div>';
