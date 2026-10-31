@@ -80,9 +80,35 @@ h1 { font-family: var(--serif); font-size: 1.95rem; line-height: 1.3; margin: 0 
 .tabs button { font: inherit; background: none; border: 0; padding: 2px 0; color: var(--muted); cursor: pointer; }
 .tabs button[aria-current="page"] { color: var(--fg); font-weight: 600; box-shadow: 0 2px 0 var(--accent); }
 .tabs button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.page { flex: 1; min-width: 0; animation: turn .28s ease; }
-@keyframes turn { from { opacity: .35; transform: translateX(10px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .page { animation: none; } .spine { transition: none; } }
+.page { flex: 1; min-width: 0; }
+.page.fwd { animation: turnF .32s ease; }
+.page.back { animation: turnB .32s ease; }
+@keyframes turnF { from { opacity: 0; transform: translateX(28px) rotateY(-8deg); } to { opacity: 1; transform: none; } }
+@keyframes turnB { from { opacity: 0; transform: translateX(-28px) rotateY(8deg); } to { opacity: 1; transform: none; } }
+/* 책 꺼내기 → 펼치기 → 다시 꽂기 */
+.spine.pulling { z-index: 2; animation: pull .42s cubic-bezier(.3,.6,.2,1) forwards; }
+@keyframes pull { 0% { transform: translateY(-8px); } 45% { transform: translateY(-46px) rotate(-3deg); } 100% { transform: translateY(-60px) rotate(-6deg) scale(1.25); opacity: 0; } }
+.spine.returning { animation: putback .55s cubic-bezier(.2,.8,.2,1); }
+@keyframes putback { 0% { transform: translateY(-60px) rotate(-5deg); opacity: 0; } 60% { opacity: 1; } 100% { transform: none; } }
+.book { perspective: 1800px; }
+.book.opening { animation: rise .35s ease both; }
+.book.opening .cover { transform-origin: left center; animation: grow .45s cubic-bezier(.2,.7,.2,1) both; }
+.book.opening .leaf { transform-origin: left center; animation: unfold .7s .2s cubic-bezier(.2,.75,.2,1) both; }
+.book.opening .cover > * { animation: fadeUp .4s .35s ease both; }
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes grow { from { transform: scaleX(.12); } to { transform: none; } }
+@keyframes unfold { from { transform: rotateY(-100deg); opacity: .2; } to { transform: none; opacity: 1; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (max-width: 760px) {
+  .book.opening .cover { transform-origin: center top; animation-name: growY; }
+  .book.opening .leaf { transform-origin: center top; animation-name: unfoldY; }
+  @keyframes growY { from { transform: scaleY(.15); } to { transform: none; } }
+  @keyframes unfoldY { from { transform: rotateX(80deg); opacity: .2; } to { transform: none; opacity: 1; } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page.fwd, .page.back, .spine.pulling, .spine.returning, .book.opening, .book.opening .cover, .book.opening .leaf, .book.opening .cover > * { animation: none; }
+  .spine { transition: none; }
+}
 .page h3 { font-family: var(--serif); font-size: 1.25rem; margin: 0 0 10px; }
 .page p { margin: 0 0 10px; max-width: 64ch; }
 .page ul { margin: 0 0 12px 18px; padding: 0; max-width: 64ch; }
@@ -491,7 +517,18 @@ dl.facts dd { margin: 0; }
     });
     h += '</div>';
     app.innerHTML = h;
-    app.querySelectorAll(".spine").forEach(function (el) { el.addEventListener("click", function () { location.hash = "b" + el.dataset.i; }); });
+    app.querySelectorAll(".spine").forEach(function (el) { el.addEventListener("click", function () {
+      if (busy) return;
+      if (reduced()) { location.hash = "b" + el.dataset.i; return; }
+      busy = true; el.classList.add("pulling");
+      setTimeout(function () { busy = false; location.hash = "b" + el.dataset.i; }, 400);
+    }); });
+    if (lastBook !== null) {
+      var back = app.querySelector('.spine[data-i="' + lastBook + '"]');
+      if (back && !reduced()) { back.classList.add("returning"); back.addEventListener("animationend", function () { back.classList.remove("returning"); }, { once: true }); }
+      if (back) back.focus({ preventScroll: true });
+      lastBook = null;
+    }
     var q = document.getElementById("q"), fc = document.getElementById("fc");
     function filt() {
       var v = q.value.trim().toLowerCase(), c = fc.value;
@@ -502,7 +539,9 @@ dl.facts dd { margin: 0; }
   }
 
   /* 펼친 책 */
-  var cur = { i: 0, p: 0 };
+  var cur = { i: 0, p: 0 }, view = "", opening = false, dir = "", busy = false, lastBook = null;
+  function reduced() { try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } }
+  function turn(p) { dir = p > cur.p ? "fwd" : "back"; cur.p = p; renderBook(); }
   function pagesOf(b) {
     var g = groupOf[b.g], refBook = null;
     if (b.ref) B.forEach(function (x, k) { if (x.n === b.ref) refBook = k; });
@@ -526,37 +565,41 @@ dl.facts dd { margin: 0; }
     var h = '<div class="bookview"><div class="bar"><button class="btn" id="home" type="button">← 책장으로</button><span class="spacer"></span>' +
       '<button class="btn" id="pb" type="button"' + (pos <= 0 ? " disabled" : "") + '>이전 책</button>' +
       '<button class="btn" id="nb" type="button"' + (pos >= order.length - 1 ? " disabled" : "") + '>다음 책</button></div>' +
-      '<article class="book" aria-label="' + esc(b.n) + '">' +
+      '<article class="book' + (opening ? " opening" : "") + '" aria-label="' + esc(b.n) + '">' +
       '<div class="cover" style="background:var(' + g.c + ')"><div class="series">' + esc(s.name + " · " + g.name) + ' · ' + (pos + 1) + ' / ' + order.length + '</div><h2>' + esc(b.n) + '</h2>' +
       '<div class="item">' + esc(b.reg) + ' · ' + esc(b.item) + '</div><div class="one">' + esc(b.one) + '</div>' +
       '<div class="foot"><span class="conf">' + chips[b.conf] + '</span><br><br>충청권 반도체 협력사 기술조사서<br>2026.10.31 기준</div></div>' +
       '<div class="leaf"><nav class="tabs" aria-label="이 책의 목차">' + P.map(function (p, k) { return '<button type="button" data-p="' + k + '"' + (k === cur.p ? ' aria-current="page"' : "") + ">" + (k + 1) + ". " + esc(p[0]) + "</button>"; }).join("") + '</nav>' +
-      '<div class="page" id="pg">' + P[cur.p][1] + '</div>' +
+      '<div class="page' + (dir ? " " + dir : "") + '" id="pg">' + P[cur.p][1] + '</div>' +
       '<div class="folio"><button class="btn" id="pp" type="button"' + (cur.p === 0 ? " disabled" : "") + '>‹ 앞쪽</button><span>' + (cur.p + 1) + ' / ' + P.length + ' 쪽</span><button class="btn" id="np" type="button"' + (cur.p === P.length - 1 ? " disabled" : "") + '>뒤쪽 ›</button></div></div></article></div>';
     app.innerHTML = h;
     document.getElementById("home").onclick = function () { location.hash = ""; };
     document.getElementById("pb").onclick = function () { go(order[pos - 1]); };
     document.getElementById("nb").onclick = function () { go(order[pos + 1]); };
-    document.getElementById("pp").onclick = function () { cur.p--; renderBook(); };
-    document.getElementById("np").onclick = function () { cur.p++; renderBook(); };
-    app.querySelectorAll(".tabs button").forEach(function (el) { el.onclick = function () { cur.p = +el.dataset.p; renderBook(); }; });
+    document.getElementById("pp").onclick = function () { turn(cur.p - 1); };
+    document.getElementById("np").onclick = function () { turn(cur.p + 1); };
+    app.querySelectorAll(".tabs button").forEach(function (el) { el.onclick = function () { var p = +el.dataset.p; if (p !== cur.p) turn(p); }; });
+    opening = false; dir = "";
   }
   function go(i) { location.hash = "b" + i; }
   function route() {
     var m = /^#b(\d+)$/.exec(location.hash);
     if (m && B[+m[1]]) {
       var i = +m[1];
-      if (i !== cur.i) cur.p = 0;
-      cur.i = i; renderBook(); window.scrollTo(0, 0);
-    } else { renderShelf(); }
+      if (i !== cur.i || view !== "book") { cur.p = 0; opening = true; }
+      cur.i = i; view = "book"; renderBook(); window.scrollTo(0, 0);
+    } else {
+      if (view === "book") lastBook = cur.i;
+      view = "shelf"; renderShelf();
+    }
   }
   window.addEventListener("scroll", function () { if (!location.hash) { try { sessionStorage.setItem("shelfY", String(window.scrollY)); } catch (e) {} } });
   window.addEventListener("hashchange", route);
   document.addEventListener("keydown", function (e) {
     if (!/^#b\d+$/.test(location.hash) || /input|select|textarea/i.test(e.target.tagName)) return;
     var P = pagesOf(B[cur.i]);
-    if (e.key === "ArrowRight" && cur.p < P.length - 1) { cur.p++; renderBook(); }
-    if (e.key === "ArrowLeft" && cur.p > 0) { cur.p--; renderBook(); }
+    if (e.key === "ArrowRight" && cur.p < P.length - 1) turn(cur.p + 1);
+    if (e.key === "ArrowLeft" && cur.p > 0) turn(cur.p - 1);
     if (e.key === "Escape") location.hash = "";
   });
   route();
