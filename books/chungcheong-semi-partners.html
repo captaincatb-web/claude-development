@@ -126,7 +126,31 @@ dl.facts dd { margin: 0; }
 .ctx { background: var(--accent-soft); border-radius: 4px; padding: 10px 14px; font-size: 14px; margin: 0 0 12px; max-width: 64ch; }
 .empty { color: var(--muted); font-style: italic; }
 .src li { font-size: 13.5px; }
-.rep { border-left: 3px solid var(--accent); padding: 2px 0 2px 14px; margin: 0 0 18px; max-width: 64ch; }
+/* 조밀한 배치: 리포트는 넓은 화면에서 2열, 표지 그림, 즐겨찾기, 보기 전환, 공정 지도 */
+.reps { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px 18px; }
+.rep { border-left: 3px solid var(--accent); padding: 2px 0 2px 12px; margin: 0; min-width: 0; font-size: 14px; line-height: 1.6; }
+.rep li { margin-bottom: 2px; }
+.cover .art { width: 100%; max-width: 320px; height: auto; color: #fff; margin-top: 4px; opacity: .92; }
+.book.opening .cover .art { animation: fadeUp .6s .5s ease both; }
+.spine .star { font-size: 11px; line-height: 1; margin-bottom: 4px; }
+.btn.fav[aria-pressed="true"] { border-color: var(--mid); color: var(--mid); }
+.views { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; margin: 6px 0 0; }
+.views a { padding: 6px 14px; text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 600; background: var(--paper); }
+.views a[aria-current="page"] { background: var(--accent); color: var(--paper); }
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-top: 16px; counter-reset: st; }
+.stage { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 12px 12px 10px; min-width: 0; position: relative; }
+.stage.infra { margin-top: 10px; background: var(--wall); }
+.st-h { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.st-h b { font-family: var(--serif); font-size: 1.05rem; }
+.st-n { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: var(--paper); font-size: 12px; font-weight: 700; flex: none; }
+.st-en { font-size: 11.5px; letter-spacing: .06em; color: var(--muted); }
+.stage p { font-size: 13px; color: var(--muted); margin: 4px 0 8px; }
+.chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.mchip { display: inline-flex; align-items: center; gap: 6px; border-radius: 4px; padding: 3px 8px; font-size: 13px; font-weight: 600; text-decoration: none; color: var(--spine-fg); background: var(--c); }
+.mchip small { font-weight: 400; opacity: .8; font-size: 11px; }
+.mchip .d { width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--spine-fg); flex: none; }
+.mchip .d.A { background: var(--spine-fg); } .mchip .d.B { background: linear-gradient(90deg, var(--spine-fg) 50%, transparent 50%); }
+.mchip:hover, .mchip:focus-visible { filter: brightness(1.12); outline: 2px solid var(--accent); outline-offset: 1px; }
 .rep-h { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; font-size: 14px; margin-bottom: 4px; }
 .rep-h span { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
 .rep-h .tp { color: var(--fg); background: var(--accent-soft); padding: 0 6px; border-radius: 3px; }
@@ -626,6 +650,55 @@ dl.facts dd { margin: 0; }
   var seq = {};
   B.forEach(function (b) { var gx = GX[b.g]; seq[b.g] = (seq[b.g] || 0) + 1; b.code = gx.code + "-" + (seq[b.g] < 10 ? "0" : "") + seq[b.g]; });
 
+  /* 표지 그림: 품목군 motif → SVG(흰 선, viewBox 200x130). 회사 코드로 시드를 고정해 새로고침해도 같은 그림 */
+  function rnd(seed) { return function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }; }
+  function seedOf(s) { var h = 7; for (var k = 0; k < s.length; k++) h = (h * 31 + s.charCodeAt(k)) % 2147483647; return h || 1; }
+  var MOTIF = {
+    pre: function (r) { var g = "", y; for (var k = 0; k < 6; k++) { y = 112 - k * 7; g += '<rect x="20" y="' + y + '" width="160" height="5" rx="1" fill="#fff" fill-opacity="' + (0.15 + k * 0.1).toFixed(2) + '"/>'; }
+      var x0 = 40 + r() * 20, pts = [[x0, 40], [x0 + 22, 28], [x0 + 44, 40], [x0 + 66, 28], [x0 + 88, 40], [x0 + 110, 28]];
+      pts.forEach(function (p, i) { if (i) g += '<line x1="' + pts[i - 1][0] + '" y1="' + pts[i - 1][1] + '" x2="' + p[0] + '" y2="' + p[1] + '" stroke="#fff" stroke-width="1.5"/>'; g += '<line x1="' + p[0] + '" y1="' + p[1] + '" x2="' + p[0] + '" y2="' + (p[1] + 34 + r() * 10) + '" stroke="#fff" stroke-opacity=".35" stroke-dasharray="2 3"/>'; });
+      pts.forEach(function (p, i) { g += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + (i % 2 ? 5 : 7) + '" fill="none" stroke="#fff" stroke-width="1.5"/>'; }); return g; },
+    gas: function (r) { var g = ""; [40, 75, 110].forEach(function (x) { g += '<rect x="' + (x - 11) + '" y="48" width="22" height="66" rx="10" fill="none" stroke="#fff" stroke-width="1.5"/><rect x="' + (x - 4) + '" y="38" width="8" height="10" fill="none" stroke="#fff" stroke-width="1.5"/>'; });
+      for (var k = 0; k < 18; k++) g += '<circle cx="' + (130 + r() * 55).toFixed(1) + '" cy="' + (20 + r() * 90).toFixed(1) + '" r="' + (1.5 + r() * 4).toFixed(1) + '" fill="none" stroke="#fff" stroke-opacity="' + (0.4 + r() * 0.6).toFixed(2) + '"/>'; return g; },
+    pr: function (r) { var g = '<ellipse cx="100" cy="108" rx="78" ry="14" fill="none" stroke="#fff" stroke-width="1.5"/><rect x="50" y="44" width="100" height="6" fill="#fff" fill-opacity=".5"/>';
+      for (var k = 0; k < 9; k++) { var x = 56 + k * 11; g += '<line x1="' + x + '" y1="10" x2="' + x + '" y2="44" stroke="#fff" stroke-opacity=".6"/>'; if (r() > 0.35) g += '<line x1="' + x + '" y1="50" x2="' + (x + (x - 100) * 0.12).toFixed(1) + '" y2="104" stroke="#fff" stroke-opacity=".85" stroke-width="1.2"/>'; } return g; },
+    wf: function (r) { var g = '<circle cx="100" cy="65" r="56" fill="none" stroke="#fff" stroke-width="1.6"/><path d="M92 121h16" stroke="#fff" stroke-width="3"/>', s = 11;
+      for (var x = 50; x < 150; x += s) for (var y = 15; y < 115; y += s) { var cx = x + s / 2 - 100, cy = y + s / 2 - 65; if (cx * cx + cy * cy < 47 * 47) g += '<rect x="' + (x + 1) + '" y="' + (y + 1) + '" width="' + (s - 2) + '" height="' + (s - 2) + '" fill="#fff" fill-opacity="' + (r() > 0.88 ? 0.75 : 0.18) + '"/>'; } return g; },
+    sub: function (r) { var g = "", c = ["", ".55", ".35", ".55", ".35"]; for (var k = 0; k < 5; k++) g += '<rect x="30" y="' + (46 + k * 9) + '" width="140" height="7" fill="#fff" fill-opacity="' + (k ? c[k] : ".85") + '"/>';
+      g += '<rect x="70" y="24" width="60" height="18" rx="2" fill="none" stroke="#fff" stroke-width="1.5"/>';
+      for (var x = 38; x <= 162; x += 12) g += '<circle cx="' + x + '" cy="98" r="4.2" fill="none" stroke="#fff" stroke-width="1.3"/>';
+      for (var v = 0; v < 6; v++) { var vx = 40 + r() * 120; g += '<line x1="' + vx.toFixed(1) + '" y1="46" x2="' + vx.toFixed(1) + '" y2="89" stroke="#fff" stroke-opacity=".8"/>'; } return g; },
+    test: function (r) { var g = '<rect x="20" y="104" width="160" height="8" fill="#fff" fill-opacity=".3"/><rect x="40" y="14" width="120" height="16" rx="2" fill="none" stroke="#fff" stroke-width="1.5"/>';
+      for (var k = 0; k < 13; k++) { var x = 46 + k * 9, tx = 52 + k * 8; g += '<path d="M' + x + ' 30 L' + tx + ' 98" stroke="#fff" stroke-width="1.1"/><rect x="' + (tx - 2.5) + '" y="99" width="5" height="4" fill="#fff" fill-opacity="' + (r() > 0.2 ? 0.9 : 0.3) + '"/>'; } return g; },
+    cons: function (r) { var g = '<circle cx="100" cy="66" r="50" fill="none" stroke="#fff" stroke-width="7" stroke-opacity=".85"/><circle cx="100" cy="66" r="36" fill="none" stroke="#fff" stroke-opacity=".5"/><circle cx="100" cy="66" r="30" fill="#fff" fill-opacity=".12"/>';
+      for (var k = 0; k < 10; k++) { var a = r() * 6.28, rr = 58 + r() * 10; g += '<path d="M' + (100 + Math.cos(a) * rr).toFixed(1) + ' ' + (66 + Math.sin(a) * rr).toFixed(1) + ' q4 -6 8 0" fill="none" stroke="#fff" stroke-opacity=".6"/>'; } return g; },
+    proc: function (r) { var g = '<path d="M40 104h120v-26l-20-14H60L40 78z" fill="none" stroke="#fff" stroke-width="1.5"/><path d="M100 18v16M88 22l12 12 12-12" fill="none" stroke="#fff" stroke-width="1.5"/>';
+      for (var k = 0; k < 26; k++) { var x = 60 + r() * 80, y = 40 + r() * 22; g += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="1.3" fill="#fff" fill-opacity="' + (0.4 + r() * 0.6).toFixed(2) + '"/>'; }
+      return g + '<path d="M60 64h80" stroke="#fff" stroke-width="3" stroke-opacity=".7"/>'; },
+    eqg: function (r) { var g = '<path d="M14 26h172" stroke="#fff" stroke-width="2.5"/>', bx = 40 + r() * 80;
+      g += '<rect x="' + bx.toFixed(1) + '" y="28" width="34" height="14" rx="2" fill="#fff" fill-opacity=".8"/><line x1="' + (bx + 17).toFixed(1) + '" y1="42" x2="' + (bx + 17).toFixed(1) + '" y2="58" stroke="#fff"/><rect x="' + (bx + 6).toFixed(1) + '" y="58" width="22" height="16" rx="2" fill="none" stroke="#fff" stroke-width="1.4"/>';
+      [26, 78, 130].forEach(function (x) { g += '<rect x="' + x + '" y="84" width="44" height="30" rx="2" fill="none" stroke="#fff" stroke-width="1.4"/><rect x="' + (x + 6) + '" y="90" width="14" height="8" fill="#fff" fill-opacity=".35"/>'; }); return g; }
+  };
+  function coverArt(b) { return '<svg class="art" viewBox="0 0 200 130" aria-hidden="true" focusable="false">' + MOTIF[b.g](rnd(seedOf(b.code + b.n))) + "</svg>"; }
+
+  /* 공정 지도: 공정 흐름 순서로 협력사를 배치(같은 회사가 여러 단계에 나올 수 있음) */
+  var MAP = [
+    ["웨이퍼", "Wafer", "모든 공정이 올라가는 기판과 테스트용 재생 웨이퍼", ["GlobalWafers (MEMC코리아)", "에이텍솔루션"]],
+    ["노광", "Lithography", "마스크의 회로를 감광막에 옮기는 단계", ["JSR", "NCK", "FFEM", "Qnity", "㈜피케이엘"]],
+    ["식각·세정", "Etch & Clean", "필요 없는 막을 깎고 씻어내는 단계", ["솔브레인", "원익머트리얼즈", "티이엠씨", "솔머티리얼즈", "효성네오켐", "다이킨첨단머티리얼즈", "칸토덴카", "㈜케이씨인더스트리얼"]],
+    ["증착·배선", "Deposition", "원자 단위로 막을 쌓고 금속 배선을 만드는 단계", ["덕산테코피아", "레이크머티리얼즈", "디엔에프", "Merck (한국머크)", "Nippon Sanso Matheson", "린데", "Solstice"]],
+    ["CMP", "Planarization", "쌓은 막을 갈아 평평하게 만드는 단계", ["FNSTech (에프엔에스테크)", "Qnity", "FFEM", "솔브레인"]],
+    ["테스트", "Test", "웨이퍼와 패키지에서 불량 칩을 가르는 단계", ["와이씨", "TSE", "피엠티", "엑시콘", "제이티"]],
+    ["패키징", "Packaging", "칩을 기판에 올리고 쌓아 완성하는 단계", ["삼성전기", "심텍", "LG화학", "AMMK", "삼화전기"]]
+  ];
+  var MAP_INFRA = ["팹 인프라·장비 부품", "Fab Infra & Parts", "전 공정을 떠받치는 가스·초순수·진공·물류와 장비 소모 부품",
+    ["에어리퀴드코리아", "에어프로덕츠코리아", "쿠리타한수", "EDWARDS", "세메스", "디에스테크노", "영신쿼츠", "와이컴", "이노레스", "GT", "한솔아이원스", "거성"]];
+
+  /* 즐겨찾기: 이 브라우저에만 저장 */
+  var FKEY = "semiPartners:fav:v1", fav = {};
+  try { (JSON.parse(localStorage.getItem(FKEY) || "[]") || []).forEach(function (n) { fav[n] = 1; }); } catch (e) {}
+  function saveFav() { try { localStorage.setItem(FKEY, JSON.stringify(Object.keys(fav))); } catch (e) {} }
+
   var groupOf = {}, shelfOf = {};
   shelves.forEach(function (s) { s.groups.forEach(function (g) { groupOf[g.id] = g; shelfOf[g.id] = s; }); });
   var order = [];
@@ -642,7 +715,8 @@ dl.facts dd { margin: 0; }
     var h = '<div class="kicker">기술조사서 · 2026.10.31 기준</div><h1>충청권 반도체 협력사 기술조사서</h1>' +
       '<p class="lede">협력사 46행(중복 1곳 제외 45개 사)을 품목별 책장에 꽂았습니다. 책등을 누르면 회사 한 권이 열립니다.</p>' +
       '<div class="legend"><span><span class="chip A">자료 확인</span> ' + cnt.A + '개 사</span><span><span class="chip B">부분 확인</span> ' + cnt.B + '개 사</span><span><span class="chip C">미검증</span> ' + cnt.C + '개 사</span><span style="color:var(--muted)">책등의 점: 꽉 참 = 확인, 반 = 부분, 빈 원 = 미검증</span></div>' +
-      '<div class="tools"><input id="q" type="search" placeholder="회사명·지역·품목으로 찾기" aria-label="책 찾기"><select id="fc" aria-label="신뢰도"><option value="">신뢰도 전체</option><option value="A">자료 확인</option><option value="B">부분 확인</option><option value="C">미검증</option></select></div>' +
+      viewTabs("shelf") +
+      '<div class="tools"><input id="q" type="search" placeholder="회사명·지역·품목으로 찾기" aria-label="책 찾기"><select id="fc" aria-label="신뢰도"><option value="">신뢰도 전체</option><option value="A">자료 확인</option><option value="B">부분 확인</option><option value="C">미검증</option><option value="F">★ 즐겨찾기만</option></select></div>' +
       '<div class="case">';
     shelves.forEach(function (s) {
       h += '<section class="shelf"><h2>' + esc(s.name) + '</h2><p class="cap">' + esc(s.cap) + '</p><div class="row">';
@@ -653,7 +727,7 @@ dl.facts dd { margin: 0; }
           var pages = (b.tech.length + b.mkt.length + b.facts.length + b.watch.length);
           var ht = 150 + Math.min(pages, 14) * 7;
           h += '<button class="spine" type="button" data-i="' + i + '" data-q="' + esc((b.n + " " + b.reg + " " + b.item).toLowerCase()) + '" data-c="' + b.conf + '" style="height:' + ht + 'px;background:var(' + g.c + ')" aria-label="' + esc(b.n + ", " + b.item + ", " + chips[b.conf]) + '">' +
-            '<span class="band" style="top:6px"></span><span class="code">' + esc(b.code) + '</span><span class="t">' + esc(b.n.replace(/\s*\(.*\)$/, "")) + '</span><span class="i">' + esc(b.item) + '</span><span class="d ' + b.conf + '"></span><span class="band" style="bottom:22px"></span></button>';
+            '<span class="band" style="top:6px"></span>' + (fav[b.n] ? '<span class="star" aria-label="즐겨찾기">★</span>' : '') + '<span class="code">' + esc(b.code) + '</span><span class="t">' + esc(b.n.replace(/\s*\(.*\)$/, "")) + '</span><span class="i">' + esc(b.item) + '</span><span class="d ' + b.conf + '"></span><span class="band" style="bottom:22px"></span></button>';
         });
         h += '</div>';
       });
@@ -676,13 +750,34 @@ dl.facts dd { margin: 0; }
     var q = document.getElementById("q"), fc = document.getElementById("fc");
     function filt() {
       var v = q.value.trim().toLowerCase(), c = fc.value;
-      app.querySelectorAll(".spine").forEach(function (el) { el.hidden = !!((v && el.dataset.q.indexOf(v) < 0) || (c && el.dataset.c !== c)); });
+      app.querySelectorAll(".spine").forEach(function (el) { var n = B[+el.dataset.i].n; el.hidden = !!((v && el.dataset.q.indexOf(v) < 0) || (c === "F" ? !fav[n] : (c && el.dataset.c !== c))); });
     }
     q.addEventListener("input", filt); fc.addEventListener("change", filt);
     try { var st = sessionStorage.getItem("shelfY"); if (st) window.scrollTo(0, +st); } catch (e) {}
   }
 
+  function viewTabs(cur) {
+    return '<nav class="views" aria-label="보기 전환"><a href="#"' + (cur === "shelf" ? ' aria-current="page"' : "") + '>책장</a><a href="#map"' + (cur === "map" ? ' aria-current="page"' : "") + '>공정 지도</a></nav>';
+  }
+  function idxOf(name) { for (var k = 0; k < B.length; k++) if (B[k].n === name && !B[k].ref) return k; return -1; }
+  function chip(name) {
+    var i = idxOf(name); if (i < 0) return "";
+    var b = B[i], g = groupOf[b.g];
+    return '<a class="mchip" href="#b' + i + '" style="--c:var(' + g.c + ')"><span class="d ' + b.conf + '"></span>' + esc(b.n.replace(/\s*\(.*\)$/, "")) + '<small>' + esc(b.item) + "</small></a>";
+  }
+  function renderMap() {
+    var h = '<div class="kicker">기술조사서 · 2026.10.31 기준</div><h1>충청권 반도체 협력사 기술조사서</h1>' +
+      '<p class="lede">협력사를 반도체 공정 순서에 놓았습니다. 한 회사가 여러 단계에 걸치면 각 단계에 모두 표시했습니다. 이름을 누르면 그 회사 책이 열립니다.</p>' + viewTabs("map") +
+      '<div class="flow">';
+    MAP.forEach(function (st, k) {
+      h += '<section class="stage"><div class="st-h"><span class="st-n">' + (k + 1) + '</span><b>' + esc(st[0]) + '</b><span class="st-en">' + esc(st[1]) + '</span></div><p>' + esc(st[2]) + '</p><div class="chips">' + st[3].map(chip).join("") + "</div></section>";
+    });
+    h += '</div><section class="stage infra"><div class="st-h"><span class="st-n">∞</span><b>' + esc(MAP_INFRA[0]) + '</b><span class="st-en">' + esc(MAP_INFRA[1]) + '</span></div><p>' + esc(MAP_INFRA[2]) + '</p><div class="chips">' + MAP_INFRA[3].map(chip).join("") + "</div></section>";
+    app.innerHTML = h;
+  }
+
   /* 펼친 책 */
+  var homeView = "shelf";
   var cur = { i: 0, p: 0 }, view = "", opening = false, dir = "", busy = false, lastBook = null;
   function reduced() { try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } }
   function turn(p) { dir = p > cur.p ? "fwd" : "back"; cur.p = p; renderBook(); }
@@ -705,11 +800,13 @@ dl.facts dd { margin: 0; }
     var rh = "<h3>증권사·기관 리포트</h3>";
     if (reps.length) {
       rh += '<p class="empty" style="font-style:normal">리포트 원문이나 리포트를 정리한 기사에서 옮긴 요약입니다. 목표가와 추정치는 발간 시점 기준이며 투자 권유가 아닙니다.</p>';
+      rh += '<div class="reps">';
       reps.forEach(function (r) {
         var s = S[r.s];
         rh += '<div class="rep"><div class="rep-h"><b>' + esc(r.by) + '</b><span>' + esc(r.date) + '</span><span class="tp">' + esc(r.tp) + '</span></div>' + list(r.pts) +
           (s ? '<a class="rep-s" href="' + s[1] + '" target="_blank" rel="noopener">' + esc(s[0]) + "</a>" : "") + "</div>";
       });
+      rh += "</div>";
     } else {
       rh += '<p class="empty">찾은 증권사 리포트가 없습니다. 비상장사·외국계 법인이거나 커버리지가 없는 회사입니다.</p>';
     }
@@ -724,20 +821,22 @@ dl.facts dd { margin: 0; }
     var b = B[cur.i], g = groupOf[b.g], s = shelfOf[b.g], P = pagesOf(b);
     if (cur.p >= P.length) cur.p = P.length - 1;
     var pos = order.indexOf(cur.i);
-    var h = '<div class="bookview"><div class="bar"><button class="btn" id="home" type="button">← 책장으로</button><span class="spacer"></span>' +
+    var h = '<div class="bookview"><div class="bar"><button class="btn" id="home" type="button">← ' + (homeView === "map" ? "공정 지도로" : "책장으로") + '</button>' +
+      '<button class="btn fav" id="fav" type="button" aria-pressed="' + (fav[b.n] ? "true" : "false") + '">' + (fav[b.n] ? "★ 즐겨찾기" : "☆ 즐겨찾기") + '</button><span class="spacer"></span>' +
       '<button class="btn" id="pb" type="button"' + (pos <= 0 ? " disabled" : "") + '>이전 책</button>' +
       '<button class="btn" id="nb" type="button"' + (pos >= order.length - 1 ? " disabled" : "") + '>다음 책</button></div>' +
       '<article class="book' + (opening ? " opening" : "") + '" aria-label="' + esc(b.n) + '">' +
       '<div class="cover" style="background:var(' + g.c + ')"><div class="series"><b>' + esc(b.code) + '</b> · ' + esc(s.name + " · " + g.name) + ' · ' + (pos + 1) + ' / ' + order.length + '</div><h2>' + esc(b.n) + '</h2>' +
       '<div class="head">' + esc(GX[b.g].head) + '</div>' +
       '<div class="item">' + esc(b.reg) + ' · ' + esc(b.item) + '</div><div class="one">' + esc(b.one) + '</div>' +
-      '<div class="topics">' + GX[b.g].topics.map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") + '</div>' +
+      '<div class="topics">' + GX[b.g].topics.map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") + '</div>' + coverArt(b) +
       '<div class="foot"><span class="conf">' + chips[b.conf] + '</span><br><br>충청권 반도체 협력사 기술조사서<br>2026.10.31 기준</div></div>' +
       '<div class="leaf"><nav class="tabs" aria-label="이 책의 목차">' + P.map(function (p, k) { return '<button type="button" data-p="' + k + '"' + (k === cur.p ? ' aria-current="page"' : "") + ">" + (k + 1) + ". " + esc(p[0]) + "</button>"; }).join("") + '</nav>' +
       '<div class="page' + (dir ? " " + dir : "") + '" id="pg">' + P[cur.p][1] + '</div>' +
       '<div class="folio"><button class="btn" id="pp" type="button"' + (cur.p === 0 ? " disabled" : "") + '>‹ 앞쪽</button><span>' + (cur.p + 1) + ' / ' + P.length + ' 쪽</span><button class="btn" id="np" type="button"' + (cur.p === P.length - 1 ? " disabled" : "") + '>뒤쪽 ›</button></div></div></article></div>';
     app.innerHTML = h;
-    document.getElementById("home").onclick = function () { location.hash = ""; };
+    document.getElementById("home").onclick = function () { location.hash = homeView === "map" ? "map" : ""; };
+    document.getElementById("fav").onclick = function () { if (fav[b.n]) delete fav[b.n]; else fav[b.n] = 1; saveFav(); var on = !!fav[b.n]; this.setAttribute("aria-pressed", on ? "true" : "false"); this.textContent = on ? "★ 즐겨찾기" : "☆ 즐겨찾기"; };
     document.getElementById("pb").onclick = function () { go(order[pos - 1]); };
     document.getElementById("nb").onclick = function () { go(order[pos + 1]); };
     document.getElementById("pp").onclick = function () { turn(cur.p - 1); };
@@ -752,9 +851,11 @@ dl.facts dd { margin: 0; }
       var i = +m[1];
       if (i !== cur.i || view !== "book") { cur.p = 0; opening = true; }
       cur.i = i; view = "book"; renderBook(); window.scrollTo(0, 0);
+    } else if (location.hash === "#map") {
+      homeView = "map"; view = "map"; renderMap(); window.scrollTo(0, 0);
     } else {
       if (view === "book") lastBook = cur.i;
-      view = "shelf"; renderShelf();
+      homeView = "shelf"; view = "shelf"; renderShelf();
     }
   }
   window.addEventListener("scroll", function () { if (!location.hash) { try { sessionStorage.setItem("shelfY", String(window.scrollY)); } catch (e) {} } });
