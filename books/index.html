@@ -6,7 +6,7 @@
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
 <body>
-<title>소부품 회사</title>
+<title>실리콘 서재</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@500;700&display=swap">
 <style>
@@ -52,7 +52,7 @@ h1 { font-family: var(--serif); font-size: 1.95rem; line-height: 1.3; margin: 0 
 .shelf h2 { font-family: var(--serif); font-size: 1.2rem; margin: 0; }
 .shelf .cap { font-size: 13.5px; color: var(--muted); margin: 2px 0 10px; max-width: 80ch; }
 .row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 4px; padding: 0 6px; min-height: 40px; border-bottom: 12px solid var(--board); box-shadow: 0 3px 0 var(--board-edge); }
-.grp { display: flex; align-items: flex-end; gap: 3px; margin-right: 14px; }
+.grp { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 3px; margin-right: 14px; min-width: 0; max-width: 100%; }
 .grp-l { writing-mode: vertical-rl; font-size: 11px; letter-spacing: .1em; color: var(--muted); padding: 0 2px 6px; align-self: flex-end; }
 .spine { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: space-between;
   width: 44px; padding: 10px 0 8px; border: 0; border-radius: 3px 3px 0 0; color: var(--spine-fg); cursor: pointer; font: inherit;
@@ -131,6 +131,39 @@ ul.rel a { text-decoration: none; }
 dl.facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 16px; margin: 4px 0 14px; font-size: 14px; }
 dl.facts dt { color: var(--muted); }
 dl.facts dd { margin: 0; }
+.sub-t { margin: -4px 0 10px; color: var(--muted); font-size: 14.5px; letter-spacing: .02em; }
+.sec-t { font-family: var(--serif); font-size: 1.3rem; margin: 26px 0 2px; }
+.lvrow { display: grid; grid-template-columns: 52px 1fr; gap: 10px; margin: 12px 0; align-items: start; }
+.lv { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 2px 7px; border-radius: 3px; margin-right: 8px; vertical-align: 2px; background: var(--ok-bg); color: var(--ok); }
+.lv.실무 { background: var(--mid-bg); color: var(--mid); } .lv.심화 { background: var(--low-bg); color: var(--low); }
+.lvrow > .lv { margin-top: 10px; text-align: center; }
+.pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; min-width: 0; }
+.pcard { display: grid; gap: 3px; padding: 12px 14px; background: var(--paper); border: 1px solid var(--line); border-radius: 6px; text-decoration: none; color: var(--fg); position: relative; }
+.pcard:hover, .pcard:focus-visible { border-color: var(--accent); outline: none; }
+.pcard .pn { position: absolute; right: 12px; top: 10px; color: var(--muted); font-size: 12px; }
+.pcard small { color: var(--muted); font-size: 12px; } .pcard span:not(.pn) { font-size: 13.5px; line-height: 1.5; }
+.pcard em { font-style: normal; font-size: 12px; color: var(--accent); }
+.kchips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+.kchip { font-size: 13px; padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; text-decoration: none; color: var(--fg); background: var(--paper); }
+.kchip.p { border-color: var(--accent); color: var(--accent); }
+.kchip:hover, .kchip:focus-visible { background: var(--accent-soft); outline: none; }
+.hits { margin: 6px 0 12px; font-size: 14px; } .hits .kchips { margin-top: 6px; }
+.crumb { font-size: 13px; color: var(--muted); margin: 14px 0 0; } .crumb a { color: var(--accent); }
+.ttl { font-family: var(--serif); font-size: 1.6rem; margin: 4px 0 6px; } .ttl small { font-size: 14px; color: var(--muted); font-family: var(--sans); }
+.note { font-size: 13px; color: var(--muted); background: var(--accent-soft); padding: 8px 12px; border-radius: 4px; max-width: 72ch; }
+.tsec { border-top: 1px solid var(--line); padding: 12px 0 4px; max-width: 900px; } .tsec h3 { font-size: 1.05rem; margin: 0 0 8px; }
+.tsec p, .tsec li { max-width: 72ch; }
+.steps { padding-left: 1.4em; margin: 0; } .steps li { margin: 3px 0; }
+.tri { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; } .tri.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.tri b { font-size: 13px; color: var(--accent); } .tri ul { margin: 4px 0 0; padding-left: 1.1em; font-size: 14px; }
+.pnav { display: flex; justify-content: space-between; gap: 10px; margin: 18px 0 30px; } .pnav a { color: var(--accent); font-weight: 600; text-decoration: none; }
+@media (max-width: 760px) { .tri, .tri.two { grid-template-columns: 1fr; } .lvrow { grid-template-columns: 1fr; } .lvrow > .lv { justify-self: start; margin-top: 0; } }
+.txc { border-left: 3px solid var(--accent); padding: 2px 0 2px 14px; margin: 0 0 18px; max-width: 64ch; }
+.txc h4 { margin: 0 0 6px; font-size: 1.05rem; }
+.txc p { margin: 0 0 6px; }
+.txc b { color: var(--accent); font-weight: 600; margin-right: 4px; }
+.txc ul { margin: 0 0 6px; }
+.txr { color: var(--muted); }
 .ctx { background: var(--accent-soft); border-radius: 4px; padding: 10px 14px; font-size: 14px; margin: 0 0 12px; max-width: 64ch; }
 .empty { color: var(--muted); font-style: italic; }
 .src li { font-size: 13.5px; }
@@ -723,6 +756,285 @@ dl.facts dd { margin: 0; }
   ].concat(REP["TSE"] || []);
   REP["FNSTech"] = [{ by: "SK증권", date: "2026.03.17", tp: "매수, 목표가 3만 원", s: "x_fn", pts: ["2025년 매출 737억 원, 영업이익 105억 원. 램프·CMP 패드 등 소재·부품이 고성장", "2026년 매출 903억 원, 영업이익 192억 원 전망", "아사히램프 연결 효과, HBM·첨단공정 CMP 패드 수요, 유리기판 신사업"] }];
 
+  /* 제품 기술 해설: 품목별 일반 기술 설명(교과서 수준). t 제목, w 무엇인가, h 원리, p 공정 위치, k 핵심 기술, r 트렌드 */
+  var TX = {
+    pre: { t: "ALD·CVD 전구체", w: "웨이퍼 위에 원하는 박막을 쌓기 위해 기체 상태로 챔버에 넣는 금속·실리콘 유기화합물입니다.",
+      h: "ALD(원자층증착)는 전구체 주입 → 퍼지 → 반응가스(O3·H2O·NH3) 주입 → 퍼지를 반복해 한 사이클에 원자 1층 두께(약 0.1nm)씩 막을 쌓습니다. 표면에서만 반응하는 자기제한 반응이라 깊은 홈 안쪽까지 두께가 균일합니다.",
+      p: "증착(Deposition): 커패시터 유전막, 게이트 절연막, 스페이서, 3D NAND 워드라인·채널",
+      k: ["High-k 전구체(Hf·Zr 계열): DRAM 커패시터와 로직 게이트용 고유전율 막", "실리콘 전구체(HCDS, DIPAS, BDEAS 등): 질화막·산화막, 저온 공정용", "금속 전구체(W·Mo·Ru·Co): 배선·워드라인. 3D NAND에서 Mo가 W를 대체 중", "핵심 경쟁력: 99.9999%(6N) 이상 순도, 금속 불순물 ppb 관리, 증기압·열안정성, 용기·공급 시스템"],
+      r: "로직 2nm 이하 GAA, DRAM 10nm급, 3D NAND 300단 이상으로 갈수록 ALD 공정 수와 신규 분자 수요가 늘어납니다." },
+    etch: { t: "고선택비 식각액·습식 케미칼", w: "웨이퍼의 특정 막만 녹여내거나 오염을 씻어내는 고순도 액체 화학물질입니다.",
+      h: "3D NAND에서는 인산 기반 식각액으로 질화막(SiN)만 녹이고 산화막(SiO2)은 남겨야 합니다. 이때 두 막을 녹이는 속도의 비율이 선택비이고, 첨가제로 이 값을 수백 대 1 이상으로 높입니다.",
+      p: "식각·세정(Etch/Clean): 3D NAND 질화막 제거, 산화막 식각(BOE·HF), 세정(SC1·SC2)",
+      k: ["선택비와 식각 균일도", "금속 이온·파티클 ppt(1조분의 1) 수준 관리", "고객 공정별 맞춤 배합과 공급 안정성"],
+      r: "NAND 단수가 높아질수록 깊은 구조 안쪽까지 균일하게 식각하는 능력이 중요해집니다." },
+    gasEtch: { t: "식각·세정용 불화가스", w: "플라즈마 식각과 챔버 세정에 쓰는 불소 화합물 가스입니다. NF3, CF4, C4F6, C4F8, WF6, SF6 등이 있습니다.",
+      h: "챔버 안에서 플라즈마로 가스를 분해하면 불소 라디칼이 생기고, 이 라디칼이 실리콘·산화막과 반응해 휘발성 물질(SiF4 등)로 날려 보냅니다. NF3는 CVD 챔버 벽에 쌓인 막을 청소하는 데 가장 많이 쓰입니다.",
+      p: "식각(Etch), CVD 챔버 세정, 텅스텐 증착(WF6)",
+      k: ["5N~6N 고순도 정제와 수분·금속 불순물 제어", "C4F6 같은 고종횡비 식각용 가스", "고압 용기 충전·운송·실린더 관리"],
+      r: "적층 구조가 깊어지며 식각 공정 수가 늘고, 온실가스 규제로 지구온난화지수(GWP)가 낮은 대체 가스 개발이 진행 중입니다." },
+    gasDep: { t: "증착·도핑용 특수가스", w: "막을 만드는 원료가스(SiH4, NH3, N2O, DCS)와 불순물을 넣는 도핑가스(B2H6, PH3, AsH3)입니다.",
+      h: "CVD 챔버에서 열이나 플라즈마로 분해돼 웨이퍼 위에 실리콘·질화막·산화막을 만듭니다. 도핑가스는 이온주입기에서 이온화해 실리콘 안에 전기적 성질을 바꾸는 원소를 넣습니다.",
+      p: "증착(CVD), 이온주입(Implant), 에피택시",
+      k: ["독성·폭발성 가스의 안전 충전과 공급(가스캐비닛, 배관)", "ppb급 불순물 분석", "혼합가스의 정밀 농도 제어"],
+      r: "공정이 미세해질수록 순도 요구가 높아지고 현지 생산·공급망 다변화 수요가 커집니다." },
+    gasRare: { t: "희귀가스(Ne·Kr·Xe)", w: "공기 중 극미량 존재하는 비활성 기체입니다. 노광 레이저와 식각에 쓰입니다.",
+      h: "네온(Ne)은 ArF·KrF 엑시머 레이저의 완충가스로 노광 장비 광원에 들어갑니다. 크립톤·제논은 식각·증착 보조가스입니다. 대형 공기분리설비에서 나온 조(粗)가스를 다시 정제해 얻습니다.",
+      p: "노광(Lithography) 광원, 식각(Etch)",
+      k: ["대형 ASU 부산물 회수·정제 기술", "레이저용 혼합가스(Ne-F-Ar 등) 배합", "가스 재활용·회수 시스템"],
+      r: "2022년 우크라이나 사태로 공급이 흔들린 뒤 국내 생산과 회수 재사용이 확대되었습니다." },
+    gasBulk: { t: "벌크가스·온사이트 공급", w: "팹에서 가장 많이 쓰는 질소·산소·아르곤·수소 같은 대용량 가스입니다.",
+      h: "공기를 압축·냉각해 액화한 뒤 끓는점 차이로 분리하는 심랭식 공기분리설비(ASU)를 팹 옆에 짓고, 배관으로 직접 공급합니다. 질소는 퍼지·분위기 가스로 팹 가스 사용량의 대부분을 차지합니다.",
+      p: "팹 전체 인프라: 퍼지, 분위기 유지, 냉각, 장비 구동",
+      k: ["대형 ASU 설계·운영 효율(전력이 원가의 대부분)", "초고순도(ppb) 질소 정제", "15~20년 장기 공급계약과 무중단 공급"],
+      r: "신규 팹마다 전용 ASU가 함께 들어서며, 전력 절감과 탄소 저감이 경쟁 요소가 되고 있습니다." },
+    pr: { t: "포토레지스트(PR)", w: "빛을 받은 부분의 화학 성질이 바뀌는 감광성 고분자입니다. 회로 패턴을 웨이퍼에 옮기는 '필름' 역할을 합니다.",
+      h: "웨이퍼에 얇게 바르고 마스크를 통해 빛을 쬐면, 노광 부위에서 광산발생제(PAG)가 산을 만들고 그 산이 고분자 구조를 바꿔 현상액에 녹게(또는 안 녹게) 합니다. 이 방식을 화학증폭형(CAR)이라 합니다.",
+      p: "노광(Lithography): 코팅 → 노광 → 현상",
+      k: ["광원별 제품: i-line, KrF(248nm), ArF(193nm), ArF 이머전, EUV(13.5nm)", "해상도·감도·선폭 거칠기(LER)의 3자 균형", "EUV용 금속산화물 레지스트(MOR) 등 신소재", "금속 불순물·결함 관리와 고객 공정 맞춤"],
+      r: "EUV 레이어가 늘면서 EUV PR이 가장 빠르게 성장하는 품목입니다. 일본 업체가 세계 시장의 대부분을 차지합니다." },
+    barc: { t: "반사방지 코팅(BARC)", w: "포토레지스트 아래에 까는 얇은 유기막입니다. 노광 빛이 아래 막에서 반사돼 패턴이 흐려지는 것을 막습니다.",
+      h: "반사된 빛과 들어오는 빛이 겹치면 정재파가 생겨 패턴 측벽이 물결치고 선폭이 흔들립니다. BARC는 빛을 흡수하고 굴절률을 맞춰 반사를 1% 이하로 줄입니다.",
+      p: "노광(Lithography): PR 코팅 직전",
+      k: ["광원별(KrF·ArF·ArF 이머전) 굴절률(n)·흡광계수(k) 설계", "식각 속도가 빠르고 PR과 섞이지 않을 것", "다층 구조(SOC·Si-ARC)와 조합"],
+      r: "패턴이 미세해질수록 하부막의 역할이 커지며, EUV용 하부막도 개발되고 있습니다." },
+    cmp: { t: "CMP 슬러리·패드", w: "웨이퍼 표면을 평평하게 깎는 화학적 기계적 연마(CMP)에 쓰는 연마액(슬러리)과 연마 패드입니다.",
+      h: "회전하는 패드 위에 웨이퍼를 눌러 대고 슬러리를 흘립니다. 슬러리 속 화학 성분이 표면을 무르게 만들고, 실리카·세리아 같은 연마 입자가 그 부분을 깎아냅니다. 패드는 폴리우레탄 재질이며 미세 기공으로 슬러리를 붙잡아 둡니다.",
+      p: "평탄화(CMP): 층간절연막, 텅스텐·구리 배선, STI(소자분리)",
+      k: ["연마 대상별 선택비(산화막 vs 질화막 vs 금속)", "스크래치·결함 최소화를 위한 입자 크기 분포 제어", "패드 경도·기공 구조와 컨디셔닝 수명"],
+      r: "HBM의 TSV·하이브리드 본딩, 로직 배선층 증가로 CMP 공정 수가 늘고 있습니다." },
+    wafer: { t: "실리콘 웨이퍼", w: "반도체 칩을 만드는 원판입니다. 순도 11N(99.999999999%) 수준의 단결정 실리콘을 얇게 자른 것입니다.",
+      h: "녹인 실리콘에 씨결정을 담가 천천히 돌리며 끌어올리는 초크랄스키(CZ) 법으로 원기둥 잉곳을 만들고, 이를 0.775mm 두께로 잘라 연마·세정합니다. 필요하면 표면에 에피택셜 층을 더 키웁니다.",
+      p: "공정 시작 전 원판",
+      k: ["300mm 웨이퍼의 평탄도(나노 단위)와 결정 결함 제어", "제품군: 폴리시드, 에피, SOI 웨이퍼", "산소 농도·저항률 사양 관리"],
+      r: "신에츠·SUMCO·GlobalWafers·SK실트론·Siltronic 5개사가 대부분을 공급합니다." },
+    reclaim: { t: "재생 웨이퍼·테스트 웨이퍼", w: "장비 점검·공정 모니터링에 쓰고 난 테스트 웨이퍼의 막을 벗겨내 다시 쓸 수 있게 만든 웨이퍼입니다.",
+      h: "사용한 웨이퍼의 막을 습식 식각으로 제거하고, 표면을 다시 연마·세정해 새 웨이퍼에 가까운 평탄도와 청정도로 되돌립니다. 여러 번 재생할 수 있습니다.",
+      p: "팹 전 공정의 장비 모니터링(더미·모니터 웨이퍼)",
+      k: ["막 종류별 제거 레시피", "연마 후 두께 손실 최소화와 재생 횟수", "파티클·금속 오염 관리"],
+      r: "팹 가동률이 높을수록 수요가 늘며, 원가 절감과 친환경 측면에서 사용이 확대됩니다." },
+    substrate: { t: "반도체 패키지 기판", w: "칩과 메인보드를 전기적으로 연결하는 다층 인쇄회로기판입니다. 미세한 칩 단자를 보드 간격으로 넓혀 줍니다.",
+      h: "코어층 위에 절연 필름(ABF 등)과 구리 배선을 반복해 쌓는 빌드업 방식으로 만듭니다. 레이저로 비아를 뚫고 도금으로 층을 연결합니다.",
+      p: "후공정(패키징): 칩 실장 기판",
+      k: ["FC-BGA: CPU·GPU·AI 가속기용 대면적·고다층 기판", "메모리용 기판: 모듈 PCB, BOC, MCP·SiP 기판", "미세 회로선폭, 휨(warpage) 제어, 대면적 수율", "유리기판: 차세대 대면적 AI 패키지용"],
+      r: "AI 칩이 커지며 기판 면적·층수가 늘고, 유리기판 상용화 경쟁이 진행 중입니다." },
+    mask: { t: "포토마스크", w: "회로 원판입니다. 석영 유리 위에 크롬 등으로 회로 패턴을 그려 노광 때 빛을 선택적으로 통과시킵니다.",
+      h: "블랭크 마스크(석영+차광막+PR)에 전자빔으로 패턴을 그리고 현상·식각해 만듭니다. 노광기는 이 패턴을 1/4로 줄여 웨이퍼에 찍습니다. EUV 마스크는 빛을 반사하는 다층 거울 구조입니다.",
+      p: "노광(Lithography) 원판",
+      k: ["선폭 정밀도(CD)와 패턴 위치 정확도", "OPC(광근접보정) 패턴 구현", "결함 검사·수리, 펠리클(보호막) 부착"],
+      r: "IDM 자체 마스크숍과 전문 업체가 함께 공급하며, 레거시 노드는 외부 조달 비중이 높습니다." },
+    film: { t: "반도체 공정·패키징 필름", w: "웨이퍼를 갈거나 자를 때 보호·고정하는 테이프, 칩을 붙이는 접착 필름 등 공정용 필름입니다.",
+      h: "백그라인딩 테이프는 회로면을 보호하며 웨이퍼 뒷면을 얇게 갈 때 쓰고, 다이싱 테이프는 자른 칩이 흩어지지 않게 잡아 줍니다. 자외선을 쬐면 점착력이 떨어지는 UV 경화형이 많습니다.",
+      p: "후공정: 백그라인딩, 다이싱, 다이 접착",
+      k: ["점착력 제어와 잔여물(풀 자국) 없는 박리", "초박형 웨이퍼 휨·파손 방지", "내열성(고온 본딩 공정 대응)"],
+      r: "HBM처럼 칩을 얇게 갈아 쌓는 공정이 늘면서 고기능 필름 수요가 커집니다." },
+    pid: { t: "PID(감광성 절연재)", w: "빛으로 패턴을 만들 수 있는 절연 소재입니다. 첨단 패키지에서 칩과 기판 사이의 미세 재배선층(RDL)을 만드는 데 씁니다.",
+      h: "PR처럼 노광·현상으로 구멍(비아)과 패턴을 만들지만, 현상 후 제거하지 않고 경화시켜 절연층으로 그대로 남깁니다. 그 위에 구리 배선을 도금하는 과정을 반복해 여러 층의 재배선을 쌓습니다.",
+      p: "후공정(첨단 패키징): 재배선층(RDL), 팬아웃·인터포저, 패키지 기판",
+      k: ["해상도(미세 비아·선폭)와 경화 후 절연·기계 특성", "낮은 경화 온도와 수축률, 휨 억제", "액상(스핀 코팅)과 필름(라미네이션) 형태"],
+      r: "칩렛·2.5D 패키지가 늘며 배선 미세화 요구가 커지고 있습니다. 환경 규제로 PFAS·유해 용매를 쓰지 않는 제품이 요구됩니다." },
+    hbmfilm: { t: "HBM용 내열 필름", w: "HBM 적층 공정의 고온·고압 본딩 단계에서 쓰는 내열 필름입니다.",
+      h: "열압착(TC) 본딩에서는 칩을 수백 ℃로 눌러 붙이는데, 본딩 툴과 칩 사이에 이형 필름을 끼워 넘친 접착제(NCF·언더필)가 툴에 묻지 않게 하고 압력을 고르게 전달합니다.",
+      p: "후공정(HBM 적층): TC 본딩, MR-MUF",
+      k: ["250℃ 이상 내열성과 치수 안정성", "이형성(접착제가 달라붙지 않음)", "두께 균일도와 쿠션성"],
+      r: "HBM 적층 단수가 12단·16단으로 늘수록 본딩 횟수와 소재 사용량이 늘어납니다." },
+    target: { t: "스퍼터링 타겟", w: "PVD(물리기상증착)에서 금속막을 만드는 원료 금속판입니다. Cu, Ta, Ti, Al, W, Co 등을 씁니다.",
+      h: "진공 챔버에서 아르곤 이온을 타겟에 충돌시키면 금속 원자가 튀어나와(스퍼터링) 맞은편 웨이퍼에 얇게 쌓입니다. 타겟은 냉각용 배킹 플레이트에 접합해 씁니다.",
+      p: "증착·배선(PVD): 배선 금속, 확산방지막(Ta/TaN, Ti/TiN), 시드층",
+      k: ["5N~6N 초고순도 금속 정련", "결정립 크기·방향 제어(막 균일도 결정)", "타겟-배킹 플레이트 접합(확산접합) 기술", "사용 효율과 파티클 억제"],
+      r: "배선이 미세해지며 Co·Ru 등 신규 금속 타겟과 고순도 Cu 수요가 커지고 있습니다." },
+    alcap: { t: "알루미늄 전해 커패시터", w: "전기를 저장했다 내보내는 수동부품입니다. 알루미늄 산화막을 유전체로 써 작은 크기에 큰 용량을 냅니다.",
+      h: "에칭으로 표면적을 넓힌 알루미늄박에 산화막을 만들고, 전해액이나 고체 전도성 고분자를 사이에 넣어 감습니다. 전원 회로에서 전압을 안정시키고 노이즈를 거릅니다.",
+      p: "반도체 공정과는 별개인 전자부품. 서버·전장·장비 전원부에 사용",
+      k: ["고분자(폴리머) 하이브리드 타입: 낮은 ESR, 긴 수명", "고온(125~150℃) 신뢰성: 전장용", "전극박 에칭·화성 기술"],
+      r: "AI 서버 전원과 전기차 전장 수요가 성장을 이끕니다." },
+    probe: { t: "프로브카드", w: "웨이퍼 상태의 칩 하나하나에 수천~수만 개 바늘을 동시에 대 전기적 양부를 검사하는 부품입니다.",
+      h: "웨이퍼 테스터와 칩의 패드를 연결합니다. MEMS 공정으로 만든 미세 탐침이 패드에 닿아 신호를 주고받으며, 불량 칩을 미리 걸러 패키징 비용을 줄입니다.",
+      p: "테스트(EDS/웨이퍼 테스트)",
+      k: ["MEMS 탐침의 미세 피치와 수명", "온도 변화(-40~150℃)에서 위치 정확도", "DRAM·NAND·HBM 등 제품별 설계"],
+      r: "HBM은 적층 전 낱개 칩(KGD) 검증이 중요해 프로브카드 사양과 교체 수요가 높아집니다." },
+    socket: { t: "테스트 인터페이스(보드·소켓)", w: "테스트 장비와 칩을 연결하는 소모성 부품입니다. 인터페이스 보드, 테스트 소켓, 프로브카드가 있습니다.",
+      h: "패키지 칩은 소켓에 꽂혀 핀(포고핀)이나 실리콘 러버 도전체로 테스터 보드와 연결됩니다. 수만 번 접촉을 반복하므로 접촉 저항 유지와 수명이 중요합니다.",
+      p: "테스트: 웨이퍼 테스트, 패키지 최종 테스트, 번인",
+      k: ["고속 신호(수 Gbps 이상) 전송 손실 최소화", "미세 피치 접촉과 접촉 수명", "고객 제품 변경에 맞춘 빠른 설계"],
+      r: "AI 칩·HBM은 테스트 시간이 길고 사양이 높아 인터페이스 부품 단가가 올라갑니다." },
+    sisic: { t: "실리콘·SiC 식각 부품", w: "플라즈마 식각 챔버 안에서 웨이퍼를 둘러싸는 포커스링, 전극(샤워헤드) 등 소모성 부품입니다.",
+      h: "식각 중 플라즈마에 같이 깎이므로 주기적으로 교체합니다. 웨이퍼와 같은 실리콘이나 더 단단한 SiC(탄화규소)로 만들어 오염을 줄이고 웨이퍼 가장자리까지 플라즈마를 고르게 합니다.",
+      p: "식각(Etch) 장비 챔버",
+      k: ["단결정 실리콘 가공과 CVD-SiC 성장", "치수 정밀도·표면 품질", "교체 주기를 늘리는 내플라즈마성"],
+      r: "고종횡비 식각이 늘며 교체 주기가 짧아지고, SiC로의 전환이 진행 중입니다." },
+    quartz: { t: "쿼츠(석영) 부품", w: "고순도 석영 유리로 만든 챔버 부품입니다. 확산로 튜브, 웨이퍼 보트, 식각 챔버 링 등에 씁니다.",
+      h: "석영은 1,000℃ 이상에서도 변형이 적고 금속 오염이 거의 없습니다. 원료 석영을 녹여 성형한 뒤 기계가공·화염가공·열처리로 치수를 맞춥니다.",
+      p: "확산·산화로(Furnace), 식각(Etch), 세정",
+      k: ["고순도 원료와 기포·불순물 관리", "대형 정밀 가공과 용접(화염가공)", "플라즈마 내식성"],
+      r: "소모성 부품이라 팹 가동률에 비례해 수요가 움직입니다." },
+    oring: { t: "반도체용 O-링·실(Seal)", w: "장비의 진공·가스 누설을 막는 고무 밀봉 부품입니다.",
+      h: "챔버 뚜껑·밸브·배관 이음부에 끼워 기밀을 유지합니다. 플라즈마와 불소 라디칼에 계속 노출되므로, 일반 고무 대신 불소 고무(FKM)나 퍼플루오로 엘라스토머(FFKM)를 씁니다.",
+      p: "식각·증착 장비 챔버, 밸브, 가스 라인",
+      k: ["FFKM 배합: 내플라즈마성, 저파티클, 저아웃가스", "고온(300℃ 이상) 압축영구변형 억제", "정밀 성형과 청정 포장"],
+      r: "FFKM은 해외 소수 업체 의존도가 높아 국산화 대상 품목입니다." },
+    clean: { t: "장비 부품 세정·코팅", w: "식각·증착 챔버에서 쓴 부품에 쌓인 막과 오염을 제거하고 보호 코팅을 다시 입혀 재사용하게 하는 서비스입니다.",
+      h: "화학 세정·블라스팅으로 증착물을 벗기고, 초순수 세정·건조 뒤 이트리아(Y2O3) 같은 내플라즈마 세라믹을 용사(플라즈마 스프레이) 또는 에어로졸 증착으로 코팅합니다.",
+      p: "식각·증착 장비 유지보수",
+      k: ["부품 손상 없는 세정 레시피", "코팅 밀도·두께와 파티클 억제", "팹 가동률 연동 물량과 근접 거점"],
+      r: "미세공정일수록 챔버 파티클 관리가 엄격해져 세정 주기가 짧아지고 고급 코팅 수요가 늘어납니다." },
+    metal: { t: "장비용 정밀 가공 부품", w: "반도체·디스플레이 장비에 들어가는 금속·세라믹·흑연 정밀 부품입니다.",
+      h: "고융점 금속(W·Mo·TZM), 흑연, 알루미늄을 CNC 가공·용접·표면처리로 만듭니다. 이온주입기의 소스헤드처럼 고온·고전압·이온 충돌을 견뎌야 하는 소모성 부품이 많습니다.",
+      p: "이온주입(Implant), 식각, 증착(CVD·PVD) 장비",
+      k: ["고융점 소재 가공과 열변형 제어", "진공 환경용 청정도", "장비사·소자사 인증과 교체 주기 대응"],
+      r: "장비 국산화와 부품 교체 수요(가동률)에 따라 움직입니다." },
+    pump: { t: "건식 진공펌프·가스처리장치", w: "공정 챔버를 진공으로 만드는 펌프와, 배출되는 유해가스를 분해하는 처리장치(스크러버)입니다.",
+      h: "건식 펌프는 오일 없이 맞물린 로터(루츠·스크류·클로)가 돌며 기체를 밀어냅니다. 오일 오염이 없어 반도체에 표준으로 쓰입니다. 처리장치는 연소·플라즈마·습식 방식으로 PFC 등을 분해합니다.",
+      p: "식각·증착·이온주입 등 진공 공정 장비마다 연결",
+      k: ["공정 부산물(파우더)·부식성 가스에 견디는 내구성", "전력 절감(팹 전력의 상당 부분)", "펌프·처리장치 통합 관리와 원격 모니터링"],
+      r: "공정 장비 수만큼 필요하며, 온실가스 규제로 처리 효율 요구가 강해지고 있습니다." },
+    upw: { t: "초순수(UPW)", w: "이온·유기물·입자를 거의 모두 제거한 물입니다. 웨이퍼 세정에 대량으로 씁니다.",
+      h: "전처리 → 역삼투(RO) → 이온교환 → 탈기 → 자외선 산화 → 한외여과(UF) 순으로 정제해 비저항 18.2MΩ·cm, 총유기탄소(TOC) 1ppb 이하로 만듭니다.",
+      p: "팹 인프라: 세정·식각 후 헹굼, CMP 후 세정",
+      k: ["설계·시공·운영(O&M) 일괄 수행", "ppt 단위 수질 분석과 실시간 모니터링", "폐수 재이용률"],
+      r: "대형 팹 한 곳이 하루 수만 톤을 쓰며, 국산화와 재이용이 정책 과제입니다." },
+    amhs: { t: "반도체 물류자동화(AMHS)", w: "팹 안에서 웨이퍼 용기(FOUP)를 장비 사이로 자동 운반·보관하는 시스템입니다.",
+      h: "천장 레일을 달리는 OHT(Overhead Hoist Transport)가 FOUP를 집어 장비 로드포트에 내려놓고, 스토커가 보관합니다. 제어 소프트웨어가 수천 대의 차량 경로를 실시간 배정합니다.",
+      p: "팹 전 공정 간 이송",
+      k: ["OHT 주행 속도·진동 억제", "대규모 차량 교통 제어 소프트웨어", "클린룸 파티클 관리"],
+      r: "팹이 대형화될수록 물류 효율이 생산성을 좌우합니다. 일본 다이후쿠·무라타가 강자입니다." },
+    wtester: { t: "웨이퍼 테스터", w: "웨이퍼 상태의 메모리 칩에 신호를 넣어 동작·속도를 검사하는 장비입니다.",
+      h: "프로브카드로 칩과 연결한 뒤 테스트 패턴을 써넣고 읽어 불량 셀을 찾습니다. 찾은 불량은 여분 셀로 바꾸는 수리(리페어) 정보로 쓰입니다.",
+      p: "테스트(EDS/웨이퍼 테스트)",
+      k: ["동시 측정 수(병렬성)와 테스트 속도", "고속 신호 정확도(HBM·DDR5)", "온도 제어 테스트"],
+      r: "HBM은 적층 전 웨이퍼 단계 검사가 중요해 고속 웨이퍼 테스터 수요가 커지고 있습니다. 어드밴테스트가 세계 1위입니다." },
+    ptester: { t: "패키지·모듈 테스터", w: "패키징이 끝난 메모리 칩이나 SSD·모듈의 최종 성능을 검사하는 장비입니다.",
+      h: "핸들러가 칩을 소켓에 넣으면 테스터가 실제 동작 속도·온도 조건에서 읽기·쓰기를 반복해 등급을 나눕니다.",
+      p: "테스트: 패키지 최종 테스트, 모듈·SSD 테스트",
+      k: ["고속 인터페이스(DDR5, PCIe 5.0 이상) 지원", "다수 동시 검사와 장비 가격 경쟁력", "고객 맞춤 테스트 프로그램"],
+      r: "DDR5·CXL·고성능 SSD 전환이 교체 수요를 만듭니다." },
+    handler: { t: "번인 소터·검사 장비", w: "칩을 번인 보드에 넣고 빼며 결과에 따라 분류하는 장비와, 외관을 검사하는 비전 장비입니다.",
+      h: "번인은 칩에 고온·고전압을 걸어 초기 불량을 미리 드러내는 공정입니다. 소터는 테스트 결과에 따라 칩을 등급별로 자동 분류합니다.",
+      p: "후공정 테스트: 번인, 분류, 외관 검사",
+      k: ["고속 픽앤플레이스 정밀도", "번인 보드 자동 장착", "카메라·AI 기반 결함 판정"],
+      r: "HBM과 고성능 메모리는 번인·검사 시간이 길어 장비 수요가 늘어납니다." }
+  };
+  var TXN = { "덕산테코피아": ["pre"], "레이크머티리얼즈": ["pre"], "디엔에프": ["pre"], "Merck (한국머크)": ["pre"], "솔브레인": ["etch", "pre"],
+    "원익머트리얼즈": ["gasDep", "gasEtch", "gasRare"], "솔머티리얼즈": ["gasDep", "gasEtch"], "티이엠씨": ["gasRare", "gasEtch"], "효성네오켐": ["gasEtch"],
+    "Nippon Sanso Matheson": ["gasDep", "gasBulk"], "에어리퀴드코리아": ["gasRare", "gasDep", "gasBulk"], "에어프로덕츠코리아": ["gasBulk"],
+    "다이킨첨단머티리얼즈": ["gasEtch"], "칸토덴카": ["gasEtch"], "㈜케이씨인더스트리얼": ["gasDep"],
+    "JSR": ["pr"], "Qnity": ["pr", "cmp", "oring"], "NCK": ["barc"], "FNSTech (에프엔에스테크)": ["cmp"], "FFEM": ["cmp", "pr"],
+    "GlobalWafers (MEMC코리아)": ["wafer"], "에이텍솔루션": ["reclaim", "clean"], "삼성전기": ["substrate"], "심텍": ["substrate"],
+    "㈜피케이엘": ["mask"], "LG화학": ["pid", "film"], "린데": ["gasBulk", "target"], "Solstice": ["target"], "삼화전기": ["alcap"],
+    "TSE": ["socket", "probe"], "피엠티": ["probe"], "디에스테크노": ["sisic"], "영신쿼츠": ["quartz"], "와이컴": ["sisic"],
+    "이노레스": ["oring"], "GT": ["oring"], "한솔아이원스": ["clean", "metal"], "에이텍솔루션 (세정)": ["clean"], "거성": ["metal"],
+    "AMMK": ["hbmfilm"], "EDWARDS": ["pump"], "쿠리타한수": ["upw"], "세메스": ["amhs"], "와이씨": ["wtester"], "엑시콘": ["ptester"], "제이티": ["handler"] };
+  /* 공정 백과: 일반 기술 해설(교과서 수준). 대표 기업은 널리 알려진 업체 예시이며 점유율·순위가 아님.
+     lv 학습 단계, s 한눈에, why 목적, how 원리, eq 장비, mat 소재, part 부품, iss 이슈, gl·kr 대표 기업, fut 발전 방향, tx 관련 제품 기술 */
+  var PROC = [
+    { id: "wafer", n: "웨이퍼 제조", en: "Wafer", lv: "입문", sb: ["PRC", "IND"], tx: ["wafer", "reclaim"],
+      s: "고순도 단결정 실리콘 잉곳을 키워 얇게 자르고 거울처럼 연마해 칩을 만들 원판을 준비합니다.",
+      why: "모든 소자는 웨이퍼 표면 수 μm 안에 만들어집니다. 결정 결함, 평탄도, 오염이 수율의 출발점입니다.",
+      how: ["폴리실리콘 정제", "CZ법 단결정 잉곳 성장", "잉곳 연삭·와이어 절단", "래핑·식각으로 손상층 제거", "양면·최종 연마", "세정·검사", "필요 시 에피택셜 성장"],
+      eq: ["단결정 성장로", "와이어 쏘", "양면 연마기", "에피 반응기", "평탄도·파티클 검사기"], mat: ["폴리실리콘", "석영 도가니", "연마 슬러리·패드"], part: ["흑연 히터·핫존 부품", "석영 도가니"],
+      iss: ["300mm 웨이퍼의 나노 단위 국부 평탄도", "결정 결함(COP)과 산소 석출 제어", "가장자리 품질", "450mm 전환은 업계 투자 부담으로 사실상 중단"],
+      gl: ["신에츠화학", "SUMCO", "GlobalWafers", "Siltronic"], kr: ["SK실트론"], fut: ["고성능 로직·HBM용 초평탄 웨이퍼", "SOI·SiC 등 특수 웨이퍼", "테스트용 재생 웨이퍼 활용 확대"] },
+    { id: "photo", n: "노광(포토)", en: "Photolithography", lv: "입문", sb: ["LIT"], tx: ["pr", "barc", "mask", "gasRare"],
+      s: "마스크의 회로 패턴을 빛으로 감광막(PR)에 옮겨 찍습니다. 미세화의 한계를 정하는 공정입니다.",
+      why: "이후 식각과 이온주입이 PR 패턴을 그대로 따라갑니다. 선폭과 층간 정렬 정확도가 칩의 집적도와 성능을 결정합니다.",
+      how: ["표면 처리(HMDS)", "하부막(BARC) 코팅", "PR 스핀 코팅·소프트 베이크", "스캐너 노광(마스크 패턴 1/4 축소)", "노광 후 베이크(PEB)", "현상(TMAH)", "선폭(CD)·오버레이 검사", "해상도는 R = k1·λ/NA: 파장(λ)을 줄이거나 렌즈 개구수(NA)를 키워 미세화"],
+      eq: ["노광기: EUV, ArF 이머전, ArF, KrF, i-line", "트랙(코터·디벨로퍼)", "마스크 검사·리페어", "오버레이·CD 계측"], mat: ["포토레지스트", "BARC·하부막", "현상액", "엑시머 레이저 가스(Ne 기반)"], part: ["포토마스크", "펠리클", "레이저 광원 모듈"],
+      iss: ["EUV 확률적 결함(stochastic defect)", "층간 정렬(오버레이) 오차", "멀티패터닝의 공정 수·원가 증가", "마스크 결함과 펠리클 수명"],
+      gl: ["ASML(노광기)", "Nikon·Canon(노광기)", "TEL(트랙)", "JSR·TOK·신에츠·스미토모화학·Fujifilm(PR)", "Lasertec(EUV 마스크 검사)"], kr: ["동진쎄미켐(PR)", "에스앤에스텍(블랭크마스크)", "에프에스티(펠리클)"],
+      fut: ["High-NA EUV(NA 0.55)", "금속산화물·건식 레지스트", "곡선형(curvilinear) 마스크"] },
+    { id: "etch", n: "식각", en: "Etch", lv: "입문", sb: ["ETC", "PLS"], tx: ["gasEtch", "etch", "sisic", "quartz", "oring"],
+      s: "PR이 덮지 않은 막을 플라즈마나 약액으로 깎아 패턴을 실제 구조로 만듭니다.",
+      why: "노광 패턴을 원하는 깊이와 모양으로 막에 옮깁니다. 3D NAND와 DRAM의 깊고 좁은 구조는 식각 능력에 달려 있습니다.",
+      how: ["건식(플라즈마) 식각: 진공 챔버에 가스 주입 → RF 전력으로 플라즈마 생성", "이온은 수직으로 때리고(물리), 라디칼은 막과 반응(화학)해 수직 측벽을 만듦(이방성)", "습식 식각: 약액으로 모든 방향을 녹임(등방성), 선택비가 높음", "ALE(원자층 식각): 표면 개질 → 제거를 반복해 원자층 단위로 깎음"],
+      eq: ["CCP(축전결합) 식각기: 산화막·고종횡비", "ICP(유도결합) 식각기: 실리콘·금속", "습식 식각기", "ALE 장비"], mat: ["불화가스(CF4, C4F6, C4F8, NF3, SF6)", "Cl2·HBr", "인산·HF 식각액"], part: ["포커스링·샤워헤드(Si·SiC)", "정전척(ESC)", "쿼츠 부품", "FFKM O-링", "RF 전원·매칭기", "진공펌프"],
+      iss: ["고종횡비 구조의 휨·막힘·바닥 미식각", "선택비(깎을 막과 남길 막의 속도 비)", "웨이퍼 가장자리 균일도", "챔버 파티클과 부품 소모"],
+      gl: ["Lam Research", "TEL", "Applied Materials", "Hitachi High-Tech"], kr: ["세메스", "PSK(스트립)", "원익IPS"],
+      fut: ["극저온(cryo) 식각", "ALE 확대", "GAA 구조용 선택적 식각"] },
+    { id: "dep", n: "증착·배선", en: "Deposition", lv: "입문", sb: ["FIL", "PLS"], tx: ["pre", "gasDep", "target"],
+      s: "웨이퍼 위에 절연막과 도체막을 나노미터 두께로 쌓고 금속 배선을 만듭니다.",
+      why: "소자, 배선, 절연층이 모두 막으로 이뤄집니다. 막의 두께·균일도·피복성이 전기 특성을 결정합니다.",
+      how: ["CVD: 가스가 열·플라즈마로 반응해 막 형성(PECVD는 저온)", "ALD: 전구체와 반응가스를 번갈아 넣어 원자층 단위로 쌓음. 깊은 홈도 균일", "PVD(스퍼터링): 타겟 원자를 물리적으로 떼어 쌓음. 배선 금속·배리어", "ECP(전기도금): 구리로 배선 홈을 채움(다마신)", "에피택시: 아래 결정 구조를 따라 단결정 성장"],
+      eq: ["CVD·PECVD", "ALD(매엽·배치)", "PVD 스퍼터", "ECP 도금기", "에피 장비"], mat: ["전구체", "SiH4·NH3·N2O·WF6", "스퍼터링 타겟", "도금액"], part: ["히터·서셉터", "샤워헤드", "쿼츠 부품", "진공 밸브·MFC"],
+      iss: ["고종횡비 홈의 균일 피복(step coverage)", "저온 공정", "신규 금속(Mo·Ru) 적용", "막 응력과 휨"],
+      gl: ["Applied Materials", "Lam Research", "TEL", "ASM International", "Kokusai Electric"], kr: ["원익IPS", "주성엔지니어링", "유진테크"],
+      fut: ["선택적 증착(ASD)", "Mo 워드라인", "저유전(low-k) 배선", "3D DRAM"] },
+    { id: "cmp", n: "CMP(평탄화)", en: "Chemical Mechanical Polishing", lv: "실무", sb: ["CMP"], tx: ["cmp"],
+      s: "쌓은 막을 화학 반응과 기계 연마로 평평하게 깎습니다.",
+      why: "층이 쌓일수록 굴곡이 커져 다음 노광의 초점이 맞지 않습니다. 금속을 홈 안에만 남기는 다마신 배선에도 필수입니다.",
+      how: ["회전하는 패드에 헤드가 웨이퍼를 눌러 대고 슬러리 공급", "화학 성분이 표면을 무르게 하고 연마 입자가 깎아냄", "컨디셔너가 패드 표면을 계속 되살림", "종점 검출(광학·모터 전류)로 정지", "후세정으로 입자 제거"],
+      eq: ["CMP 장비(연마+세정 통합)", "패드 컨디셔너", "종점 검출기"], mat: ["슬러리(실리카·세리아·알루미나)", "연마 패드", "후세정액"], part: ["리테이너 링", "헤드 멤브레인", "컨디셔너 디스크"],
+      iss: ["디싱·에로전(패턴 밀도에 따른 과연마)", "스크래치·잔류 입자", "막 종류별 선택비"],
+      gl: ["Applied Materials·Ebara(장비)", "Qnity·Fujifilm·Entegris·Resonac(소재)"], kr: ["KCTech(장비·슬러리)", "SK엔펄스(패드)", "솔브레인(슬러리)"],
+      fut: ["하이브리드 본딩용 초평탄 CMP", "HBM TSV 노출 CMP", "신규 금속 CMP"] },
+    { id: "clean", n: "세정", en: "Cleaning", lv: "실무", sb: ["CMP", "FAB"], tx: ["etch", "upw", "clean", "reclaim"],
+      s: "공정 사이마다 웨이퍼 표면의 입자·유기물·금속·자연산화막을 제거합니다. 가장 자주 반복되는 공정 중 하나입니다.",
+      why: "나노 크기 오염 하나가 단락과 불량을 만듭니다. 미세화될수록 허용 오염 기준이 엄격해집니다.",
+      how: ["SC1(암모니아+과산화수소): 입자·유기물 제거", "SC2(염산+과산화수소): 금속 제거", "DHF(묽은 불산): 산화막 제거", "초순수 헹굼 → 스핀·IPA 건조", "매엽식(한 장씩)과 배치식(여러 장 담금)", "패턴 붕괴를 막는 초임계 CO2 건조"],
+      eq: ["매엽 세정기", "배치 세정기(습식 스테이션)", "스크러버", "건식 세정·애싱"], mat: ["고순도 황산·과산화수소·암모니아·불산·IPA", "초순수"], part: ["노즐·스핀척", "PFA 약액 배관", "필터"],
+      iss: ["고종횡비 패턴 쓰러짐(leaning)", "약액·용수 사용량과 폐수", "금속 오염 ppt 관리"],
+      gl: ["SCREEN", "TEL", "Lam Research"], kr: ["세메스", "제우스", "KCTech"], fut: ["초임계 건조", "약액·용수 저감", "패턴 무손상 세정"] },
+    { id: "imp", n: "이온주입", en: "Ion Implantation", lv: "실무", sb: ["PRC"], tx: ["gasDep", "metal"],
+      s: "붕소·인·비소 이온을 가속해 실리콘에 넣어 전기가 통하는 성질(도핑)을 국부적으로 바꿉니다.",
+      why: "트랜지스터의 소스·드레인, 웰, 문턱전압을 만드는 핵심 공정입니다.",
+      how: ["도핑가스(BF3, PH3, AsH3)를 이온화", "질량분석 자석으로 원하는 이온만 선택", "전기장으로 가속해 웨이퍼에 주사", "주입량(dose)과 에너지로 농도·깊이 결정", "주입 후 열처리(어닐)로 결정 손상 회복·활성화"],
+      eq: ["중전류·고전류·고에너지 이온주입기", "플라즈마 도핑(PLAD)"], mat: ["도핑가스(BF3, PH3, AsH3, B2H6)", "고체 소스"], part: ["이온 소스헤드·필라멘트(W·Mo)", "흑연 라이너", "정전척", "고전압 부품"],
+      iss: ["얕은 접합(USJ)", "3D 구조 측벽 도핑 균일도", "소스 부품 수명", "독성가스 안전"],
+      gl: ["Applied Materials(Varian)", "Axcelis", "SMIT(스미토모)"], kr: ["국내는 장비보다 부품·가스 공급 중심"], fut: ["고에너지 주입(이미지센서·전력반도체)", "SiC 고온 주입", "플라즈마 도핑"] },
+    { id: "diff", n: "확산·열처리", en: "Diffusion & Anneal", lv: "실무", sb: ["FIL", "PRC"], tx: ["quartz", "sisic", "gasBulk"],
+      s: "고온 열처리로 산화막을 키우거나 불순물을 퍼뜨리고, 막과 결정의 결함을 회복시킵니다.",
+      why: "게이트·버퍼 산화막 형성, 주입 이온 활성화, 막 치밀화에 필요합니다.",
+      how: ["퍼니스(배치)에서 수백 ℃~1,000℃대로 산소·수증기와 반응(건식·습식 산화)", "RTP(급속열처리): 램프로 수 초 안에 가열해 불필요한 확산 최소화", "레이저 어닐: 표면만 순간 가열"],
+      eq: ["종형 확산로(퍼니스)", "RTP", "레이저 어닐", "배치 LPCVD"], mat: ["고순도 O2·N2·H2", "수증기", "도핑 소스"], part: ["쿼츠 튜브·보트", "SiC 보트·라이너", "히터"],
+      iss: ["열예산(thermal budget) 축소", "온도 균일도", "금속 오염"],
+      gl: ["Kokusai Electric", "TEL", "Applied Materials(RTP)", "Mattson"], kr: ["원익IPS", "유진테크", "AP시스템"], fut: ["저온 공정", "밀리초·레이저 어닐", "고압 수소 어닐"] },
+    { id: "metro", n: "계측·검사", en: "Metrology & Inspection", lv: "심화", sb: ["PRC"], tx: [],
+      s: "공정마다 선폭·두께·정렬·결함을 측정하고 검사해 공정이 제대로 됐는지 확인합니다.",
+      why: "수백 단계 공정에서 문제를 빨리 찾아야 수율 손실이 줄어듭니다. 측정값은 공정 자동 보정(APC)에 다시 쓰입니다.",
+      how: ["계측(Metrology)은 값을 재고, 검사(Inspection)는 결함을 찾음", "광학 계측(엘립소메트리·OCD): 두께·선폭", "오버레이 계측: 층간 정렬", "광학·전자빔 검사로 결함 탐지 → 리뷰 SEM으로 분류"],
+      eq: ["CD-SEM", "OCD", "오버레이 계측기", "박막 두께 측정기", "광학·전자빔 결함 검사기", "X선 계측"], mat: ["소재보다 장비·소프트웨어 중심"], part: ["전자빔 소스", "광학계", "정밀 스테이지"],
+      iss: ["3D 구조 내부의 비파괴 측정 한계", "검사 속도와 감도의 맞교환", "데이터 처리량"],
+      gl: ["KLA", "Applied Materials", "Hitachi High-Tech", "ASML", "Onto Innovation", "Nova"], kr: ["넥스틴", "파크시스템스", "오로스테크놀로지"], fut: ["X선·AI 기반 계측", "HBM·첨단 패키징 검사 확대"] },
+    { id: "pkg", n: "패키징", en: "Packaging", lv: "실무", sb: ["PKG"], tx: ["substrate", "pid", "film", "alcap"],
+      s: "완성된 칩을 잘라 기판에 붙이고 연결·보호해 실제 쓸 수 있는 부품으로 만듭니다.",
+      why: "칩을 보호하고 전기·열을 연결합니다. AI 시대에는 여러 칩을 묶는 첨단 패키징이 성능 향상의 핵심 수단입니다.",
+      how: ["백그라인딩(얇게 갈기) → 다이싱(자르기)", "다이 본딩 → 와이어본딩 또는 플립칩 범프 연결", "몰딩(EMC) → 마킹·솔더볼", "첨단: 2.5D(실리콘 인터포저 위에 GPU와 HBM), 3D(칩 수직 적층), 팬아웃(FOWLP)"],
+      eq: ["그라인더", "다이서(블레이드·레이저)", "다이·와이어·플립칩 본더", "몰딩기", "리플로우"], mat: ["패키지 기판", "EMC", "언더필", "솔더", "DAF·공정 테이프", "PID"], part: ["본딩 툴·캐필러리", "리드프레임"],
+      iss: ["휨(warpage)", "열 방출", "대면적 기판 수율", "미세 범프 피치"],
+      gl: ["TSMC(CoWoS)", "ASE", "Amkor", "Disco(그라인더·다이서)", "BESI·ASMPT(본더)", "Ibiden·Unimicron(기판)"], kr: ["삼성전자·SK하이닉스(자체)", "한미반도체(TC본더)", "삼성전기·LG이노텍·심텍(기판)", "하나마이크론"],
+      fut: ["하이브리드 본딩", "유리기판", "패널레벨 패키징(PLP)", "광 연결 통합(CPO)"] },
+    { id: "hbm", n: "범핑·TSV·HBM", en: "Bumping, TSV & HBM", lv: "심화", sb: ["PKG", "MEM"], tx: ["hbmfilm", "cmp", "probe", "film"],
+      s: "칩에 미세 범프를 만들고, 실리콘을 관통하는 전극(TSV)으로 DRAM 여러 장을 수직으로 쌓아 HBM을 만듭니다.",
+      why: "AI 가속기는 연산보다 메모리 대역폭이 병목입니다. HBM은 1,024개(HBM4는 2,048개) 입출력으로 GPU 바로 옆에서 데이터를 공급합니다.",
+      how: ["TSV: 깊은 구멍 식각 → 절연·배리어·시드 증착 → 구리 도금 → CMP → 뒷면 연삭으로 노출", "범핑: 도금으로 구리 필러와 솔더 마이크로 범프 형성", "적층: 열압착(TC) 본딩 + 비전도성 필름(NCF), 또는 리플로 후 액상 몰딩으로 채우는 MR-MUF", "베이스(로직) 다이 위에 8·12·16단 적층"],
+      eq: ["딥 실리콘 식각기", "도금기", "TC본더", "리플로우·몰딩", "하이브리드 본더(차세대)"], mat: ["도금액", "NCF", "언더필·EMC", "내열 이형 필름", "임시 접착제"], part: ["본딩 헤드", "캐리어 웨이퍼", "프로브카드(적층 전 KGD 검증)"],
+      iss: ["적층 시 휨과 보이드", "열 방출", "단수 증가와 패키지 높이 규격의 충돌", "단마다 누적되는 수율 손실"],
+      gl: ["SK하이닉스·삼성전자·Micron(HBM 3사)", "ASMPT·BESI(본더)"], kr: ["한미반도체·한화세미텍(TC본더)"], fut: ["HBM4·HBM4E(로직 베이스 다이)", "하이브리드 본딩", "16단 이상 적층"] },
+    { id: "test", n: "테스트", en: "Test", lv: "실무", sb: ["TST"], tx: ["probe", "socket", "wtester", "ptester", "handler"],
+      s: "웨이퍼와 패키지 단계에서 전기 신호로 칩의 양품·불량과 성능 등급을 가립니다.",
+      why: "불량 칩을 일찍 걸러 패키징 비용을 줄이고, 리페어로 수율을 높이며, 출하 품질을 보증합니다.",
+      how: ["웨이퍼 테스트(EDS): 테스터·프로버·프로브카드로 칩마다 측정", "불량 셀을 여분 셀로 바꾸는 리페어", "패키지 테스트: 핸들러가 칩을 소켓에 넣고 속도·온도별 측정", "번인: 고온·고전압으로 초기 불량을 가속 선별", "시스템 레벨 테스트(SLT): 실제 사용 환경 검증"],
+      eq: ["메모리·SoC 테스터", "프로버", "핸들러", "번인 장비·소터", "SLT 장비"], mat: ["소재보다 소모성 부품 중심"], part: ["프로브카드", "테스트 소켓", "인터페이스 보드", "번인 보드"],
+      iss: ["HBM·칩렛의 KGD(적층 전 양품) 검증", "고속 신호 무결성", "테스트 시간과 원가", "고온 테스트"],
+      gl: ["Advantest", "Teradyne", "FormFactor·Technoprobe·MJC(프로브카드)", "Cohu"], kr: ["와이씨", "엑시콘", "디아이", "테크윙", "제이티", "리노공업·ISC(소켓)", "티에스이"],
+      fut: ["HBM·칩렛 KGD 테스트", "SLT 확대", "AI 기반 테스트 최적화"] },
+    { id: "infra", n: "팹 인프라", en: "Fab Infra", lv: "심화", sb: ["FAB"], tx: ["gasBulk", "upw", "pump", "amhs"],
+      s: "공정 장비를 받쳐 주는 가스·초순수·진공·배기처리·물류·클린룸 시스템입니다.",
+      why: "팹은 24시간 멈추지 않아야 합니다. 유틸리티의 순도·압력·온도가 곧 수율과 가동률입니다.",
+      how: ["벌크가스: 공기분리설비(ASU) → 배관 공급", "특수가스: 실린더 → 가스캐비닛 → 분배 장치 → 장비", "초순수: 정제 플랜트 → 순환 루프", "진공: 장비마다 건식 펌프, 배기는 스크러버로 처리", "물류: OHT가 FOUP 단위로 장비 간 이송", "클린룸: 천장 FFU로 층류 유지"],
+      eq: ["ASU", "가스 공급 설비", "초순수 플랜트", "진공펌프", "스크러버", "OHT·스토커", "FFU"], mat: ["벌크·특수가스", "초순수", "약액 공급"], part: ["밸브·피팅·MFC", "필터", "센서"],
+      iss: ["전력·용수 사용량", "온실가스(PFC) 배출", "무중단 공급", "팹 대형화"],
+      gl: ["Linde·Air Liquide·Air Products·Nippon Sanso(가스)", "Kurita·Organo(초순수)", "Edwards·Ebara(펌프)", "Daifuku·Murata(물류)"], kr: ["세메스(물류)", "한양이엔지·에스티아이(공급 설비)", "유니셈(스크러버)"],
+      fut: ["용수·에너지 재이용", "탄소 저감", "디지털 트윈 팹 운영"] }
+  ];
+  var procOf = {};
+  PROC.forEach(function (p) { p.tx.forEach(function (k) { (procOf[k] = procOf[k] || []).push(p.id); }); });
+  function firmsOf(keys) {
+    var out = [];
+    B.forEach(function (b) { if (b.ref) return; var t = TXN[b.n] || []; if (keys.some(function (k) { return t.indexOf(k) >= 0; })) out.push(b.n); });
+    return out;
+  }
+  function procById(id) { for (var k = 0; k < PROC.length; k++) if (PROC[k].id === id) return PROC[k]; return null; }
+
   /* 책 필드(books.json 구조 참고): 품목군 코드, 주제 칩, 관련 SemiBooks 교과서 */
   var SB = {
     IND: ["ChipIndustryBook", "반도체 산업 지도", "https://semi.euiyun.com/industry/chapters/materials.html"],
@@ -813,12 +1125,12 @@ dl.facts dd { margin: 0; }
   function renderShelf() {
     var cnt = { A: 0, B: 0, C: 0 };
     B.forEach(function (b) { if (!b.ref) cnt[b.conf]++; });
-    var h = '<div class="kicker">2026.10.31 기준</div><h1>소부품 회사</h1>' +
+    var h = head("") +
       '<p class="lede">협력사 46행(중복 1곳 제외 45개 사)을 품목별 책장에 꽂았습니다. 책등을 누르면 회사 한 권이 열립니다.</p>' +
       '<div class="legend"><span><span class="chip A">자료 확인</span> ' + cnt.A + '개 사</span><span><span class="chip B">부분 확인</span> ' + cnt.B + '개 사</span><span><span class="chip C">미검증</span> ' + cnt.C + '개 사</span><span style="color:var(--muted)">책등의 점: 꽉 참 = 확인, 반 = 부분, 빈 원 = 미검증</span></div>' +
       viewTabs("shelf") +
-      '<div class="tools"><input id="q" type="search" placeholder="회사명·지역·품목으로 찾기" aria-label="책 찾기"><select id="fc" aria-label="신뢰도"><option value="">신뢰도 전체</option><option value="A">자료 확인</option><option value="B">부분 확인</option><option value="C">미검증</option><option value="F">★ 즐겨찾기만</option></select></div>' +
-      '<div class="case">';
+      '<div class="tools"><input id="q" type="search" placeholder="회사·품목·기술·공정 찾기 (예: ALD, FFKM, HBM)" aria-label="책 찾기"><select id="fc" aria-label="신뢰도"><option value="">신뢰도 전체</option><option value="A">자료 확인</option><option value="B">부분 확인</option><option value="C">미검증</option><option value="F">★ 즐겨찾기만</option></select></div>' +
+      '<div id="hits" class="hits" hidden></div><div class="case">';
     shelves.forEach(function (s) {
       h += '<section class="shelf"><h2>' + esc(s.name) + '</h2><p class="cap">' + esc(s.cap) + '</p><div class="row">';
       s.groups.forEach(function (g) {
@@ -827,7 +1139,7 @@ dl.facts dd { margin: 0; }
           if (b.g !== g.id) return;
           var pages = (b.tech.length + b.mkt.length + b.facts.length + b.watch.length);
           var ht = 150 + Math.min(pages, 14) * 7;
-          h += '<button class="spine" type="button" data-i="' + i + '" data-q="' + esc((b.n + " " + b.reg + " " + b.item).toLowerCase()) + '" data-c="' + b.conf + '" style="height:' + ht + 'px;background:var(' + g.c + ')" aria-label="' + esc(b.n + ", " + b.item + ", " + chips[b.conf]) + '">' +
+          h += '<button class="spine" type="button" data-i="' + i + '" data-q="' + esc((b.n + " " + b.reg + " " + b.item + " " + b.tech.join(" ") + " " + (TXN[b.n] || []).map(function (k) { return TX[k].t + " " + TX[k].k.join(" "); }).join(" ")).toLowerCase()) + '" data-c="' + b.conf + '" style="height:' + ht + 'px;background:var(' + g.c + ')" aria-label="' + esc(b.n + ", " + b.item + ", " + chips[b.conf]) + '">' +
             '<span class="band" style="top:6px"></span>' + (fav[b.n] ? '<span class="star" aria-label="즐겨찾기">★</span>' : '') + '<span class="code">' + esc(b.code) + '</span><span class="t">' + esc(b.n.replace(/\s*\(.*\)$/, "")) + '</span><span class="i">' + esc(b.item) + '</span><span class="d ' + b.conf + '"></span><span class="band" style="bottom:22px"></span></button>';
         });
         h += '</div>';
@@ -853,12 +1165,16 @@ dl.facts dd { margin: 0; }
       var v = q.value.trim().toLowerCase(), c = fc.value;
       app.querySelectorAll(".spine").forEach(function (el) { var n = B[+el.dataset.i].n; el.hidden = !!((v && el.dataset.q.indexOf(v) < 0) || (c === "F" ? !fav[n] : (c && el.dataset.c !== c))); });
     }
+    var hits = document.getElementById("hits"), f0 = filt;
+    filt = function () { f0(); var v = q.value.trim().toLowerCase(), r = v.length > 1 ? searchKnow(v) : [];
+      var nb = app.querySelectorAll(".spine:not([hidden])").length;
+      hits.hidden = !v; hits.innerHTML = v ? '<b>회사 ' + nb + '권</b>' + (r.length ? ' · <b>기술 백과 ' + r.length + '건</b><div class="kchips">' + r.join("") + "</div>" : ' · 기술 백과 결과 없음') : ""; };
     q.addEventListener("input", filt); fc.addEventListener("change", filt);
     try { var st = sessionStorage.getItem("shelfY"); if (st) window.scrollTo(0, +st); } catch (e) {}
   }
 
   function viewTabs(cur) {
-    return '<nav class="views" aria-label="보기 전환"><a href="#"' + (cur === "shelf" ? ' aria-current="page"' : "") + '>책장</a><a href="#map"' + (cur === "map" ? ' aria-current="page"' : "") + '>공정 지도</a></nav>';
+    return '<nav class="views" aria-label="보기 전환"><a href="#"' + (cur === "shelf" ? ' aria-current="page"' : "") + '>책장</a><a href="#map"' + (cur === "map" ? ' aria-current="page"' : "") + '>공정 지도</a><a href="#tech"' + (cur === "tech" ? ' aria-current="page"' : "") + '>기술 백과</a></nav>';
   }
   function idxOf(name) { for (var k = 0; k < B.length; k++) if (B[k].n === name && !B[k].ref) return k; return -1; }
   function chip(name) {
@@ -867,13 +1183,13 @@ dl.facts dd { margin: 0; }
     return '<a class="mchip" href="#b' + i + '" style="--c:var(' + g.c + ')"><span class="d ' + b.conf + '"></span>' + esc(b.n.replace(/\s*\(.*\)$/, "")) + '<small>' + esc(b.item) + "</small></a>";
   }
   function renderMap() {
-    var h = '<div class="kicker">2026.10.31 기준</div><h1>소부품 회사</h1>' +
+    var h = head("") +
       '<p class="lede">협력사를 반도체 공정 순서에 놓았습니다. 한 회사가 여러 단계에 걸치면 각 단계에 모두 표시했습니다. 이름을 누르면 그 회사 책이 열립니다.</p>' + viewTabs("map") +
       '<div class="flow">';
     MAP.forEach(function (st, k) {
-      h += '<section class="stage"><div class="st-h"><span class="st-n">' + (k + 1) + '</span><b>' + esc(st[0]) + '</b><span class="st-en">' + esc(st[1]) + '</span></div><p>' + esc(st[2]) + '</p><div class="chips">' + st[3].map(chip).join("") + "</div></section>";
+      h += '<section class="stage"><div class="st-h"><span class="st-n">' + (k + 1) + '</span><b>' + esc(st[0]) + '</b><span class="st-en">' + esc(st[1]) + '</span></div><p>' + esc(st[2]) + (STAGE2P[st[0]] ? ' <a href="#t-' + STAGE2P[st[0]] + '">공정 설명 →</a>' : "") + '</p><div class="chips">' + st[3].map(chip).join("") + "</div></section>";
     });
-    h += '</div><section class="stage infra"><div class="st-h"><span class="st-n">∞</span><b>' + esc(MAP_INFRA[0]) + '</b><span class="st-en">' + esc(MAP_INFRA[1]) + '</span></div><p>' + esc(MAP_INFRA[2]) + '</p><div class="chips">' + MAP_INFRA[3].map(chip).join("") + "</div></section>";
+    h += '</div><section class="stage infra"><div class="st-h"><span class="st-n">∞</span><b>' + esc(MAP_INFRA[0]) + '</b><span class="st-en">' + esc(MAP_INFRA[1]) + '</span></div><p>' + esc(MAP_INFRA[2]) + ' <a href="#t-infra">공정 설명 →</a></p><div class="chips">' + MAP_INFRA[3].map(chip).join("") + "</div></section>";
     app.innerHTML = h;
   }
 
@@ -896,6 +1212,12 @@ dl.facts dd { margin: 0; }
       gx.rel.map(function (c) { var s = SB[c]; return '<li><a href="' + s[2] + '" target="_blank" rel="noopener"><b>' + esc(s[0]) + '</b> · ' + esc(s[1]) + "</a></li>"; }).join("") + "</ul>";
     P.push(["개요", ov]);
     P.push(["기술·제품", "<h3>기술과 제품</h3>" + (b.tech.length ? list(b.tech) : '<p class="empty">확인된 기술·제품 정보가 없습니다.</p>')]);
+    var tx = (TXN[b.n] || []).map(function (k) { return TX[k]; }).filter(Boolean);
+    if (tx.length) P.push(["제품 기술", "<h3>제품 기술 해설</h3>" + '<p class="empty" style="font-style:normal">이 회사가 만드는 품목의 일반 기술 설명입니다. 회사별 세부 사양이 아니라 품목 원리를 이해하기 위한 교과서 수준의 내용입니다.</p>' +
+      (b.conf === "C" ? '<p class="note">이 회사는 아직 미검증입니다. 아래 해설은 목록 품목(' + esc(b.item) + ') 기준이며, 이 회사가 실제로 만드는 제품인지는 확인되지 않았습니다.</p>' : "") +
+      (TXN[b.n] || []).map(function (k) { var x = TX[k];
+        return '<div class="txc"><h4>' + esc(x.t) + '</h4>' + txBody(x) + '<div class="kchips">' + (procOf[k] || []).map(pLink).join("") + '<a class="kchip" href="#x-' + k + '">같은 품목 회사 보기</a></div></div>';
+      }).join("")]);
     P.push(["시장·경쟁", "<h3>시장과 경쟁</h3>" + (b.mkt.length ? list(b.mkt) : '<p class="empty">이 회사에 대한 시장 정보는 확인하지 못했습니다.</p>') + '<div class="ctx"><b>' + esc(g.name) + ' 품목 배경</b><br>' + esc(g.ctx) + "</div>"]);
     var reps = REP[b.n.replace(/\s*\(.*\)$/, "")] || [];
     var rh = "<h3>증권사·기관 리포트</h3>";
@@ -931,7 +1253,7 @@ dl.facts dd { margin: 0; }
       '<div class="head">' + esc(GX[b.g].head) + '</div>' +
       '<div class="item">' + esc(b.reg) + ' · ' + esc(b.item) + '</div><div class="one">' + esc(b.one) + '</div>' +
       '<div class="topics">' + GX[b.g].topics.map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") + '</div>' + coverArt(b) +
-      '<div class="foot"><span class="conf">' + chips[b.conf] + '</span><br><br>소부품 회사<br>2026.10.31 기준</div></div>' +
+      '<div class="foot"><span class="conf">' + chips[b.conf] + '</span><br><br>실리콘 서재<br>2026.10.31 기준</div></div>' +
       '<div class="leaf"><nav class="tabs" aria-label="이 책의 목차">' + P.map(function (p, k) { return '<button type="button" data-p="' + k + '"' + (k === cur.p ? ' aria-current="page"' : "") + ">" + (k + 1) + ". " + esc(p[0]) + "</button>"; }).join("") + '</nav>' +
       '<div class="page' + (dir ? " " + dir : "") + '" id="pg">' + P[cur.p][1] + '</div>' +
       '<div class="folio"><button class="btn" id="pp" type="button"' + (cur.p === 0 ? " disabled" : "") + '>‹ 앞쪽</button><span>' + (cur.p + 1) + ' / ' + P.length + ' 쪽</span><button class="btn" id="np" type="button"' + (cur.p === P.length - 1 ? " disabled" : "") + '>뒤쪽 ›</button></div></div></article></div>';
@@ -946,12 +1268,72 @@ dl.facts dd { margin: 0; }
     opening = false; dir = "";
   }
   function go(i) { location.hash = "b" + i; }
+  /* 기술 백과: #tech 목록, #t-공정, #x-제품기술 */
+  var STAGE2P = { "웨이퍼": "wafer", "노광": "photo", "식각·세정": "etch", "증착·배선": "dep", "CMP": "cmp", "테스트": "test", "패키징": "pkg" };
+  var LV = ["입문", "실무", "심화"];
+  function head(sub) { return '<div class="kicker">2026.10.31 기준</div><h1>실리콘 서재</h1><p class="sub-t">충청권 반도체 소부장 지식 라이브러리</p>' + sub; }
+  function txLink(k) { var x = TX[k]; return x ? '<a class="kchip" href="#x-' + k + '">' + esc(x.t) + "</a>" : ""; }
+  function pLink(id) { var p = procById(id); return p ? '<a class="kchip p" href="#t-' + id + '">' + esc(p.n) + "</a>" : ""; }
+  function sbList(keys) { return '<ul class="rel">' + keys.map(function (c) { var s = SB[c]; return s ? '<li><a href="' + s[2] + '" target="_blank" rel="noopener"><b>' + esc(s[0]) + "</b> · " + esc(s[1]) + "</a></li>" : ""; }).join("") + "</ul>"; }
+  var NOTE = '<p class="note">일반 기술 해설입니다. 공정 원리는 교과서 수준의 내용이고, 대표 기업은 널리 알려진 업체 예시로 점유율이나 순위가 아닙니다. 수치가 필요한 판단에는 회사 책의 출처 자료를 쓰세요.</p>';
+  function renderTech() {
+    var h = head('<p class="lede">공정 13개와 제품 기술 ' + Object.keys(TX).length + '개를 설명합니다. 입문에서 심화 순서로 읽으면 반도체 제조 흐름이 잡히고, 각 항목에서 관련 소재·부품과 서재 속 회사 책으로 이어집니다.</p>') + viewTabs("tech");
+    h += '<h2 class="sec-t">공정 백과</h2><p class="cap">학습 경로: 입문 → 실무 → 심화</p>';
+    LV.forEach(function (lv) {
+      h += '<div class="lvrow"><span class="lv ' + lv + '">' + lv + '</span><div class="pgrid">';
+      PROC.forEach(function (p, k) {
+        if (p.lv !== lv) return;
+        h += '<a class="pcard" href="#t-' + p.id + '"><span class="pn">' + (k + 1) + '</span><b>' + esc(p.n) + '</b><small>' + esc(p.en) + '</small><span>' + esc(p.s) + '</span><em>회사 ' + firmsOf(p.tx).length + "곳</em></a>";
+      });
+      h += "</div></div>";
+    });
+    h += '<h2 class="sec-t">제품 기술</h2><p class="cap">서재 속 회사들이 만드는 품목입니다. 누르면 원리와 만드는 회사가 나옵니다.</p><div class="kchips">' + Object.keys(TX).map(txLink).join("") + "</div>";
+    app.innerHTML = h;
+  }
+  function sec(lv, title, body) { return '<section class="tsec"><h3><span class="lv ' + lv + '">' + lv + "</span>" + esc(title) + "</h3>" + body + "</section>"; }
+  function renderProc(p) {
+    var k = PROC.indexOf(p), firms = firmsOf(p.tx), prev = PROC[k - 1], next = PROC[k + 1];
+    var h = head("") + viewTabs("tech") + '<p class="crumb"><a href="#tech">기술 백과</a> › 공정 ' + (k + 1) + "</p>" +
+      '<h2 class="ttl">' + esc(p.n) + ' <small>' + esc(p.en) + "</small></h2>" + NOTE;
+    h += sec("입문", "한눈에", "<p>" + esc(p.s) + "</p>") + sec("입문", "왜 필요한가", "<p>" + esc(p.why) + "</p>");
+    h += sec("실무", "작동 원리와 흐름", '<ol class="steps">' + p.how.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ol>");
+    h += sec("실무", "장비 · 소재 · 부품", '<div class="tri"><div><b>주요 장비</b>' + list(p.eq) + "</div><div><b>핵심 소재</b>" + list(p.mat) + "</div><div><b>핵심 부품</b>" + list(p.part) + "</div></div>");
+    h += sec("심화", "기술 이슈", list(p.iss)) + sec("심화", "발전 방향", list(p.fut));
+    h += sec("실무", "대표 기업", '<div class="tri two"><div><b>해외</b>' + list(p.gl) + "</div><div><b>국내</b>" + list(p.kr) + "</div></div>");
+    h += sec("실무", "서재 속 관련 회사", firms.length ? '<div class="chips">' + firms.map(chip).join("") + "</div>" : '<p class="empty">이 서재에 이 공정 품목을 만드는 회사가 없습니다.</p>');
+    if (p.tx.length) h += sec("실무", "관련 제품 기술", '<div class="kchips">' + p.tx.map(txLink).join("") + "</div>");
+    h += sec("심화", "더 읽기", sbList(p.sb));
+    h += '<nav class="pnav">' + (prev ? '<a href="#t-' + prev.id + '">← ' + esc(prev.n) + "</a>" : "<span></span>") + (next ? '<a href="#t-' + next.id + '">' + esc(next.n) + " →</a>" : "") + "</nav>";
+    app.innerHTML = h;
+  }
+  function txBody(x) {
+    return '<p><b>무엇인가</b> ' + esc(x.w) + '</p><p><b>원리</b> ' + esc(x.h) + '</p><p><b>공정 위치</b> ' + esc(x.p) + '</p><p><b>핵심 기술</b></p>' + list(x.k) + '<p class="txr"><b>트렌드</b> ' + esc(x.r) + "</p>";
+  }
+  function renderTx(key) {
+    var x = TX[key], firms = firmsOf([key]);
+    var h = head("") + viewTabs("tech") + '<p class="crumb"><a href="#tech">기술 백과</a> › 제품 기술</p><h2 class="ttl">' + esc(x.t) + "</h2>" + NOTE +
+      '<div class="txc">' + txBody(x) + "</div>" +
+      sec("실무", "쓰이는 공정", '<div class="kchips">' + (procOf[key] || []).map(pLink).join("") + "</div>") +
+      sec("실무", "서재 속 만드는 회사", firms.length ? '<div class="chips">' + firms.map(chip).join("") + "</div>" : '<p class="empty">없음</p>');
+    app.innerHTML = h;
+  }
+  /* 통합 검색 색인: 공정·제품 기술 */
+  function hitText(o) { return JSON.stringify(o).toLowerCase(); }
+  function searchKnow(v) {
+    var out = [];
+    PROC.forEach(function (p) { if (hitText(p).indexOf(v) >= 0) out.push('<a class="kchip p" href="#t-' + p.id + '">공정 · ' + esc(p.n) + "</a>"); });
+    Object.keys(TX).forEach(function (k) { if (hitText(TX[k]).indexOf(v) >= 0) out.push('<a class="kchip" href="#x-' + k + '">기술 · ' + esc(TX[k].t) + "</a>"); });
+    return out;
+  }
   function route() {
     var m = /^#b(\d+)$/.exec(location.hash);
     if (m && B[+m[1]]) {
       var i = +m[1];
       if (i !== cur.i || view !== "book") { cur.p = 0; opening = true; }
       cur.i = i; view = "book"; renderBook(); window.scrollTo(0, 0);
+    } else if (location.hash === "#tech" || /^#[tx]-/.test(location.hash)) {
+      var h2 = location.hash, pp = h2.indexOf("#t-") === 0 ? procById(h2.slice(3)) : null, xk = h2.indexOf("#x-") === 0 && TX[h2.slice(3)] ? h2.slice(3) : null;
+      view = "tech"; if (pp) renderProc(pp); else if (xk) renderTx(xk); else renderTech(); window.scrollTo(0, 0);
     } else if (location.hash === "#map") {
       homeView = "map"; view = "map"; renderMap(); window.scrollTo(0, 0);
     } else {
