@@ -158,6 +158,20 @@ dl.facts dd { margin: 0; }
 .tri b { font-size: 13px; color: var(--accent); } .tri ul { margin: 4px 0 0; padding-left: 1.1em; font-size: 14px; }
 .pnav { display: flex; justify-content: space-between; gap: 10px; margin: 18px 0 30px; } .pnav a { color: var(--accent); font-weight: 600; text-decoration: none; }
 @media (max-width: 760px) { .tri, .tri.two { grid-template-columns: 1fr; } .lvrow { grid-template-columns: 1fr; } .lvrow > .lv { justify-self: start; margin-top: 0; } }
+.sumbox { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 8px 14px; border-radius: 4px; margin: 0 0 14px; max-width: 72ch; }
+.sumbox b { font-size: 13px; color: var(--accent); } .sumbox p { margin: 4px 0; } .sumbox .sm { font-size: 13.5px; color: var(--muted); }
+.rt { border-collapse: collapse; width: 100%; max-width: 820px; font-size: 14px; margin: 6px 0 14px; }
+.rt th, .rt td { border-bottom: 1px solid var(--line); padding: 7px 8px; text-align: left; vertical-align: top; }
+.rt th { width: 30%; color: var(--muted); font-weight: 600; font-size: 13px; } .rt thead th { width: auto; }
+.rt small { color: var(--muted); }
+.pflow { display: flex; flex-wrap: wrap; gap: 4px; list-style: none; padding: 0; margin: 8px 0 14px; counter-reset: pf; }
+.pflow li a { display: block; font-size: 12.5px; padding: 4px 9px; border-radius: 3px; border: 1px dashed var(--line); color: var(--muted); text-decoration: none; }
+.pflow li.on a { border: 1px solid var(--accent); background: var(--accent); color: var(--paper); font-weight: 600; }
+.tl { list-style: none; padding: 0; margin: 6px 0 14px; max-width: 76ch; }
+.tl li { display: grid; grid-template-columns: 86px 1fr; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.tl time { color: var(--accent); font-weight: 600; font-size: 13px; } .cite { font-size: 12px; color: var(--muted); }
+.stype { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 3px; background: var(--accent-soft); color: var(--accent); }
+@media (max-width: 760px) { .tl li { grid-template-columns: 1fr; gap: 2px; } .rt th { width: 36%; } }
 .txc { border-left: 3px solid var(--accent); padding: 2px 0 2px 14px; margin: 0 0 18px; max-width: 64ch; }
 .txc h4 { margin: 0 0 6px; font-size: 1.05rem; }
 .txc p { margin: 0 0 6px; }
@@ -1139,7 +1153,7 @@ dl.facts dd { margin: 0; }
           if (b.g !== g.id) return;
           var pages = (b.tech.length + b.mkt.length + b.facts.length + b.watch.length);
           var ht = 150 + Math.min(pages, 14) * 7;
-          h += '<button class="spine" type="button" data-i="' + i + '" data-q="' + esc((b.n + " " + b.reg + " " + b.item + " " + b.tech.join(" ") + " " + (TXN[b.n] || []).map(function (k) { return TX[k].t + " " + TX[k].k.join(" "); }).join(" ")).toLowerCase()) + '" data-c="' + b.conf + '" style="height:' + ht + 'px;background:var(' + g.c + ')" aria-label="' + esc(b.n + ", " + b.item + ", " + chips[b.conf]) + '">' +
+          h += '<button class="spine" type="button" data-i="' + i + '" data-q="' + esc((b.n + " " + b.reg + " " + b.item + " " + b.tech.join(" ") + " " + (TXN[b.n] || []).map(function (k) { return TX[k].t + " " + TX[k].k.join(" "); }).join(" ") + " " + (X[b.n] ? JSON.stringify([X[b.n].tr, X[b.n].opp, X[b.n].news]) : "")).toLowerCase()) + '" data-c="' + b.conf + '" style="height:' + ht + 'px;background:var(' + g.c + ')" aria-label="' + esc(b.n + ", " + b.item + ", " + chips[b.conf]) + '">' +
             '<span class="band" style="top:6px"></span>' + (fav[b.n] ? '<span class="star" aria-label="즐겨찾기">★</span>' : '') + '<span class="code">' + esc(b.code) + '</span><span class="t">' + esc(b.n.replace(/\s*\(.*\)$/, "")) + '</span><span class="i">' + esc(b.item) + '</span><span class="d ' + b.conf + '"></span><span class="band" style="bottom:22px"></span></button>';
         });
         h += '</div>';
@@ -1202,7 +1216,8 @@ dl.facts dd { margin: 0; }
     var g = groupOf[b.g], refBook = null;
     if (b.ref) B.forEach(function (x, k) { if (x.n === b.ref) refBook = k; });
     var P = [];
-    var ov = "<h3>회사 개요</h3><p>" + esc(b.one) + "</p>";
+    var xa = X[b.n] || {};
+    var ov = (xa.ana ? '<div class="sumbox"><b>핵심 요약</b><p>' + esc(xa.ana.c) + '</p><p class="sm">' + esc(xa.ana.e) + "</p></div>" : "") + "<h3>회사 개요</h3><p>" + esc(b.one) + "</p>";
     if (b.facts.length) ov += '<dl class="facts">' + b.facts.map(function (f) { return "<dt>" + esc(f[0]) + "</dt><dd>" + esc(f[1]) + "</dd>"; }).join("") + "</dl>";
     else ov += '<p class="empty">이번 조사에서 회사 기본 정보를 확인하지 못했습니다.</p>';
     ov += '<dl class="facts"><dt>목록상 지역</dt><dd>' + esc(b.reg) + '</dd><dt>목록상 품목</dt><dd>' + esc(b.item) + '</dd><dt>신뢰도</dt><dd><span class="chip ' + b.conf + '">' + chips[b.conf] + '</span></dd></dl>';
@@ -1210,17 +1225,30 @@ dl.facts dd { margin: 0; }
     var gx = GX[b.g];
     ov += '<h3>함께 읽을 교과서</h3><p class="empty" style="font-style:normal">품목의 공정 원리를 설명하는 SemiBooks 교과서입니다.</p><ul class="rel">' +
       gx.rel.map(function (c) { var s = SB[c]; return '<li><a href="' + s[2] + '" target="_blank" rel="noopener"><b>' + esc(s[0]) + '</b> · ' + esc(s[1]) + "</a></li>"; }).join("") + "</ul>";
-    P.push(["개요", ov]);
-    P.push(["기술·제품", "<h3>기술과 제품</h3>" + (b.tech.length ? list(b.tech) : '<p class="empty">확인된 기술·제품 정보가 없습니다.</p>')]);
+    P.push(["기업 개요", ov]);
+    P.push(["사업·제품", "<h3>사업과 제품</h3>" + (b.tech.length ? list(b.tech) : '<p class="empty">확인된 기술·제품 정보가 없습니다.</p>')]);
     var tx = (TXN[b.n] || []).map(function (k) { return TX[k]; }).filter(Boolean);
-    if (tx.length) P.push(["제품 기술", "<h3>제품 기술 해설</h3>" + '<p class="empty" style="font-style:normal">이 회사가 만드는 품목의 일반 기술 설명입니다. 회사별 세부 사양이 아니라 품목 원리를 이해하기 위한 교과서 수준의 내용입니다.</p>' +
+    if (tx.length) P.push(["핵심 기술", "<h3>핵심 기술 해설</h3>" + '<p class="empty" style="font-style:normal">이 회사가 만드는 품목의 일반 기술 설명입니다. 회사별 세부 사양이 아니라 품목 원리를 이해하기 위한 교과서 수준의 내용입니다.</p>' +
       (b.conf === "C" ? '<p class="note">이 회사는 아직 미검증입니다. 아래 해설은 목록 품목(' + esc(b.item) + ') 기준이며, 이 회사가 실제로 만드는 제품인지는 확인되지 않았습니다.</p>' : "") +
       (TXN[b.n] || []).map(function (k) { var x = TX[k];
         return '<div class="txc"><h4>' + esc(x.t) + '</h4>' + txBody(x) + '<div class="kchips">' + (procOf[k] || []).map(pLink).join("") + '<a class="kchip" href="#x-' + k + '">같은 품목 회사 보기</a></div></div>';
       }).join("")]);
+    var tk = TXN[b.n] || [], on = {};
+    tk.forEach(function (k) { (procOf[k] || []).forEach(function (id) { on[id] = 1; }); });
+    if (tk.length) P.push(["공정 내 역할", "<h3>제조공정 내 역할</h3><p class=\"empty\" style=\"font-style:normal\">진하게 표시된 공정에 이 회사 품목이 쓰입니다. 누르면 공정 설명으로 갑니다.</p><ol class=\"pflow\">" +
+      PROC.map(function (q) { return '<li class="' + (on[q.id] ? "on" : "") + '"><a href="#t-' + q.id + '">' + esc(q.n) + "</a></li>"; }).join("") + "</ol>" +
+      '<table class="rt"><thead><tr><th>품목</th><th>적용 공정과 역할</th></tr></thead><tbody>' + tk.map(function (k) { return "<tr><td>" + txLink(k) + "</td><td>" + esc(TX[k].p) + "<br><small>" + esc(TX[k].w) + "</small></td></tr>"; }).join("") + "</tbody></table>"]);
+    var ga = GA[b.g];
+    var gah = ga ? '<h3>' + esc(g.name) + ' 산업 구조</h3><table class="rt"><tbody>' + [["시장 구조", ga.m], ["글로벌 주요 기업", ga.g], ["국내 주요 기업", ga.kr], ["국산화 수준", ga.l], ["진입장벽", ga.b]].map(function (r) { return "<tr><th>" + r[0] + "</th><td>" + esc(r[1]) + "</td></tr>"; }).join("") + '</tbody></table><p><a href="#g-' + b.g + '">품목군 산업 분석 전체 보기 →</a></p>' : "";
     P.push(["시장·경쟁", "<h3>시장과 경쟁</h3>" + (b.mkt.length ? list(b.mkt) : '<p class="empty">이 회사에 대한 시장 정보는 확인하지 못했습니다.</p>') + '<div class="ctx"><b>' + esc(g.name) + ' 품목 배경</b><br>' + esc(g.ctx) + "</div>"]);
+    P[P.length - 1][1] += gah;
+    var gr = "<h3>성장 기회</h3>" + (xa.opp && xa.opp.length ? list(xa.opp) : '<p class="empty">공개자료 확인 불가</p>') + "<h3>사업 리스크</h3>" + (xa.risk && xa.risk.length ? list(xa.risk) : '<p class="empty">공개자료 확인 불가</p>');
+    if (xa.tr && xa.tr.length) gr += '<h3>관련 산업 트렌드</h3><table class="rt"><tbody>' + xa.tr.map(function (t) { return "<tr><th>" + esc(t[0]) + "</th><td>" + esc(t[1]) + "<br><small>" + esc(TR[t[0]] || "") + "</small></td></tr>"; }).join("") + "</tbody></table>";
+    if (xa.ana) gr += '<div class="sumbox"><b>관전 포인트</b><p>' + esc(xa.ana.w) + "</p></div>";
+    gr += "<h3>추가로 확인할 점</h3>" + (b.watch.length ? list(b.watch) : '<p class="empty">없음</p>') + '<p class="note">성장 기회·리스크는 출처 자료를 근거로 한 편집 해석이며 투자 권유가 아닙니다.</p>';
+    P.push(["성장·리스크", gr]);
     var reps = REP[b.n.replace(/\s*\(.*\)$/, "")] || [];
-    var rh = "<h3>증권사·기관 리포트</h3>";
+    var rh = "<h3>최근 주요 동향</h3>" + (xa.news && xa.news.length ? '<ol class="tl">' + xa.news.map(function (n) { var s2 = S[n[2]]; return "<li><time>" + esc(n[0]) + "</time><span>" + esc(n[1]) + (s2 ? ' <a class="cite" href="' + s2[1] + '" target="_blank" rel="noopener">[' + esc(s2[0]) + "]</a>" : "") + "</span></li>"; }).join("") + "</ol>" : '<p class="empty">이번 라운드에서 최근 동향을 재확인하지 못했습니다. 시장·경쟁 페이지의 과거 자료를 참고하세요.</p>') + "<h3>증권사·기관 리포트</h3>";
     if (reps.length) {
       rh += '<p class="empty" style="font-style:normal">리포트 원문이나 리포트를 정리한 기사에서 옮긴 요약입니다. 목표가와 추정치는 발간 시점 기준이며 투자 권유가 아닙니다.</p>';
       rh += '<div class="reps">';
@@ -1233,11 +1261,15 @@ dl.facts dd { margin: 0; }
     } else {
       rh += '<p class="empty">찾은 증권사 리포트가 없습니다. 비상장사·외국계 법인이거나 커버리지가 없는 회사입니다.</p>';
     }
-    P.push(["리포트", rh]);
+    P.push(["최근 동향", rh]);
     var srcKeys = b.src.slice();
     reps.forEach(function (r) { if (r.s && srcKeys.indexOf(r.s) < 0) srcKeys.push(r.s); });
+    (xa.news || []).forEach(function (n) { if (n[2] && srcKeys.indexOf(n[2]) < 0) srcKeys.push(n[2]); });
     var src = srcKeys.map(function (k) { return S[k]; }).filter(Boolean);
-    P.push(["확인할 점·출처", "<h3>확인할 점</h3>" + (b.watch.length ? list(b.watch) : '<p class="empty">없음</p>') + "<h3>출처</h3>" + (src.length ? '<ul class="src">' + src.map(function (s) { return '<li><a href="' + s[1] + '" target="_blank" rel="noopener">' + esc(s[0]) + "</a></li>"; }).join("") + "</ul>" : '<p class="empty">근거 자료를 찾지 못했습니다. 이 책의 내용은 일반 지식이나 추정이며 사실로 쓰면 안 됩니다.</p>')]);
+    var ty = {}; src.forEach(function (s3) { var t3 = srcType(s3); ty[t3] = (ty[t3] || 0) + 1; });
+    var unk = b.facts.concat(b.tech, b.mkt).map(function (f) { return Array.isArray(f) ? f.join(" ") : f; }).filter(function (t4) { return /추정|미검증|확인 필요|가능성|일반 지식/.test(t4); }).length;
+    var dq = '<h3>데이터 품질</h3><table class="rt"><tbody><tr><th>정보 기준일</th><td>' + (xa.chk ? "2026-10-31 (웹 재확인)" : "2026-10 이전 수집 자료") + "</td></tr><tr><th>신뢰도</th><td>" + chips[b.conf] + "</td></tr><tr><th>출처 수</th><td>" + src.length + "건</td></tr><tr><th>출처 유형</th><td>" + (Object.keys(ty).map(function (k5) { return k5 + " " + ty[k5]; }).join(" · ") || "없음") + "</td></tr><tr><th>확인된 정보</th><td>기본 정보 " + b.facts.length + "항목, 최근 동향 " + ((xa.news || []).length) + "건</td></tr><tr><th>추정·미확인 표시</th><td>" + unk + "건</td></tr><tr><th>추가 조사 필요</th><td>" + (b.watch.length ? esc(b.watch.join(" / ")) : "없음") + '</td></tr></tbody></table><p class="note">신뢰도 A: 공식자료와 복수 자료로 핵심 확인 · B: 사업·제품은 확인, 일부 수치 부족 · C: 실체·제품 검증 부족. 기업 우수성과 무관합니다.</p>';
+    P.push(["참고자료", dq + "<h3>출처</h3>" + (src.length ? '<ul class="src">' + src.map(function (s) { return '<li><span class="stype">' + srcType(s) + '</span> <a href="' + s[1] + '" target="_blank" rel="noopener">' + esc(s[0]) + "</a></li>"; }).join("") + "</ul>" : '<p class="empty">근거 자료를 찾지 못했습니다. 이 책의 내용은 일반 지식이나 추정이며 사실로 쓰면 안 됩니다.</p>')]);
     return P;
   }
   function renderBook() {
@@ -1268,6 +1300,261 @@ dl.facts dd { margin: 0; }
     opening = false; dir = "";
   }
   function go(i) { location.hash = "b" + i; }
+  /* 3차 보강(2026.10.31): 최근 동향·성장/리스크·트렌드·종합 분석·데이터 품질.
+     news [날짜, 내용, 출처키] / opp 성장 기회 / risk 리스크 / tr [트렌드, 연관 설명] / ana {c 핵심 경쟁력, w 관전 포인트, e 종합 평가}
+     chk: 이번 라운드에서 웹 검색으로 재확인한 회사. 분석 문장은 출처 사실을 근거로 한 편집자 해석이며 투자 의견이 아님 */
+  [["z_ds1", "지디넷코리아, 덕산테코피아 2025년 실적(2026.03.17)", "https://v.daum.net/v/20260317080124747"],
+   ["z_ds2", "디일렉, 덕산테코피아 1Q26 실적(2026.05.08)", "https://www.thelec.kr/news/articleView.html?idxno=56267"],
+   ["z_ds3", "디일렉, 덕산일렉테라 상장 추진(2026.09.07)", "https://www.thelec.kr/news/articleView.html?idxno=61912"],
+   ["z_ds4", "데일리인베스트, 교보증권 리포트 정리(2025.09.10)", "http://www.dailyinvest.kr/news/articleView.html?idxno=68680"],
+   ["z_ds5", "AWAKEPLUS, 덕산테코피아 반기보고서 요약(2026.08.14)", "https://www.awakeplus.co.kr/data/view/20260814003493"],
+   ["z_lk1", "전자신문, 레이크머티리얼즈 반도체 소재 매출 목표(2026.07.26)", "https://www.etnews.com/20260722000253"],
+   ["z_lk2", "연합뉴스, 레이크머티리얼즈 2Q26 실적(2026.08.11)", "https://www.yna.co.kr/view/AKR20260811133000527"],
+   ["z_lk3", "뉴스톱, 레이크머티리얼즈 500억 CB(2026.05.13)", "https://www.newstopkorea.com/news/articleView.html?idxno=44939"],
+   ["z_lk4", "한국IR협의회, 레이크머티리얼즈(2026.04.30)", "https://m.stock.naver.com/domestic/stock/281740/research/92216?domesticStockExchange=KRX"],
+   ["z_lk5", "프라임경제, WF6 공급 중단과 몰리브덴 전구체(2026.06.16)", "https://www.newsprime.co.kr/news/article/?no=736839"],
+   ["z_dn1", "디지털투데이, 디엔에프 2025년 실적 공시(2026.02.05)", "https://www.digitaltoday.co.kr/news/articleView.html?idxno=627362"],
+   ["z_dn2", "녹색경제신문, 디엔에프 High-k 전구체(2026.02.20)", "https://www.greened.kr/news/articleView.html?idxno=337128"],
+   ["z_dn3", "AWAKEPLUS, 디엔에프 반기보고서 요약(2026.08.14)", "https://www.awakeplus.co.kr/data/view/20260814002889"],
+   ["z_dn4", "VUEDOT, 소부장 테마 정리(반기보고서 인용)", "https://stock.vuedot.co.kr/themes/kr/semiconductor-frontend"],
+   ["z_sb1", "디일렉, 솔브레인 1Q26 실적(2026.05.16)", "https://www.thelec.kr/news/articleView.html?idxno=56730"],
+   ["z_sb2", "연합뉴스, 신한투자증권 솔브레인(2026.09.01)", "https://www.yna.co.kr/view/AKR20260901033400008"],
+   ["z_sb3", "버핏연구소, 메리츠증권 솔브레인(2026.10.12)", "https://www.buffettlab.co.kr/news/view.php?idx=57175"],
+   ["z_sb4", "뉴스핌, 한국IR협의회 솔브레인(2026.06.17)", "https://www.newspim.com/news/view/20260617000105"],
+   ["z_wm1", "디지털투데이, 원익머트리얼즈 2Q26 실적(2026.08.07)", "https://www.digitaltoday.co.kr/news/articleView.html?idxno=691059"],
+   ["z_wm2", "연합뉴스, 신한투자증권 원익머트리얼즈(2026.08.21)", "https://www.yna.co.kr/view/AKR20260821029100008"],
+   ["z_wm3", "프라임경제, 상상인증권 원익머트리얼즈(2026.10.19)", "https://www.newsprime.co.kr/news/article?no=751364"],
+   ["z_te1", "프라임경제, 티이엠씨 재활용 네온 공급계약(2026.09.21)", "https://www.newsprime.co.kr/news/article?no=748499"],
+   ["z_te2", "WISEreport 티이엠씨 기업현황(2026.09 기준)", "https://comp.wisereport.co.kr/samsung/company/c1010001.aspx?cmp_cd=425040"],
+   ["z_fn1", "IB토마토, 에프엔에스테크 상반기·아사히램프(2026.09.03)", "https://www.newstomato.com/readnews.aspx?no=1312525"],
+   ["z_fn2", "뉴스핌, 그로쓰리서치 에프엔에스테크(2026.05.14)", "https://www.newspim.com/news/view/20260514000144"],
+   ["z_fn3", "데일리인베스트, SK증권 에프엔에스테크(2026.05.19)", "http://www.dailyinvest.kr/news/articleView.html?idxno=70723"],
+   ["z_fn4", "한경비즈니스, 대원화성·에프엔에스테크 유리기판 Sub Pad(2026.07.14)", "https://magazine.hankyung.com/business/article/202607143967b"],
+   ["z_fn5", "핀보드, 에프엔에스테크 2025 실적(DART 표준화)", "https://www.finboard.co.kr/company/2651"],
+   ["z_se1", "삼성전기 뉴스룸, 2026년 3분기 경영실적(2026.10.28)", "https://www.samsungsem.com/kr/newsroom/news/view.do?id=10627"],
+   ["z_se2", "데일리안, 삼성전기 3Q26 컨콜 정리(2026.10.28)", "https://www.dailian.co.kr/news/view/1707444/%EC%82%BC%EC%84%B1%EC%A0%84%EA%B8%B0-MLCC%EA%B8%B0%ED%8C%90-%EC%B5%9C%EB%8C%80-%EC%8B%A4%EC%A0%81%EB%B9%85%ED%85%8C%ED%81%AC-2026"],
+   ["z_st1", "뷰어스, 메리츠증권 심텍(2026.10.13)", "https://theviewers.co.kr/View.aspx?No=4260810"],
+   ["z_ts1", "LS증권, 티에스이 2Q26 Review(2026.08.18)", "https://file.alphasquare.co.kr/media/pdfs/company-report/_260818%20%ED%8B%B0%EC%97%90%EC%8A%A4%EC%9D%B4_%EC%98%A8%EB%9D%BC%EC%9D%B8%20-%202Q26%20Review_%EC%A0%95%ED%99%8D%EC%8B%9D_1433_Online%20report%20_%206_10p_%ED%8B%B0%EC%97%90%EC%8A%A4%EC%9D%B4.pdf"],
+   ["z_ts2", "EBN, 티에스이 HBM 확대(2026.07.10)", "https://www.ebn.co.kr/news/articleView.html?idxno=1715710"],
+   ["z_pc1", "QYResearch Korea, 프로브카드 시장 전망 2026 개정판(2026.10.10)", "https://contents.premium.naver.com/qyresearch/insight/contents/261010111324411kp"],
+   ["z_pm1", "WISEreport 피엠티 기업현황(2026.09 기준)", "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=147760"],
+   ["z_dt1", "기술과가치, 디에스테크노 월드클래스(2026.09.11)", "https://technovalue.com/View.aspx?No=4221208"],
+   ["z_dt2", "전자신문, 디에스테크노 CVD-SiC 웨이퍼 보트(2025.03.10)", "https://www.etnews.com/20250310000191"],
+   ["z_dt3", "지디넷코리아, 티씨케이-디에스테크노 SiC 특허(2026.10.10)", "https://zdnet.co.kr/view?no=20261010213456"],
+   ["z_dt4", "세라믹코리아, 디에스테크노 대표 인터뷰(2026.02)", "https://cerazine.net/news/view.php?idx=32389"],
+   ["z_hi1", "디지털투데이, 한솔아이원스 3Q26 실적(2026.10.23)", "https://www.digitaltoday.co.kr/disclosure/articleView.html?idxno=709517"],
+   ["z_hi2", "인포스탁데일리, 한솔아이원스 시설투자·유상증자 공시(2026.10.23)", "https://www.infostockdaily.co.kr/news/articleView.html?idxno=218566"],
+   ["z_hi3", "WISEreport 한솔아이원스 기업현황(2026.09 기준)", "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=114810"],
+   ["z_yc1", "KOSAI, 와이씨 리포트(공시 기반 정리, 2026.09.05)", "https://kosai.kr/stock/232140.html"],
+   ["z_ex1", "KOSAI, 엑시콘 리포트(공시 기반 정리, 2026.09.05)", "https://kosai.kr/r/092870.html"],
+   ["z_ex2", "데일리인베스트, 엑시콘 증권사 전망(2026.09.11)", "https://www.dailyinvest.kr/news/articleView.html?idxno=72057"],
+   ["z_jt1", "WISEreport 제이티 기업현황(2026.09 기준)", "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=089790"],
+   ["z_sw1", "WISEreport 삼화전기 기업현황(2026.09 기준)", "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=009470"],
+   ["z_sw2", "CNews, 삼화콘덴서·삼화전기 제품(2026.06.18)", "https://www.thecommoditiesnews.com/news/articleView.html?idxno=11342"]
+  ].forEach(function (r) { S[r[0]] = [r[1], r[2]]; });
+
+  var TR = {
+    "HBM·AI": "AI 가속기용 HBM 생산 확대. 적층·TSV·테스트 공정이 늘어 관련 소재·부품 사용량이 증가",
+    "DRAM 미세화": "1b·1c·1d 나노 전환. High-k 커패시터, EUV 레이어, 신규 배선 금속 수요가 커짐",
+    "3D NAND 고단화": "300단 이상 적층. 증착·식각 공정 수가 단수에 비례해 늘어남",
+    "GAA·선단 로직": "2nm 이하 게이트올어라운드. 선택적 식각·ALD 공정과 신규 케미칼이 필요",
+    "EUV": "EUV·High-NA EUV 확대. 노광 소재, 마스크, 광원 관련 수요",
+    "하이브리드 본딩": "범프 없이 구리끼리 붙이는 차세대 적층. 초평탄 CMP와 세정이 핵심",
+    "유리기판·FC-BGA": "AI 칩 대형화로 기판 면적·층수 증가. 유리기판은 2027~2028년 상용화 목표",
+    "전력반도체": "SiC·GaN 전력소자 확대. 고온 공정 부품과 전력용 수동부품 수요",
+    "차세대 소재": "Mo·Ru 배선, 저GWP 가스, 재활용 가스 등 소재 전환",
+    "팹 증설": "국내외 신규 팹(평택 P4·P5, 용인, 청주 M15X, 미국 테일러) 가동과 유틸리티·물류 수요"
+  };
+
+  var X = {
+    "덕산테코피아": { chk: 1,
+      news: [["2026.03.16", "2025년 연결 매출 1,121억 원(+12.4%), 영업손실 430억 원. 자회사 덕산일렉테라 북미 전해액 공장 램프업 비용과 RCPS 평가손실 574억 원 반영", "z_ds1"],
+        ["2026.05.08", "1Q26 연결 매출 391억 원, 영업손실 104억 원. 별도 기준 영업이익 9억 원으로 흑자전환. 반도체 소재 매출 165억 원(전년 동기 133억 원)", "z_ds2"],
+        ["2026.08.14", "반기보고서: 2Q26 매출 422억 원, 영업손실 106억 원", "z_ds5"],
+        ["2026.09.07", "덕산일렉테라 코스닥 상장 추진, 일반주주에게 지분 5.1% 현물배당 방침", "z_ds3"]],
+      opp: ["3D NAND 단수 증가에 따른 HCDS 사용량 증가", "천안 3공장 기반 DRAM·파운드리향 신규 전구체 준비(증권사 리포트 인용, 2025.09)"],
+      risk: ["반도체 전구체가 삼성전자에 집중. HCDS 삼성 내 점유율 60%는 2024년 증권사 추정치", "이차전지 자회사 적자로 연결 손실 지속", "자회사 상장에 따른 지분가치 희석 가능성"],
+      tr: [["3D NAND 고단화", "HCDS는 3D NAND 질화막·산화막 ALD에 쓰임"]],
+      ana: { c: "삼성전자 3D NAND용 HCDS의 주요 국내 공급사. 반도체 소재만 보면 매출이 늘고 있음", w: "연결 흑자전환 시점, HCDS 외 신규 전구체 품목의 고객 승인", e: "반도체 본업은 안정적이나, 회사 전체 실적은 이차전지 자회사 실적에 크게 좌우되는 구조" } },
+    "레이크머티리얼즈": { chk: 1,
+      news: [["2026.04.30", "한국IR협의회: 2025년 반도체 소재 매출 971억 원(비중 68.7%), 2026년 1,165억 원 전망", "z_lk4"],
+        ["2026.05.13", "500억 원 사모 CB 발행. 반도체·촉매 설비 각 50억 원, 전고체 관련 300억 원 배정", "z_lk3"],
+        ["2026.07.22", "대표 발언: 2026년 반도체 소재 매출 약 1,100억 원 예상. 삼성전자 테일러 공장 초도품 공급 완료, TSMC·마이크론·키옥시아 공급 및 인텔 평가 진행", "z_lk1"],
+        ["2026.08.11", "2Q26 매출 372억 원(+19.1%), 영업이익 61억 원(+40%)", "z_lk2"]],
+      opp: ["해외 고객(TSMC·마이크론·키옥시아·인텔) 확대", "WF6 공급 차질 속 몰리브덴 전구체 국책과제(2024.01~) 진행", "TMA 기반 메탈로센 촉매 2027년 매출 인식 전망(한국IR협의회)"],
+      risk: ["태양광 소재 업황 둔화", "전고체 신사업 투자 부담과 CB 전환 희석", "2025년 영업이익 -40%로 이익 변동성"],
+      tr: [["DRAM 미세화", "High-k(Hf·Zr) 전구체 수요"], ["3D NAND 고단화", "실리콘·배리어 전구체 사용량 증가"], ["차세대 소재", "몰리브덴 전구체 개발"]],
+      ana: { c: "TMA 원천기술과 설계·합성·정제 수직계열화. 국내 양대 메모리사에 더해 해외 고객 확대 중", w: "테일러 양산 매출 시점, 해외 고객 추가 품목 승인, Mo 전구체 상용화", e: "국내 전구체 업체 중 고객 다변화가 가장 진전된 곳 중 하나. 신사업 투자가 이익률 변수" } },
+    "디엔에프": { chk: 1,
+      news: [["2026.02.05", "2025년 매출 791억 원(+7%), 영업손실 6.7억 원(적자 축소), 순이익 12억 원", "z_dn1"],
+        ["2026.02.06", "최대주주 솔브레인 지분 32.5%로 확대", "z_dn2"],
+        ["2026.08.14", "반기보고서: 2Q26 매출 217억 원, 영업이익 7억 원(2분기 연속 흑자)", "z_dn3"],
+        ["2026", "솔브레인 종속회사로 편입(솔브레인 반기보고서 기준 정리 자료)", "z_dn4"]],
+      opp: ["일본 TCLC 하프늄 전구체 특허 만료(2026년 말 전망) 후 삼성전자 공급 다변화 가능성(업계 관측)", "솔브레인과의 원가·영업 시너지"],
+      risk: ["매출 대부분이 단일 고객(공시 기반 계산 약 92%)", "이익 규모가 작아 분기 변동이 큼"],
+      tr: [["DRAM 미세화", "DRAM 커패시터용 High-k 전구체"], ["3D NAND 고단화", "V-NAND 적층 수에 비례해 전구체 사용량 증가(회사 설명)"]],
+      ana: { c: "2019년 국산화 과정에서 삼성전자 투자를 받은 High-k 전구체 업체. 부채비율 한 자릿수의 재무구조", w: "하프늄 전구체 공급 개시 여부, 솔브레인 편입 후 고객 다변화", e: "기술 이력은 탄탄하나 고객 집중이 매우 높은 구조. 솔브레인 그룹 내 전구체 플랫폼 역할이 관건" } },
+    "솔브레인": { chk: 1,
+      news: [["2026.05.15", "1Q26 매출 2,638억 원, 영업이익 447억 원. 반도체 매출 비중 84%. 미국 법인 2곳 설립(부지 확보 단계)", "z_sb1"],
+        ["2026.06.17", "한국IR협의회: 유리기판 TGV·금속화·CMP 기술 보유, 3Q26 파일럿 라인 후 4Q 샘플 공급 계획", "z_sb4"],
+        ["2026.08", "2Q26 매출 3,120억 원, 영업이익 460억 원. 디엔에프 연결 반영으로 매출 증가", "z_sb2"],
+        ["2026.10.12", "메리츠증권: 8월 테일러 팹향 초도 물량 출하, 북미 현지 공장 착공 후 2028년 상반기 공급 예정", "z_sb3"]],
+      opp: ["P4·M15X·Y1·P5 등 고객 신규 팹 연속 가동(메리츠, 2026.10)", "테일러 파운드리향 초산계 에천트", "유리기판 신사업(2027년 가시화 기대)"],
+      risk: ["원재료 가격과 판가 전가 시차", "고객사의 복수 공급 체계 강화", "국내 이엔에프테크놀로지, 해외 Entegris와 경쟁"],
+      tr: [["3D NAND 고단화", "인산계 식각액 사용량 증가"], ["DRAM 미세화", "신규 DRAM 팹 불산계 에천트"], ["GAA·선단 로직", "GAA 공정용 특수 식각액(반기보고서)"], ["HBM·AI", "HBM4 적층용 CMP 슬러리·전구체(반기보고서)"], ["유리기판·FC-BGA", "TGV·금속화 공정 신사업"]],
+      ana: { c: "국내 메모리 신규 팹 불산계 식각액 점유율이 높은 것으로 파악(한국IR협의회). 식각액·CMP 슬러리·전구체 포트폴리오", w: "3Q26 이후 원가 안정과 마진 회복, 미국 공장 일정, 유리기판 샘플 평가", e: "국내 반도체 습식 소재의 대표 기업. 고객 증설 사이클과 매출이 가장 직접 연동되는 위치" } },
+    "원익머트리얼즈": { chk: 1,
+      news: [["2026.08.07", "2Q26 매출 923억 원(+23.1%), 영업이익 146억 원(+28.9%). 상반기 매출 1,805억 원", "z_wm1"],
+        ["2026.08.21", "신한투자증권: 물류비·일부 원가 상승으로 2Q 영업이익률 2%p 축소, 하반기 정상화 전망", "z_wm2"],
+        ["2026.10.19", "상상인증권: 3Q26 매출 1,009억 원 추정. 가동률 약 65%로 신규 라인 대응 여력", "z_wm3"]],
+      opp: ["P4 램프업과 Y1·P5 신규 라인 초도 물량(증권사 추정)", "특수가스는 장비 셋업 단계 초도 투입량이 큼"],
+      risk: ["유가·물류비 연동 원가", "국내 양대 메모리사 투자 일정 의존"],
+      tr: [["DRAM 미세화", "10nm급 DRAM용 특수가스 공급 증가(회사 설명)"], ["3D NAND 고단화", "식각·증착 가스 사용량 증가"]],
+      ana: { c: "N2O·NH3 등 100여 종 특수가스 포트폴리오와 국내 메모리·디스플레이 고객 기반", w: "하반기 이익률 회복, 신규 팹 초도 물량 반영 시점", e: "국내 특수가스 국산화 대표 업체. 2023년 저점 이후 실적 회복 국면(공시 기준)" } },
+    "티이엠씨": { chk: 1,
+      news: [["2026.09.21", "삼성전자·SK하이닉스와 재활용 네온 장기 공급 본계약 체결 보도(IB업계 전언). 공동개발 회수율 72.7%. 회사는 NDA로 확인 거부", "z_te1"],
+        ["2026.09", "2026년 상반기 매출 -2.4%, 영업이익 -56%(전년 동기 대비)", "z_te2"]],
+      opp: ["네온 재활용 → 제논·크립톤 재활용으로 확장 가능성(업계 관측)", "희귀가스 국산 공급망 수요"],
+      risk: ["반도체 설비투자에 실적 연동", "재활용 계약은 회사 공식 확인 불가 상태"],
+      tr: [["차세대 소재", "재활용 희귀가스와 ESG 대응"], ["3D NAND 고단화", "C4F6 등 식각가스"]],
+      ana: { c: "가스 합성·희귀가스 분리·정제·충전 전 공정 내재화. 엑시머 레이저 가스 글로벌 인증 보유", w: "재활용 네온 매출 반영과 이익 회복", e: "희귀가스 공급망 자립의 상징성이 큰 업체이나 최근 실적은 둔화" } },
+    "FNSTech (에프엔에스테크)": { chk: 1,
+      news: [["2025.08", "대만 할로겐 램프 업체 아사히램프 지분 62.96% 인수(AMAT 공급, TSMC·마이크론 애프터마켓)", "z_fn2"],
+        ["2026.07", "아사히램프 지분 80%로 확대(약 29억 원 추가 취득)", "z_fn1"],
+        ["2026.07.14", "대원화성과 유리기판 CMP Sub Pad 공동개발", "z_fn4"],
+        ["2026.09.03", "상반기 매출 270억 원(-37.1%)이나 영업이익 72.6억 원으로 증가. 부품소재 비중 72.3%", "z_fn1"]],
+      opp: ["HBM용 CMP 패드 납품 시작(2026, 증권사·독립리서치)", "유리기판용 대면적 CMP 패드: 2025.3Q 개발 완료, 2027 상반기 양산 출하 전망(SK증권)", "할로겐 램프 대만 증설"],
+      risk: ["디스플레이 장비 투자 변동으로 매출 감소", "CMP 패드 시장은 Qnity(구 Dow/DuPont)가 지배적"],
+      tr: [["HBM·AI", "HBM 라인 CMP 패드"], ["유리기판·FC-BGA", "대면적 유리기판 CMP 패드"], ["하이브리드 본딩", "본딩용 패드 연구개발 중(회사 답변)"]],
+      ana: { c: "삼성전자 재생 패드로 진입해 신품·HBM용까지 확장. 원판 경화 방식이 대면적 패드에 유리하다고 회사가 설명", w: "HBM 패드 물량, 유리기판 패드 양산 투자, 아사히램프 이익 기여", e: "장비주에서 소모품 중심 소부장으로 체질 전환 중. 2025년 영업이익률 14.1%(DART 표준화)" } },
+    "삼성전기": { chk: 1,
+      news: [["2026.09", "세종 4조 2,700억 원, 베트남 2조 5,100억 원 FC-BGA 증설 결정(총 6조 7,800억 원)", "z_se2"],
+        ["2026.10.28", "3Q26 매출 3조 7,633억 원, 영업이익 6,910억 원으로 분기 최대. 패키지솔루션 매출 9,390억 원(+58%)", "z_se1"],
+        ["2026.10.28", "컨퍼런스콜: 유리기판 2028년 가동 목표, 실리콘 커패시터 2027년 양산, 수동부품 내장 기판 4Q 공급 2배", "z_se2"]],
+      opp: ["AI 서버 CPU·가속기·네트워크용 FC-BGA 공급 부족", "빅테크 투자비 지원과 장기공급계약(LTA)", "유리기판·실리콘 커패시터 신사업"],
+      risk: ["대규모 증설에 따른 투자 부담과 수요 사이클 변화", "환율 변동", "빅테크 소수 고객 집중"],
+      tr: [["유리기판·FC-BGA", "대면적·고다층 FC-BGA와 유리기판"], ["HBM·AI", "AI 서버용 MLCC·기판 동반 성장"]],
+      ana: { c: "MLCC와 FC-BGA를 함께 공급하고, 수동부품 내장 기판을 만드는 차별화(회사 주장)", w: "세종·베트남 증설 일정, 유리기판 고객 확보, 2027년 실적 가이던스 이행", e: "AI 인프라 투자의 대표 부품 수혜 기업. 국내 기판 업계에서 규모·기술 모두 선두" } },
+    "심텍": { chk: 1,
+      news: [["2026.10.13", "메리츠증권: 3Q26 매출 5,523억 원(+48.1%), 영업이익 851억 원 추정. SoCAMM 모듈 PCB·MCP 기판 출하 증가와 ASP 상승", "z_st1"]],
+      opp: ["SoCAMM(서버 CPU용 LPDDR 모듈) 확대", "고객사 장기공급계약으로 수요 가시성 상승(증권사)"],
+      risk: ["ABF(FC-BGA) 기판 노출이 없어 AI 가속기 직접 수혜 제한(증권사 지적)", "메모리 업황 사이클"],
+      tr: [["HBM·AI", "AI 서버 메모리 모듈·패키지 기판"]],
+      ana: { c: "메모리 모듈 PCB와 메모리 패키지 기판(MCP·SiP) 전문", w: "판가 인상 지속, SoCAMM 물량", e: "메모리 업사이클의 직접 수혜 기판 업체. 수익성이 판가에 민감" } },
+    "TSE": { chk: 1,
+      news: [["2026.07.10", "2025년 글로벌 프로브카드 시장 7위(DS투자증권 인용 보도)", "z_ts2"],
+        ["2026.08.18", "2Q26 매출 1,888억 원(+60.5%), 영업이익 525억 원(+254.7%)으로 분기 최대. 프로브카드 703억 원, 인터페이스보드 427억 원", "z_ts1"],
+        ["2026", "국내 S사 HBM 프로브카드 1Q26 공급 시작 후 2Q 확대, 미국 M사 HBM·DDR5 프로브카드 1Q26 신규 공급(LS증권)", "z_ts1"]],
+      opp: ["HBM4용 프로브카드 수요", "비메모리(CPU·GPU·AP) 인터페이스보드 확대", "HBF(고대역폭 플래시) 장기 수요 가능성"],
+      risk: ["생산 인력·장비 증설 속도가 매출 상한", "글로벌 Big3(FormFactor·Technoprobe·MJC)와 경쟁"],
+      tr: [["HBM·AI", "HBM 웨이퍼 테스트용 프로브카드"]],
+      ana: { c: "프로브카드·인터페이스보드·테스트소켓을 모두 만드는 국내 유일급 업체. NAND에서 DRAM·HBM으로 확장", w: "HBM4 물량, 증설 속도, 2027년 이익 지속성", e: "2026년 국내 테스트 부품 업체 중 가장 큰 실적 레벨업을 보이는 곳" } },
+    "피엠티": { chk: 1,
+      news: [["2026.09", "2026년 상반기 매출 344억 원(+186%), 영업이익·순이익 흑자전환. 대만·중국 신규 매출처 발굴", "z_pm1"],
+        ["2026.10", "QYResearch: 국내 프로브카드 업체 중 상반기 성장률 1위. 품질 문제 이후 턴어라운드", "z_pc1"]],
+      opp: ["HBM 수요 확산과 해외 신규 고객"], risk: ["과거 품질 문제로 수주가 급감한 이력", "2025년 대규모 적자(EPS -1,698원)"],
+      tr: [["HBM·AI", "메모리 프로브카드 수요 증가"]],
+      ana: { c: "MEMS 3D 프로브카드 상용화(2006) 이력과 2D MEMS 신제품", w: "흑자 지속성과 신규 고객 매출 비중", e: "최대주주 프로텍(49%) 계열의 프로브카드 업체. 회복 초기 단계" } },
+    "디에스테크노": { chk: 1,
+      news: [["2025.03", "CVD-SiC 웨이퍼 보트 국산화, 해외 전력반도체 장비사 공급 시작", "z_dt2"],
+        ["2025", "인텔 EPIC Supplier Award 수상(국내 반도체 부품사 최초), 글로벌파운드리 협력사 선정. 월드클래스플러스 후보로 4년간 342억 원 R&D 지원", "z_dt1"],
+        ["2026.02", "원주 문막공장 가동(실리콘 잉곳부터 가공까지 수직계열화 목표)", "z_dt4"],
+        ["2026.10.07", "티씨케이와의 SiC 포커스링 특허 분쟁 지속. 특허심판원이 티씨케이 '888 특허 정정 수용", "z_dt3"]],
+      opp: ["삼성전자·인텔 전략적 투자 기반 해외 고객 확대", "600mm급 대구경 실리콘 부품, CVD-SiC 보트·튜브 12인치 개발", "2030년 매출 5,000억 원 목표(대표 인터뷰)"],
+      risk: ["티씨케이 특허 침해소송(2019~) 결과", "비상장으로 재무 공시 제한"],
+      tr: [["전력반도체", "고온 공정용 CVD-SiC 보트·튜브"], ["3D NAND 고단화", "고종횡비 식각으로 포커스링 교체 주기 단축"]],
+      ana: { c: "쿼츠·실리콘·CVD-SiC 세 소재를 모두 원소재부터 가공·세정까지 내재화한 국내 유일 업체(회사·보도)", w: "특허 분쟁 결론, 원주 공장 램프업, 대만 고객", e: "식각 소모 부품 국산화의 핵심 업체. 글로벌 IDM 인증으로 해외 확장성 확보" } },
+    "한솔아이원스": { chk: 1,
+      news: [["2026.03", "2025년 매출 1,988억 원(+26.5%), 영업이익 333억 원(공시)", "z_hi3"],
+        ["2026.09", "EUV 파츠 리유즈 사업 아시아 첫 인증, 쿼츠 대체 포커싱 신소재 개발(반기보고서 요약)", "z_hi3"],
+        ["2026.10.23", "3Q26 매출 650억 원(+26.9%), 영업이익 124억 원(+32%)", "z_hi1"],
+        ["2026.10.23", "1,260억 원 신규 시설투자와 600억 원 주주배정 유상증자 결정. 최대주주 한솔테크닉스 참여", "z_hi2"]],
+      opp: ["HBM 수요 확대에 따른 세정·코팅 물량", "EUV 부품 재사용 서비스", "대규모 시설투자로 캐파 확대"],
+      risk: ["유상증자에 따른 지분 희석(발행주식의 약 23%)", "정밀가공 부문 이익률 변동"],
+      tr: [["EUV", "EUV 장비 부품 재사용"], ["HBM·AI", "HBM 공정 장비 부품 세정 수요"]],
+      ana: { c: "장비 부품 정밀가공부터 세정·코팅까지 통합 제공. 글로벌 장비사 협력 기반", w: "1,260억 원 투자의 가동 시점과 증자 후 이익 성장", e: "한솔그룹 편입 후 투자를 키우는 국내 부품 세정·가공 대표 업체" } },
+    "와이씨": { chk: 1,
+      news: [["2026.03", "2025년 매출 2,726억 원, 영업이익 170억 원(공시 기반 정리)", "z_yc1"],
+        ["2026.08", "2Q26 매출 1,050억 원, 영업이익 150.5억 원. 1Q 급감 후 반등", "z_yc1"]],
+      opp: ["HBM 웨이퍼 테스터 공급 확대", "SK하이닉스 번인 테스터 세컨 벤더 진입 경쟁"],
+      risk: ["삼성전자가 2대 주주(11.7%)이자 매출 대부분인 고객 집중", "계약 시점에 따른 분기 실적 편차"],
+      tr: [["HBM·AI", "HBM 고속 웨이퍼 테스터"]],
+      ana: { c: "국내 유일 고속 메모리 웨이퍼 테스터 제조 역량(2012년 일본 테스터 사업 인수)", w: "삼성 후속 발주, SK하이닉스 진입 여부", e: "어드밴테스트 대체 국산 테스터의 대표 주자이나 고객 집중이 큼" } },
+    "엑시콘": { chk: 1,
+      news: [["2026.03.04", "삼성전자와 CLT·SSD 테스터 302억 원 공급계약", "z_ex1"],
+        ["2026.07.10", "삼성전자와 CLT·SSD 테스터 498.5억 원 공급계약", "z_ex1"],
+        ["2026.09.11", "증권사 전망: 2026년 매출 약 1,349억 원, 영업이익 231억 원(신한투자증권 추정)", "z_ex2"]],
+      opp: ["CLT 공급 대수 확대(2025년 10대 → 2026년 15~20대 추정, 대신증권)", "Gen6 SSD·CXL 3.1 테스터 초도 매출"],
+      risk: ["삼성전자의 CIB 멀티벤더화(네오셈 등)", "계약 인도 시점에 따른 분기 편차", "2024년 영업손실률 -50% 이력"],
+      tr: [["HBM·AI", "AI 서버용 DRAM·SSD 테스트 수요"]],
+      ana: { c: "CLT(챔버형 저주파 테스터)로 삼성 퀄 통과, 메모리·SSD·CIS 테스터 라인업", w: "CLT 경쟁 구도, 신제품 매출 시점", e: "2024년 적자에서 2025~2026년 흑자 전환. 수주 지속성이 핵심" } },
+    "제이티": { chk: 1,
+      news: [["2026.03", "2025년 매출 384억 원(-22.5%), 영업손실 22억 원", "jt1"],
+        ["2026.09", "상반기 매출 +178.5%, 흑자전환. 메모리 모듈 검사장비 대규모 수주와 번인 소터 수주 확대", "z_jt1"]],
+      opp: ["글로벌 OSAT 대상 AI 반도체용 BLU 장비", "Wafer Probe Station 개발, HBM 장비 기술 협업", "마이크론 해외 신규 공장"],
+      risk: ["고객 투자 사이클에 따른 큰 실적 변동(2022→2025 매출 절반 이하)"],
+      tr: [["HBM·AI", "고성능 메모리 번인·검사"]],
+      ana: { c: "번인 소터 세계 1위(회사 설명). 삼성·SK하이닉스·마이크론 모두 고객", w: "하반기 수주 지속, 신규 장비 매출화", e: "메모리 투자 재개의 수혜를 받는 후공정 장비 업체" } },
+    "삼화전기": { chk: 1,
+      news: [["2026.03", "2025년 매출 2,301억 원(-1.3%), 영업이익 120억 원(-51%)", "z_sw1"],
+        ["2026.06.18", "하이브리드 커패시터를 AI 서버 전력 공급용으로 양산(보도)", "z_sw2"],
+        ["2026.09", "상반기 매출 -8.2%, 영업이익 -27%. 동남아·중국 저가 제품 수입으로 경쟁 심화", "z_sw1"]],
+      opp: ["AI 서버 전원부용 하이브리드 커패시터", "ESS·신재생용 EDLC(그린캡)"],
+      risk: ["중국·동남아 저가 경쟁", "알루미늄박 등 원자재 가격"],
+      tr: [["HBM·AI", "AI 서버 전원부 커패시터(반도체 공정 부품은 아님)"], ["전력반도체", "고전압 전장·ESS 수요"]],
+      ana: { c: "50년 업력의 알루미늄 전해 커패시터 전문. 2대 주주 일본 니치콘(22.8%)", w: "AI 서버용 제품 매출 비중, 판가 회복", e: "반도체 소부장보다는 전자부품. 목록상 협력사이나 반도체 공정과 직접 연결은 약함" } },
+    "칸토덴카": { chk: 1,
+      news: [["2026.06.16", "칸토덴카·센트럴글래스가 2026.07.01부터 WF6 생산 영구 중단을 고객사에 통보(트렌드포스 등 인용 보도). 중국의 텅스텐 대일 수출통제 영향", "z_lk5"]],
+      opp: ["불소계 식각가스 수요"], risk: ["원재료(텅스텐) 수출통제로 일부 제품 철수"],
+      tr: [["차세대 소재", "WF6 공급 차질로 Mo 배선 전환 가속 가능성"]],
+      ana: { c: "일본 불소계 특수가스 업체(일반 지식). 천안 사업장의 실체는 공개자료 확인 불가", w: "한국 법인 제품 구성과 WF6 중단 영향", e: "공급망 리스크가 현실화된 사례로 주목" } }
+  };
+  /* 출처 기반 편집 분석(이번 라운드 재검색 없음): 기존 수록 자료를 근거로 작성 */
+  var XA = {
+    "Merck (한국머크)": ["High-k·몰리브덴 전구체와 공급 장비(켐키퍼)까지 함께 공급", "음성 High-k 생산 확대 프로젝트 진행", "몰리브덴 워드라인 채택 확대 속도", [["3D NAND 고단화", "Mo 워드라인"], ["차세대 소재", "Mo 전구체"]]],
+    "효성네오켐": ["NF3와 중수소(D2) 국산화", "중수소 고객 품질평가 결과", "NF3 가격 경쟁(중국)", [["차세대 소재", "중수소 국산화"]]],
+    "Nippon Sanso Matheson": ["도펀트·실란 등 특수가스와 팹 상주 가스관리 서비스", "아산 사업장 투자", "공개 재무 확인 불가", [["팹 증설", "Total Gas Management"]]],
+    "에어리퀴드코리아": ["천안 크립톤·제논 정제공장(2025.06), 세종 디보란 공장(2024.05)", "희귀가스 국산화 물량", "글로벌 본사 전략 의존", [["팹 증설", "신규 팹 가스 수요"], ["차세대 소재", "희귀가스 현지 정제"]]],
+    "에어프로덕츠코리아": ["초고순도 벌크가스 장기 공급", "청주 신규 팹 연계 투자", "장기계약 갱신 조건", [["팹 증설", "청주 M15X 등"]]],
+    "JSR": ["EUV용 금속산화물 레지스트(MOR) 등 차세대 PR", "일본 국부펀드(JIC) 인수 후 투자", "EUV PR 경쟁(TOK·신에츠)", [["EUV", "MOR 레지스트"]]],
+    "Qnity": ["CMP 패드 글로벌 최대 점유(2019년 Dow 약 80%, 삼성증권)", "HBM용 신규 패드(Emblem)", "국산 패드(에프엔에스테크 등) 추격", [["HBM·AI", "HBM용 CMP 패드"], ["하이브리드 본딩", "초평탄 CMP"]]],
+    "NCK": ["ArF용 반사방지막(ARC) 전문, 당진 3공장(2023.09)", "EUV 하부막 확대", "모회사(닛산화학) 전략 의존", [["EUV", "하부막 소재"]]],
+    "FFEM": ["CMP 슬러리·PR·케미칼 종합, 삼성전자 M-day 최우수 파트너상(2025.11)", "일본·미국·한국 1,000억 엔 이상 투자(~2027.03)", "국내 생산 품목 확인 필요", [["EUV", "PR"], ["HBM·AI", "CMP 슬러리"]]],
+    "GlobalWafers (MEMC코리아)": ["글로벌 5대 웨이퍼 업체 한국 법인", "300mm 증설", "수치가 2차 자료 인용(원문 확인 필요)", [["팹 증설", "웨이퍼 수요"]]],
+    "에이텍솔루션": ["재생 웨이퍼·세정", "아산 신공장 월 6만 장(연말 목표)", "2025.09 천안 공장 화재로 주력 라인 소실", [["팹 증설", "신규 팹 셋업용 테스트 웨이퍼"]]],
+    "㈜피케이엘": ["레거시 노드 포토마스크 국산 공급", "고객 다변화", "Toppan·Photronics·DNP·Hoya 과점 시장", [["EUV", "선단 마스크는 IDM 내재화"]]],
+    "LG화학": ["액상·필름 PID, PFAS·유해 용매 미사용", "첨단 패키지 RDL 채택", "일본 업체 선점 시장", [["유리기판·FC-BGA", "재배선 절연재"], ["HBM·AI", "칩렛 패키징"]]],
+    "린데": ["국내 1위 산업가스, 평택 ASU", "2031년 평택 희귀가스 1,500억 원 투자", "타겟 사업은 별도 법인(Linde AMT) 가능성", [["팹 증설", "평택 ASU"], ["차세대 소재", "희귀가스"]]],
+    "영신쿼츠": ["ALD·LPCVD·확산·식각용 고순도 쿼츠웨어와 원자재", "표면처리 기술로 수명 연장", "원익QnC·월덱스 등과 경쟁", [["3D NAND 고단화", "확산·ALD 쿼츠 부품"]]],
+    "이노레스": ["FFKM 실링 국산화", "고객사 국산 대체 비중", "Kalrez(Qnity) 등 해외 강자", [["차세대 소재", "FFKM 국산화"]]],
+    "거성": ["이온주입 소스헤드 등 고융점 소재 가공", "반도체 매출 비중", "고객 투자 사이클", [["DRAM 미세화", "이온주입 공정 증가"]]],
+    "EDWARDS": ["천안·아산 진공펌프 생산, 공급망 현지화 85%", "아산 공장 가동률", "Ebara·Kashiyama 경쟁", [["팹 증설", "장비당 진공펌프"], ["EUV", "EUV 진공 수요"]]],
+    "쿠리타한수": ["초순수 설계·운영", "신규 팹 UPW 수주", "천안 사업장 역할 확인 불가", [["팹 증설", "UPW 플랜트"]]],
+    "세메스": ["OHT 국산화(2025 장영실상)", "외부 고객 확대", "다이후쿠·무라타와 경쟁", [["팹 증설", "팹 물류"]]]
+  };
+  Object.keys(XA).forEach(function (n) { var a = XA[n]; X[n] = X[n] || { opp: [a[1]], risk: [a[2]], tr: a[3], ana: { c: a[0], w: a[1], e: "기존 수록 자료 기반 요약. 이번 라운드에서 최신 동향은 재확인하지 못함" } }; });
+
+  /* 품목군 산업 분석(10항목). 수치는 출처·기준연도가 있는 것만 */
+  var GA = {
+    pre: { d: "박막을 만드는 기체 원료. 순도·분자 설계가 막 품질을 결정", p: "증착(ALD·CVD): 커패시터, 게이트, 워드라인", k: "High-k(Hf·Zr), 실리콘(HCDS·DIPAS), 금속(W·Mo·Ru)", m: "웨이퍼 투입량과 ALD 공정 수에 비례. 글로벌 시장 규모는 공개자료 확인 불가", g: "Merck, Air Liquide, Entegris, ADEKA, TCLC(SK트리켐 합작)", kr: "디엔에프, 레이크머티리얼즈, 덕산테코피아, 솔브레인, 한솔케미칼", l: "실리콘·일부 High-k는 국산화. 하프늄 계열은 일본 특허 의존(2026년 말 만료 전망)", h: "HBM용 DRAM 커패시터 High-k 수요", f: "Mo·Ru 금속 전구체, 저온 ALD", b: "고객 공정 인증 1~2년, 고객 집중, 원천 특허" },
+    gas: { d: "식각·증착·도핑·세정에 쓰는 고순도 가스와 대용량 벌크가스", p: "식각, 증착, 이온주입, 노광 광원, 팹 전체 인프라", k: "식각 불화가스(NF3·C4F6), 증착 가스(SiH4·NH3), 희귀가스(Ne·Kr·Xe), 벌크(N2·O2·Ar)", m: "글로벌 특수가스는 6개사가 약 80%(한국IR협의회, 2025)", g: "Linde, Air Liquide, Air Products, Nippon Sanso, Messer, Sumitomo Seika", kr: "원익머트리얼즈, 티이엠씨, 효성네오켐, SK스페셜티, 솔머티리얼즈", l: "혼합·정제가스와 NF3, 네온 국산화 진전. 일부 원료는 수입", h: "웨이퍼 투입 증가로 간접 수혜", f: "재활용 가스, 저GWP 대체 가스, WF6→Mo 전환", b: "고압가스 안전 인허가, 장기 공급 신뢰, 원료 조달" },
+    pr: { d: "노광용 감광재와 하부막, 평탄화용 CMP 슬러리·패드, 습식 케미칼", p: "노광, CMP, 식각·세정", k: "PR(KrF·ArF·EUV), BARC, CMP 패드·슬러리, 식각액", m: "CMP 패드는 2019년 Dow(현 Qnity) 약 80%, 슬러리는 CMC 30%·Fujifilm 16%(삼성증권, 2019)", g: "JSR, TOK, 신에츠, Qnity, Fujifilm, Entegris", kr: "동진쎄미켐, 솔브레인, 에프엔에스테크, 케이씨텍", l: "식각액은 국산화 높음. EUV PR·CMP 패드는 해외 의존 큼", h: "TSV·하이브리드 본딩용 CMP 증가", f: "EUV MOR·건식 레지스트, 유리기판 CMP", b: "노광 레시피 종속, 고객 공동개발, 결함 관리" },
+    wf: { d: "칩을 만드는 실리콘 원판과 장비 점검용 재생 웨이퍼", p: "공정 시작 전, 장비 모니터링", k: "폴리시드·에피·SOI, 재생 웨이퍼", m: "5개사(Shin-Etsu·SUMCO·GlobalWafers·Siltronic·SK실트론) 과점(삼성증권, 2019). 재생 웨이퍼 약 6.4억 달러(Straits Research, 2025)", g: "Shin-Etsu, SUMCO, GlobalWafers, Siltronic", kr: "SK실트론, 에이텍솔루션(재생)", l: "SK실트론이 300mm 공급. 재생은 국내 업체 존재", h: "HBM용 고평탄 웨이퍼 사양 상향", f: "초평탄, SiC 웨이퍼", b: "막대한 설비투자와 결정 성장 노하우" },
+    sub: { d: "패키지 기판, 포토마스크, 공정·패키징 필름, 스퍼터링 타겟, 수동부품", p: "노광(마스크), PVD(타겟), 패키징(기판·필름)", k: "FC-BGA·메모리 기판, 바이너리·EUV 마스크, PID·테이프, Cu·Ta·Ti 타겟", m: "타겟은 글로벌 4개 업체 과점(삼성증권, 2019)", g: "Ibiden, Unimicron, Toppan, Photronics, JX금속, Honeywell(Solstice)", kr: "삼성전기, 심텍, LG이노텍, 피케이엘, LG화학", l: "기판은 국내 경쟁력 높음. 타겟·마스크 블랭크는 해외 의존", h: "AI 칩 대형화로 FC-BGA 면적·층수 증가", f: "유리기판, 임베디드 기판, Co·Ru 타겟", b: "대규모 설비, 고객 인증, 고순도 금속 정련" },
+    test: { d: "웨이퍼·패키지 전기 검사용 소모성 인터페이스", p: "테스트(EDS·패키지·번인)", k: "프로브카드, 인터페이스보드, 테스트 소켓", m: "글로벌 프로브카드 2025년 37.8억 달러, 2026~2032 CAGR 15.5% 전망, 상위 3사 49.2%(QYResearch, 2026)", g: "FormFactor, Technoprobe, Micronics Japan", kr: "티에스이, 코리아인스트루먼트, 윌테크놀러지, 피엠티, ISC, 리노공업", l: "NAND 프로브카드는 국산화, DRAM·HBM은 확대 중", h: "HBM 적층 전 KGD 검증으로 고사양 카드 수요 급증", f: "HBM4·HBF, 칩렛 테스트", b: "MEMS 미세 피치, 고객별 설계 대응 속도" },
+    cons: { d: "플라즈마·고온에 닳는 장비 소모 부품", p: "식각·확산·증착 챔버", k: "Si·SiC 포커스링, 쿼츠웨어, FFKM O-링", m: "CVD-SiC 보트·튜브 세계 시장 약 4,000~6,000억 원(업계 추산, 2025)", g: "CoorsTek, Ferrotec, Kalrez(Qnity), 신에츠쿼츠", kr: "티씨케이, 디에스테크노, 원익QnC, 월덱스, 이노레스", l: "Si·SiC 링 국산화 높음, FFKM은 해외 의존", h: "고종횡비 식각으로 교체 주기 단축", f: "SiC 전환, 대구경 실리콘", b: "소재 원천기술, 특허 분쟁, 고객 인증" },
+    proc: { d: "부품 정밀가공·세정·코팅 서비스와 패키징 소재", p: "장비 유지보수, HBM 적층", k: "정밀가공, 세정, Y2O3 용사 코팅, 내열 필름", m: "공개자료 확인 불가", g: "UCT, Ichor, Pentagon", kr: "한솔아이원스, 코미코, 거성", l: "국내 서비스 업체 중심", h: "HBM 단수 증가로 패키징 소재 사용량 증가(한국IR협의회)", f: "EUV 부품 재사용, 고밀도 코팅", b: "팹 근접 거점, 장비사 인증" },
+    eqg: { d: "테스트·물류·유틸리티 장비", p: "테스트, 팹 물류, 진공·초순수", k: "웨이퍼·패키지 테스터, 번인 소터, OHT, 진공펌프, UPW", m: "메모리 테스터는 Advantest가 압도적(일반 업계 인식)", g: "Advantest, Teradyne, Daifuku, Edwards, Kurita", kr: "와이씨, 엑시콘, 디아이, 제이티, 세메스", l: "번인·핸들러 국산화, 고속 테스터는 와이씨 등 일부", h: "HBM·고속 DRAM 테스트 시간 증가", f: "CLT, CXL·Gen6 SSD 테스터", b: "고객 장비 인증과 소프트웨어" }
+  };
+  function srcType(s) {
+    var u = s[1], t = s[0];
+    if (/dart\.fss|wisereport|awakeplus|finboard|bosoop|공시|사업보고서/.test(u + t)) return "공시";
+    if (/증권|IR협의회|리서치|research|Research|리포트|pstatic|alphasquare\.co\.kr\/media|QYResearch/.test(u + t)) return "증권사·리서치";
+    if (/홈페이지|회사소개|연혁|브로슈어|뉴스룸|newsroom|IR|\.co\.kr\/?$|\.com\/?$/.test(t + u)) return "회사 공식";
+    if (/KOSAI|VUEDOT|kosai|vuedot|thevc|saramin|jobkorea|incruit|기업정보/.test(t + u)) return "정리 사이트";
+    return "언론";
+  }
+
   /* 기술 백과: #tech 목록, #t-공정, #x-제품기술 */
   var STAGE2P = { "웨이퍼": "wafer", "노광": "photo", "식각·세정": "etch", "증착·배선": "dep", "CMP": "cmp", "테스트": "test", "패키징": "pkg" };
   var LV = ["입문", "실무", "심화"];
@@ -1287,6 +1574,7 @@ dl.facts dd { margin: 0; }
       });
       h += "</div></div>";
     });
+    h += '<h2 class="sec-t">품목군 산업 분석</h2><p class="cap">소재·부품·장비 품목군별 정의, 시장 구조, 국산화 수준, HBM 연관성, 진입장벽</p><div class="kchips">' + Object.keys(GA).map(function (k) { return '<a class="kchip p" href="#g-' + k + '">' + esc(groupOf[k].name) + "</a>"; }).join("") + "</div>";
     h += '<h2 class="sec-t">제품 기술</h2><p class="cap">서재 속 회사들이 만드는 품목입니다. 누르면 원리와 만드는 회사가 나옵니다.</p><div class="kchips">' + Object.keys(TX).map(txLink).join("") + "</div>";
     app.innerHTML = h;
   }
@@ -1305,6 +1593,15 @@ dl.facts dd { margin: 0; }
     h += sec("심화", "더 읽기", sbList(p.sb));
     h += '<nav class="pnav">' + (prev ? '<a href="#t-' + prev.id + '">← ' + esc(prev.n) + "</a>" : "<span></span>") + (next ? '<a href="#t-' + next.id + '">' + esc(next.n) + " →</a>" : "") + "</nav>";
     app.innerHTML = h;
+  }
+  function renderGA(k) {
+    var a = GA[k], gg = groupOf[k], firms = B.filter(function (b) { return b.g === k && !b.ref; }).map(function (b) { return b.n; });
+    var rows = [["품목의 정의와 역할", a.d], ["공정 내 사용 위치", a.p], ["주요 기술·제품 종류", a.k], ["글로벌 시장 구조", a.m], ["주요 글로벌 기업", a.g], ["국내 주요 기업", a.kr], ["국내 기술 수준·국산화", a.l], ["HBM·AI 반도체 연관성", a.h], ["향후 기술 변화", a.f], ["진입장벽·산업 리스크", a.b]];
+    app.innerHTML = head("") + viewTabs("tech") + '<p class="crumb"><a href="#tech">기술 백과</a> › 품목군 산업 분석</p><h2 class="ttl">' + esc(gg.name) + "</h2>" +
+      '<p class="note">수치는 출처와 기준연도를 함께 적었고, 확인하지 못한 항목은 "공개자료 확인 불가"로 표시했습니다. 기업 목록은 널리 알려진 업체 예시입니다.</p>' +
+      '<table class="rt"><tbody>' + rows.map(function (r) { return "<tr><th>" + r[0] + "</th><td>" + esc(r[1]) + "</td></tr>"; }).join("") + "</tbody></table>" +
+      '<div class="ctx"><b>배경</b><br>' + esc(gg.ctx) + "</div>" +
+      sec("실무", "서재 속 회사", '<div class="chips">' + firms.map(chip).join("") + "</div>");
   }
   function txBody(x) {
     return '<p><b>무엇인가</b> ' + esc(x.w) + '</p><p><b>원리</b> ' + esc(x.h) + '</p><p><b>공정 위치</b> ' + esc(x.p) + '</p><p><b>핵심 기술</b></p>' + list(x.k) + '<p class="txr"><b>트렌드</b> ' + esc(x.r) + "</p>";
@@ -1331,6 +1628,8 @@ dl.facts dd { margin: 0; }
       var i = +m[1];
       if (i !== cur.i || view !== "book") { cur.p = 0; opening = true; }
       cur.i = i; view = "book"; renderBook(); window.scrollTo(0, 0);
+    } else if (/^#g-/.test(location.hash) && GA[location.hash.slice(3)]) {
+      view = "tech"; renderGA(location.hash.slice(3)); window.scrollTo(0, 0);
     } else if (location.hash === "#tech" || /^#[tx]-/.test(location.hash)) {
       var h2 = location.hash, pp = h2.indexOf("#t-") === 0 ? procById(h2.slice(3)) : null, xk = h2.indexOf("#x-") === 0 && TX[h2.slice(3)] ? h2.slice(3) : null;
       view = "tech"; if (pp) renderProc(pp); else if (xk) renderTx(xk); else renderTech(); window.scrollTo(0, 0);
