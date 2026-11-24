@@ -1,0 +1,40 @@
+{
+ "ranAt": "2026-11-24T14:36:35.688Z",
+ "ok": true,
+ "changed": false,
+ "sources": [
+  {
+   "id": "michelin",
+   "status": "ok",
+   "records": 93,
+   "note": "초기 자료: 미쉐린 가이드 공식 사이트의 서울 2026 셀렉션(빕 구르망 51곳, 스타 42곳) 레스토랑 페이지에서 주소·좌표 확인"
+  },
+  {
+   "id": "bluer",
+   "status": "unlicensed",
+   "records": 0,
+   "note": "블루리본 데이터 이용 권한 미확보"
+  },
+  {
+   "id": "lifemaster",
+   "status": "ok",
+   "records": 25,
+   "note": "초기 자료: SBS 생활의 달인 공식 방송정보 게시판 1041~1054회의 방송협조 주소(서울·경기 음식점)"
+  },
+  {
+   "id": "baeknyeon",
+   "status": "manual",
+   "records": 4,
+   "note": "초기 자료: 공공데이터 파일을 아직 반영하지 못해 백년가게 누리집·발표 자료에서 직접 확인한 4곳만 수록"
+  }
+ ],
+ "errors": [],
+ "added": [],
+ "updated": [],
+ "addressChanged": [],
+ "retired": [],
+ "revived": [],
+ "merged": [],
+ "excluded": [],
+ "review": []
+}

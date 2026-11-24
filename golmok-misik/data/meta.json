@@ -1,0 +1,114 @@
+{
+ "generatedAt": "2026-11-24",
+ "totals": {
+  "restaurants": 120,
+  "onMap": 93,
+  "noCoord": 27,
+  "multiBadge": 2,
+  "retired": 0
+ },
+ "guides": {
+  "michelin": {
+   "label": "미쉐린 가이드",
+   "restaurants": 93,
+   "bySido": {
+    "서울": 93,
+    "경기": 0
+   },
+   "onMap": 93,
+   "asOf": {
+    "from": "2025-08-21",
+    "to": "2026-11-22"
+   },
+   "status": "ok",
+   "lastAttempt": "2026-11-24",
+   "lastSuccess": "2026-11-24",
+   "note": "초기 자료: 미쉐린 가이드 공식 사이트의 서울 2026 셀렉션(빕 구르망 51곳, 스타 42곳) 레스토랑 페이지에서 주소·좌표 확인",
+   "scope": "서울(미쉐린 가이드 서울 & 부산). 경기도는 미쉐린 가이드 발간 지역이 아님",
+   "sourceUrls": [
+    "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurants/bib-gourmand",
+    "https://guide.michelin.com/kr/ko/article/michelin-guide-ceremony/all-the-stars-michelin-guide-seoul-busan-2026",
+    "https://guide.michelin.com/kr/ko/article/michelin-guide-ceremony/korea-bib-gourmand-2026"
+   ],
+   "missing": [
+    "미쉐린 가이드 한국판은 서울·부산만 발간 — 경기도 31개 시·군은 해당 없음",
+    "미쉐린 \"선정(플레이트)\" 레스토랑은 아직 미수록, 스타·빕 구르망만 수록",
+    "12곳(할매집·맷돌·니시무라멘·미필담·진중 우육면관·가겐·고료리 켄·기와강·뛰뚜아멍·레귬·빈호·소설한남)은 2026 목록 수록은 확인했지만 주소·좌표 페이지는 2026년 3월 발표 이전 사본으로 확인 — 다음 갱신 때 재확인"
+   ]
+  },
+  "bluer": {
+   "label": "블루리본 서베이",
+   "restaurants": 0,
+   "bySido": {
+    "서울": 0,
+    "경기": 0
+   },
+   "onMap": 0,
+   "asOf": null,
+   "status": "unlicensed",
+   "lastAttempt": "2026-11-24",
+   "lastSuccess": null,
+   "note": "블루리본 데이터 이용 권한 미확보",
+   "scope": "이용 권한이 있는 블루리본 데이터를 넣은 경우에만",
+   "sourceUrls": [
+    "https://www.bluer.co.kr"
+   ],
+   "missing": [
+    "블루리본 서베이는 공개 API가 없고 데이터 재배포 권한이 필요 — 권한 있는 데이터를 받기 전까지 0곳"
+   ]
+  },
+  "lifemaster": {
+   "label": "SBS 생활의 달인",
+   "restaurants": 25,
+   "bySido": {
+    "서울": 21,
+    "경기": 4
+   },
+   "onMap": 1,
+   "asOf": {
+    "from": "2026-11-24",
+    "to": "2026-11-24"
+   },
+   "status": "ok",
+   "lastAttempt": "2026-11-24",
+   "lastSuccess": "2026-11-24",
+   "note": "초기 자료: SBS 생활의 달인 공식 방송정보 게시판 1041~1054회의 방송협조 주소(서울·경기 음식점)",
+   "scope": "서울·경기. SBS 공식 방송정보 게시판에 방송협조 주소가 공개된 회차만",
+   "sourceUrls": [
+    "https://programs.sbs.co.kr/culture/lifemaster/boards/55736?cmd=list"
+   ],
+   "missing": [
+    "SBS 공식 방송정보 게시판에서 주소가 공개된 회차만 수록(초기 회차 대부분 미수록)",
+    "좌표를 제공하지 않아 지도 핀 없이 목록·네이버지도 검색으로만 표시",
+    "1040회 이전 회차, 1044·1046·1051회(서울·경기 음식점 없음), 1055회 이후는 다음 갱신 때 추가"
+   ]
+  },
+  "baeknyeon": {
+   "label": "백년가게(중기부·소진공)",
+   "restaurants": 4,
+   "bySido": {
+    "서울": 3,
+    "경기": 1
+   },
+   "onMap": 1,
+   "asOf": {
+    "from": "2026-11-24",
+    "to": "2026-11-24"
+   },
+   "status": "manual",
+   "lastAttempt": "2026-11-24",
+   "lastSuccess": null,
+   "note": "초기 자료: 공공데이터 파일을 아직 반영하지 못해 백년가게 누리집·발표 자료에서 직접 확인한 4곳만 수록",
+   "scope": "서울·경기 음식점업 백년가게",
+   "sourceUrls": [
+    "https://www.data.go.kr/data/15132695/fileData.do",
+    "https://www.sbiz.or.kr/hdst/main/ohndMarketListSmba.do"
+   ],
+   "missing": [
+    "공공데이터포털 전체 목록(전국 1,511건) 반영에는 서비스키 또는 CSV가 필요",
+    "서울시 자료에는 좌표가 없어 목록·네이버지도 검색으로만 표시"
+   ]
+  }
+ },
+ "review": []
+}

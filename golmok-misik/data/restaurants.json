@@ -1,0 +1,3593 @@
+{
+ "version": 1,
+ "restaurants": [
+  {
+   "id": "gm-021b1fef",
+   "name": "기가스",
+   "branch": null,
+   "menu": [
+    "지중해식"
+   ],
+   "sido": "서울",
+   "sigungu": "중구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 중구 퇴계로6가길 30",
+   "jibunAddress": null,
+   "entityKey": "기가스@서울|중구|퇴계로6가길|30",
+   "lat": 37.55696,
+   "lng": 126.97809,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:gigas",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gigas",
+     "checkedAt": "2026-11-16"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-031d0dc7",
+   "name": "완산정",
+   "branch": null,
+   "menu": [
+    "순대국",
+    "콩나물 해장국"
+   ],
+   "sido": "경기",
+   "sigungu": "군포시",
+   "gu": null,
+   "dong": "금정동",
+   "roadAddress": "경기 군포시 번영로 508",
+   "jibunAddress": null,
+   "entityKey": "완산정@경기|군포시|번영로|508",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "baeknyeon",
+     "sourceKey": "baeknyeon:manual:완산정",
+     "year": null,
+     "sourceUrl": "https://www.sbiz.or.kr/hdst/main/ohndMarketListSmba.do",
+     "checkedAt": "2026-11-24",
+     "note": "백년가게 누리집 현황보기 목록"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-0364b9cd",
+   "name": "레스토랑 알렌",
+   "branch": null,
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 테헤란로 231",
+   "jibunAddress": null,
+   "entityKey": "레스토랑알렌@서울|강남구|테헤란로|231",
+   "lat": 37.5036,
+   "lng": 127.0418,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:restaurant-allen",
+     "distinction": "2star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/restaurant-allen",
+     "checkedAt": "2026-11-10"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-04cc149c",
+   "name": "라미띠에",
+   "branch": null,
+   "menu": [
+    "프렌치"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 도산대로67길 30",
+   "jibunAddress": null,
+   "entityKey": "라미띠에@서울|강남구|도산대로67길|30",
+   "lat": 37.52591,
+   "lng": 127.04455,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:l-amitie",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/l-amitie",
+     "checkedAt": "2026-08-25"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-04e4f4aa",
+   "name": "라망 시크레",
+   "branch": null,
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "sido": "서울",
+   "sigungu": "중구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 중구 퇴계로 67",
+   "jibunAddress": null,
+   "entityKey": "라망시크레@서울|중구|퇴계로|67",
+   "lat": 37.55983,
+   "lng": 126.97949,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:l-amant-secret",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/l-amant-secret",
+     "checkedAt": "2026-11-09"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-05379ef4",
+   "name": "알라 프리마",
+   "branch": null,
+   "menu": [
+    "이노베이티브"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 학동로17길 13",
+   "jibunAddress": null,
+   "entityKey": "알라프리마@서울|강남구|학동로17길|13",
+   "lat": 37.51346,
+   "lng": 127.02602,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:alla-prima",
+     "distinction": "2star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/alla-prima",
+     "checkedAt": "2026-06-06"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-06e84d5e",
+   "name": "용금옥",
+   "branch": null,
+   "menu": [
+    "추어탕"
+   ],
+   "sido": "서울",
+   "sigungu": "종로구",
+   "gu": null,
+   "dong": "통인동",
+   "roadAddress": "서울 종로구 자하문로 41-2",
+   "jibunAddress": null,
+   "entityKey": "용금옥@서울|종로구|자하문로|41-2",
+   "lat": 37.57972,
+   "lng": 126.97088,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:yonggeumok",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/yonggeumok",
+     "checkedAt": "2026-07-06"
+    },
+    {
+     "guide": "baeknyeon",
+     "sourceKey": "baeknyeon:manual:용금옥",
+     "year": 2022,
+     "sourceUrl": "https://m.bravo.etoday.co.kr/view/atc_view.php?varAtcId=13626",
+     "checkedAt": "2026-11-24",
+     "note": "2022년 6월 중기부 백년가게 선정 발표(서울 종로구 용금옥, 업력 39년). 다동 본점(중구)이 아니라 종로구 통인동 지점임을 소재지·전화(02-777-4749)로 확인. 주소는 서울시 공식 관광정보(VisitSeoul) 기준",
+     "evidenceUrls": [
+      "https://korean.visitseoul.net/restaurants/%EC%9A%A9%EA%B8%88%EC%98%A5-kr/KOP010312"
+     ]
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-0a1cdb66",
+   "name": "꼴라쥬",
+   "branch": null,
+   "menu": [
+    "프렌치 컨템퍼러리"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 논현로136길 11",
+   "jibunAddress": null,
+   "entityKey": "꼴라쥬@서울|강남구|논현로136길|11",
+   "lat": 37.51619,
+   "lng": 127.03099,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:collage",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/collage",
+     "checkedAt": "2026-07-03"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-0c1e3518",
+   "name": "레스토랑 산",
+   "branch": null,
+   "menu": [
+    "이노베이티브"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 언주로168길 6",
+   "jibunAddress": null,
+   "entityKey": "레스토랑산@서울|강남구|언주로168길|6",
+   "lat": 37.52631,
+   "lng": 127.03391,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:san",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/san",
+     "checkedAt": "2026-07-06"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-108458f0",
+   "name": "면서울",
+   "branch": null,
+   "menu": [
+    "국수"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 선릉로 805",
+   "jibunAddress": null,
+   "entityKey": "면서울@서울|강남구|선릉로|805",
+   "lat": 37.52416,
+   "lng": 127.03906,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:myeon-seoul",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/myeon-seoul",
+     "checkedAt": "2026-11-13"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-137dc1dc",
+   "name": "엄지손칼국수",
+   "branch": null,
+   "menu": [
+    "콩국수"
+   ],
+   "sido": "서울",
+   "sigungu": "송파구",
+   "gu": null,
+   "dong": "송파동",
+   "roadAddress": null,
+   "jibunAddress": "서울 송파구 송파동 148-3",
+   "entityKey": "엄지손칼국수@서울|송파구|송파동|148-3",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1042:엄지손칼국수",
+     "episode": 1042,
+     "title": "은둔식달 – 서울 3대 콩국수",
+     "postedAt": "2026-08-03",
+     "airDate": "2026-08-03",
+     "boardNo": "7561",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7561",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-178a706a",
+   "name": "진진",
+   "branch": null,
+   "menu": [
+    "중식"
+   ],
+   "sido": "서울",
+   "sigungu": "마포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 마포구 월드컵북로1길 60",
+   "jibunAddress": null,
+   "entityKey": "진진@서울|마포구|월드컵북로1길|60",
+   "lat": 37.55777,
+   "lng": 126.91324,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:jin-jin",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/jin-jin",
+     "checkedAt": "2026-11-07"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-181e8956",
+   "name": "우래옥",
+   "branch": null,
+   "menu": [
+    "냉면"
+   ],
+   "sido": "서울",
+   "sigungu": "중구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 중구 창경궁로 62-29",
+   "jibunAddress": null,
+   "entityKey": "우래옥@서울|중구|창경궁로|62-29",
+   "lat": 37.56815,
+   "lng": 126.99866,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:woo-lae-oak",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/woo-lae-oak",
+     "checkedAt": "2026-08-13"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-18da7d94",
+   "name": "도산제과",
+   "branch": null,
+   "menu": [
+    "치즈케이크"
+   ],
+   "sido": "서울",
+   "sigungu": "금천구",
+   "gu": null,
+   "dong": "독산동",
+   "roadAddress": null,
+   "jibunAddress": "서울 금천구 독산동 1007-13",
+   "entityKey": "도산제과@서울|금천구|독산동|1007-13",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1043:도산제과",
+     "episode": 1043,
+     "title": "빵의 전쟁 – 서울 최고의 치즈케이크 2부",
+     "postedAt": "2026-08-10",
+     "airDate": "2026-08-10",
+     "boardNo": "7562",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7562",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-234ab896",
+   "name": "스바루",
+   "branch": null,
+   "menu": [
+    "소바"
+   ],
+   "sido": "서울",
+   "sigungu": "서초구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 서초구 방배중앙로21길 7",
+   "jibunAddress": null,
+   "entityKey": "스바루@서울|서초구|방배중앙로21길|7",
+   "lat": 37.49234,
+   "lng": 126.98611,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:subaru",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/subaru",
+     "checkedAt": "2026-07-10"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-267325e5",
+   "name": "게방식당",
+   "branch": null,
+   "menu": [
+    "게장"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 선릉로131길 17",
+   "jibunAddress": null,
+   "entityKey": "게방식당@서울|강남구|선릉로131길|17",
+   "lat": 37.51727,
+   "lng": 127.03942,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:gebang-sikdang",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gebang-sikdang",
+     "checkedAt": "2026-11-06"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-27864d1c",
+   "name": "솔밤",
+   "branch": null,
+   "menu": [
+    "컨템퍼러리",
+    "코리안 컨템퍼러리"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 학동로 231",
+   "jibunAddress": null,
+   "entityKey": "솔밤@서울|강남구|학동로|231",
+   "lat": 37.51575,
+   "lng": 127.03411,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:solbam",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/solbam",
+     "checkedAt": "2026-11-20"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-282155fb",
+   "name": "만두집",
+   "branch": null,
+   "menu": [
+    "만두"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 압구정로 338",
+   "jibunAddress": null,
+   "entityKey": "만두집@서울|강남구|압구정로|338",
+   "lat": 37.52785,
+   "lng": 127.03898,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:mandujip",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mandujip",
+     "checkedAt": "2026-11-12"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-306b19c5",
+   "name": "모수",
+   "branch": null,
+   "menu": [
+    "모던 요리"
+   ],
+   "sido": "서울",
+   "sigungu": "용산구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 용산구 회나무로41길 4",
+   "jibunAddress": null,
+   "entityKey": "모수@서울|용산구|회나무로41길|4",
+   "lat": 37.54115,
+   "lng": 126.99615,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:mosu",
+     "distinction": "2star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mosu",
+     "checkedAt": "2026-11-08"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-31b8ef2d",
+   "name": "도투리 샤브칼국수 불광천",
+   "branch": null,
+   "menu": [
+    "샤브칼국수"
+   ],
+   "sido": "서울",
+   "sigungu": "은평구",
+   "gu": null,
+   "dong": "증산동",
+   "roadAddress": "서울 은평구 증산로 303",
+   "jibunAddress": null,
+   "entityKey": "도투리샤브칼국수불광천@서울|은평구|증산로|303",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "baeknyeon",
+     "sourceKey": "baeknyeon:manual:도투리샤브칼국수불광천",
+     "year": null,
+     "sourceUrl": "https://www.sbiz.or.kr/hdst/main/ohndMarketListSmba.do",
+     "checkedAt": "2026-11-24",
+     "note": "백년가게 누리집 현황보기 목록"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-33c6d715",
+   "name": "페리엔서울치즈케이크",
+   "branch": null,
+   "menu": [
+    "치즈케이크"
+   ],
+   "sido": "서울",
+   "sigungu": "성동구",
+   "gu": null,
+   "dong": "성수동1가",
+   "roadAddress": null,
+   "jibunAddress": "서울 성동구 성수동1가 656-1659",
+   "entityKey": "페리엔서울치즈케이크@서울|성동구|성수동1가|656-1659",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1043:페리엔서울치즈케이크",
+     "episode": 1043,
+     "title": "빵의 전쟁 – 서울 최고의 치즈케이크 2부",
+     "postedAt": "2026-08-10",
+     "airDate": "2026-08-10",
+     "boardNo": "7562",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7562",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-33e38cbf",
+   "name": "대관원",
+   "branch": null,
+   "menu": [
+    "간짜장"
+   ],
+   "sido": "서울",
+   "sigungu": "영등포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 영등포구 당산로37길 1",
+   "jibunAddress": null,
+   "entityKey": "대관원@서울|영등포구|당산로37길|1",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1048:대관원",
+     "episode": 1048,
+     "title": "은둔식달 – 서울 3대 간짜장 달인",
+     "postedAt": "2026-09-14",
+     "airDate": "2026-09-14",
+     "boardNo": "7567",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7567",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-38d99f4a",
+   "name": "할매집",
+   "branch": null,
+   "menu": [
+    "한식"
+   ],
+   "sido": "서울",
+   "sigungu": "종로구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 종로구 사직로12길 1-5",
+   "jibunAddress": null,
+   "entityKey": "할매집@서울|종로구|사직로12길|1-5",
+   "lat": 37.5755506,
+   "lng": 126.9715631,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:halmaejip",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/halmaejip",
+     "checkedAt": "2026-02-19"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-3a289617",
+   "name": "소설한남",
+   "branch": null,
+   "menu": [
+    "한식"
+   ],
+   "sido": "서울",
+   "sigungu": "용산구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 용산구 한남대로20길 21-18",
+   "jibunAddress": null,
+   "entityKey": "소설한남@서울|용산구|한남대로20길|21-18",
+   "lat": 37.53528,
+   "lng": 127.00914,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:soseoul-hannam",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/soseoul-hannam",
+     "checkedAt": "2026-01-22"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-3a33dd1d",
+   "name": "서천칼국수",
+   "branch": null,
+   "menu": [
+    "콩국수"
+   ],
+   "sido": "서울",
+   "sigungu": "중랑구",
+   "gu": null,
+   "dong": "면목동",
+   "roadAddress": null,
+   "jibunAddress": "서울 중랑구 면목동 50-34",
+   "entityKey": "서천칼국수@서울|중랑구|면목동|50-34",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1042:서천칼국수",
+     "episode": 1042,
+     "title": "은둔식달 – 서울 3대 콩국수",
+     "postedAt": "2026-08-03",
+     "airDate": "2026-08-03",
+     "boardNo": "7561",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7561",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-3a52a2e8",
+   "name": "금돼지식당",
+   "branch": null,
+   "menu": [
+    "바비큐"
+   ],
+   "sido": "서울",
+   "sigungu": "중구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 중구 다산로 149",
+   "jibunAddress": null,
+   "entityKey": "금돼지식당@서울|중구|다산로|149",
+   "lat": 37.55705,
+   "lng": 127.01165,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:geumdwaeji-sikdang",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/geumdwaeji-sikdang",
+     "checkedAt": "2026-06-20"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-3a641026",
+   "name": "무니",
+   "branch": null,
+   "menu": [
+    "일식"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 도산대로72길 16",
+   "jibunAddress": null,
+   "entityKey": "무니@서울|강남구|도산대로72길|16",
+   "lat": 37.52291,
+   "lng": 127.04545,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:muni",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/muni",
+     "checkedAt": "2026-06-15"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-3cbe04ca",
+   "name": "스시 마츠모토",
+   "branch": null,
+   "menu": [
+    "스시"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 도산대로75길 24",
+   "jibunAddress": null,
+   "entityKey": "스시마츠모토@서울|강남구|도산대로75길|24",
+   "lat": 37.52535,
+   "lng": 127.04573,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:sushi-matsumoto-1195338",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/sushi-matsumoto-1195338",
+     "checkedAt": "2026-07-03"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-3e2932e8",
+   "name": "영순관",
+   "branch": null,
+   "menu": [
+    "중식"
+   ],
+   "sido": "서울",
+   "sigungu": "성북구",
+   "gu": null,
+   "dong": "보문동2가",
+   "roadAddress": null,
+   "jibunAddress": "서울 성북구 보문동2가 122",
+   "entityKey": "영순관@서울|성북구|보문동2가|122",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1054:영순관",
+     "episode": 1054,
+     "title": "은둔식달-보문동 3대 중식당 이야기",
+     "postedAt": "2026-11-09",
+     "airDate": "2026-11-09",
+     "boardNo": "7599",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7599",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-3eb86584",
+   "name": "레스토랑 주은",
+   "branch": null,
+   "menu": [
+    "한식",
+    "클래식 퀴진"
+   ],
+   "sido": "서울",
+   "sigungu": "종로구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 종로구 경희궁길 36",
+   "jibunAddress": null,
+   "entityKey": "레스토랑주은@서울|종로구|경희궁길|36",
+   "lat": 37.57276,
+   "lng": 126.96991,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:restaurant-jueun",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/restaurant-jueun",
+     "checkedAt": "2026-11-08"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-4167739e",
+   "name": "러셀 도넛",
+   "branch": null,
+   "menu": [
+    "이탈리아식 도넛"
+   ],
+   "sido": "서울",
+   "sigungu": "강동구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강동구 양재대로89길 60 1층 102호",
+   "jibunAddress": null,
+   "entityKey": "러셀도넛@서울|강동구|양재대로89길|60",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1041:러셀도넛",
+     "episode": 1041,
+     "title": "이탈리아식 도넛 달인",
+     "postedAt": "2026-07-27",
+     "airDate": "2026-07-27",
+     "boardNo": "7560",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7560",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-4520d018",
+   "name": "양양 메밀 막국수",
+   "branch": null,
+   "menu": [
+    "메밀국수"
+   ],
+   "sido": "서울",
+   "sigungu": "서초구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 서초구 동광로15길 10",
+   "jibunAddress": null,
+   "entityKey": "양양메밀막국수@서울|서초구|동광로15길|10",
+   "lat": 37.49247,
+   "lng": 126.98826,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:yangyang-memil-makguksu",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/yangyang-memil-makguksu",
+     "checkedAt": "2026-11-14"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-48d71016",
+   "name": "맷돌",
+   "branch": null,
+   "menu": [
+    "멕시칸"
+   ],
+   "sido": "서울",
+   "sigungu": "성동구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 성동구 성덕정길 63",
+   "jibunAddress": null,
+   "entityKey": "맷돌@서울|성동구|성덕정길|63",
+   "lat": 37.53808,
+   "lng": 127.05065,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:mattdol",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mattdol",
+     "checkedAt": "2025-11-27"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-4ae5eba2",
+   "name": "라연",
+   "branch": null,
+   "menu": [
+    "한식",
+    "컨템퍼러리"
+   ],
+   "sido": "서울",
+   "sigungu": "중구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 중구 동호로 249",
+   "jibunAddress": null,
+   "entityKey": "라연@서울|중구|동호로|249",
+   "lat": 37.555813,
+   "lng": 127.00517,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:la-yeon",
+     "distinction": "2star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/la-yeon",
+     "checkedAt": "2026-11-14"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-4f0b4ccc",
+   "name": "필동면옥",
+   "branch": null,
+   "menu": [
+    "냉면"
+   ],
+   "sido": "서울",
+   "sigungu": "중구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 중구 서애로 26",
+   "jibunAddress": null,
+   "entityKey": "필동면옥@서울|중구|서애로|26",
+   "lat": 37.56035,
+   "lng": 126.99689,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:pildong-myeonok",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/pildong-myeonok",
+     "checkedAt": "2026-06-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-4f4820c3",
+   "name": "안중풍년떡집",
+   "branch": null,
+   "menu": [
+    "호박시루떡"
+   ],
+   "sido": "경기",
+   "sigungu": "평택시",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "경기 평택시 안중읍 안중로117번길 1 1층",
+   "jibunAddress": null,
+   "entityKey": "안중풍년떡집@경기|평택시|안중로117번길|1",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1045:안중풍년떡집",
+     "episode": 1045,
+     "title": "호박떡의 성지 평택 안중 호박시루떡 달인",
+     "postedAt": "2026-08-24",
+     "airDate": "2026-08-24",
+     "boardNo": "7564",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7564",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-526c52fd",
+   "name": "모아냉면",
+   "branch": null,
+   "menu": [
+    "냉면"
+   ],
+   "sido": "경기",
+   "sigungu": "파주시",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "경기 파주시 문산읍 방촌로 1622",
+   "jibunAddress": null,
+   "entityKey": "모아냉면@경기|파주시|방촌로|1622",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1043:모아냉면",
+     "episode": 1043,
+     "title": "은둔식달 – 파주 냉면",
+     "postedAt": "2026-08-10",
+     "airDate": "2026-08-10",
+     "boardNo": "7562",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7562",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-539f916c",
+   "name": "임병주 산동 칼국수",
+   "branch": null,
+   "menu": [
+    "칼국수"
+   ],
+   "sido": "서울",
+   "sigungu": "서초구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 서초구 강남대로37길 65",
+   "jibunAddress": null,
+   "entityKey": "임병주산동칼국수@서울|서초구|강남대로37길|65",
+   "lat": 37.48458,
+   "lng": 127.02988,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:limbyungjoo-sandong-kalguksu",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/limbyungjoo-sandong-kalguksu",
+     "checkedAt": "2026-11-07"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-561ea697",
+   "name": "마포옥",
+   "branch": null,
+   "menu": [
+    "설렁탕"
+   ],
+   "sido": "서울",
+   "sigungu": "마포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 마포구 토정로 312",
+   "jibunAddress": null,
+   "entityKey": "마포옥@서울|마포구|토정로|312",
+   "lat": 37.53983,
+   "lng": 126.94332,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:mapo-ok",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mapo-ok",
+     "checkedAt": "2026-11-08"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-57bafdff",
+   "name": "계월",
+   "branch": null,
+   "menu": [
+    "곰탕"
+   ],
+   "sido": "서울",
+   "sigungu": "성동구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 성동구 성덕정3길 8",
+   "jibunAddress": null,
+   "entityKey": "계월@서울|성동구|성덕정3길|8",
+   "lat": 37.53952,
+   "lng": 127.04762,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:kyewol-gomtang",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/kyewol-gomtang",
+     "checkedAt": "2026-11-09"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-583164a1",
+   "name": "능동미나리",
+   "branch": null,
+   "menu": [
+    "곰탕"
+   ],
+   "sido": "서울",
+   "sigungu": "용산구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 용산구 한강대로40길 28",
+   "jibunAddress": null,
+   "entityKey": "능동미나리@서울|용산구|한강대로40길|28",
+   "lat": 37.53008,
+   "lng": 126.97078,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:neungdong-minari",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/neungdong-minari",
+     "checkedAt": "2026-11-14"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-5a246338",
+   "name": "교다이야",
+   "branch": null,
+   "menu": [
+    "우동"
+   ],
+   "sido": "서울",
+   "sigungu": "마포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 마포구 성지길 39 1층",
+   "jibunAddress": null,
+   "entityKey": "교다이야@서울|마포구|성지길|39",
+   "lat": 37.54681,
+   "lng": 126.91317,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:kyodaiya",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/kyodaiya",
+     "checkedAt": "2026-11-10"
+    },
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1049:교다이야",
+     "episode": 1049,
+     "title": "은둔식달 - 9년 연속 M슐랭 강북 최고 우동",
+     "postedAt": "2026-10-06",
+     "airDate": "2026-10-05",
+     "boardNo": "7568",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7568",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-5ae2788c",
+   "name": "고향맛깔김치 나물",
+   "branch": null,
+   "menu": [
+    "김치",
+    "나물"
+   ],
+   "sido": "서울",
+   "sigungu": "양천구",
+   "gu": null,
+   "dong": "목동",
+   "roadAddress": null,
+   "jibunAddress": "서울 양천구 목동 615-1",
+   "entityKey": "고향맛깔김치나물@서울|양천구|목동|615-1",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1045:고향맛깔김치나물",
+     "episode": 1045,
+     "title": "서울 최고 김치 달인 양념 비법 최초 공개",
+     "postedAt": "2026-08-24",
+     "airDate": "2026-08-24",
+     "boardNo": "7564",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7564",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-5b2469f2",
+   "name": "고료리 켄",
+   "branch": null,
+   "menu": [
+    "컨템퍼러리",
+    "재패니즈 컨템퍼러리"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 언주로152길 15-3",
+   "jibunAddress": null,
+   "entityKey": "고료리켄@서울|강남구|언주로152길|15-3",
+   "lat": 37.52298,
+   "lng": 127.03478,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:goryori-ken",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/goryori-ken",
+     "checkedAt": "2026-01-23"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-5d5e0072",
+   "name": "유 유안",
+   "branch": null,
+   "menu": [
+    "중식"
+   ],
+   "sido": "서울",
+   "sigungu": "종로구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 종로구 새문안로 97",
+   "jibunAddress": null,
+   "entityKey": "유유안@서울|종로구|새문안로|97",
+   "lat": 37.57049,
+   "lng": 126.97545,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:yu-yuan",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/yu-yuan",
+     "checkedAt": "2026-11-10"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-61c17027",
+   "name": "안암",
+   "branch": null,
+   "menu": [
+    "돼지국밥"
+   ],
+   "sido": "서울",
+   "sigungu": "종로구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 종로구 북촌로5길 10",
+   "jibunAddress": null,
+   "entityKey": "안암@서울|종로구|북촌로5길|10",
+   "lat": 37.57939,
+   "lng": 126.98446,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:anam",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/anam",
+     "checkedAt": "2026-04-25"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-6470ea2f",
+   "name": "미필담",
+   "branch": null,
+   "menu": [
+    "만두"
+   ],
+   "sido": "서울",
+   "sigungu": "마포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 마포구 성지3길 22",
+   "jibunAddress": null,
+   "entityKey": "미필담@서울|마포구|성지3길|22",
+   "lat": 37.54658,
+   "lng": 126.91419,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:mipildam",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mipildam",
+     "checkedAt": "2026-02-15"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-6803f16f",
+   "name": "무오키",
+   "branch": null,
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 학동로55길 12-12",
+   "jibunAddress": null,
+   "entityKey": "무오키@서울|강남구|학동로55길|12-12",
+   "lat": 37.51896,
+   "lng": 127.04222,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:muoki",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/muoki",
+     "checkedAt": "2026-11-13"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-68dd1a2f",
+   "name": "세븐스도어",
+   "branch": null,
+   "menu": [
+    "코리안 컨템퍼러리"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 학동로97길 41",
+   "jibunAddress": null,
+   "entityKey": "세븐스도어@서울|강남구|학동로97길|41",
+   "lat": 37.52237,
+   "lng": 127.05429,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:7th-door",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/7th-door",
+     "checkedAt": "2026-11-14"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-6bfb408f",
+   "name": "유림면",
+   "branch": null,
+   "menu": [
+    "메밀국수"
+   ],
+   "sido": "서울",
+   "sigungu": "중구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 중구 서소문로 139-1",
+   "jibunAddress": null,
+   "entityKey": "유림면@서울|중구|서소문로|139-1",
+   "lat": 37.56419,
+   "lng": 126.9761,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:yurimmyeon",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/yurimmyeon",
+     "checkedAt": "2026-11-11"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-6c005400",
+   "name": "진중 우육면관",
+   "branch": null,
+   "menu": [
+    "국수"
+   ],
+   "sido": "서울",
+   "sigungu": "종로구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 종로구 청계천로 75-2",
+   "jibunAddress": null,
+   "entityKey": "진중우육면관@서울|종로구|청계천로|75-2",
+   "lat": 37.56854,
+   "lng": 126.98612,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:niroumianguan",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/niroumianguan",
+     "checkedAt": "2026-01-18"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-6d34e5e2",
+   "name": "정인면옥",
+   "branch": null,
+   "menu": [
+    "냉면"
+   ],
+   "sido": "서울",
+   "sigungu": "영등포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 영등포구 국회대로76길 10",
+   "jibunAddress": null,
+   "entityKey": "정인면옥@서울|영등포구|국회대로76길|10",
+   "lat": 37.5307,
+   "lng": 126.92167,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:jungin-myeonok",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/jungin-myeonok",
+     "checkedAt": "2026-11-15"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-6e05f72d",
+   "name": "정면",
+   "branch": null,
+   "menu": [
+    "국수"
+   ],
+   "sido": "서울",
+   "sigungu": "광진구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 광진구 능동로13길 88",
+   "jibunAddress": null,
+   "entityKey": "정면@서울|광진구|능동로13길|88",
+   "lat": 37.54551,
+   "lng": 127.06866,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:jeongmyeon",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/jeongmyeon",
+     "checkedAt": "2026-08-23"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-6ec85d95",
+   "name": "이스트",
+   "branch": null,
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 언주로170길 26-6",
+   "jibunAddress": null,
+   "entityKey": "이스트@서울|강남구|언주로170길|26-6",
+   "lat": 37.5263,
+   "lng": 127.03556,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:y-east",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/y-east",
+     "checkedAt": "2026-06-27"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-7314f0de",
+   "name": "진켈란젤로",
+   "branch": null,
+   "menu": [
+    "치즈케이크"
+   ],
+   "sido": "서울",
+   "sigungu": "영등포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 영등포구 국회대로29길 14 1층",
+   "jibunAddress": null,
+   "entityKey": "진켈란젤로@서울|영등포구|국회대로29길|14",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1043:진켈란젤로",
+     "episode": 1043,
+     "title": "빵의 전쟁 – 서울 최고의 치즈케이크 2부",
+     "postedAt": "2026-08-10",
+     "airDate": "2026-08-10",
+     "boardNo": "7562",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7562",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-7bedeeb6",
+   "name": "안동반점",
+   "branch": null,
+   "menu": [
+    "중식",
+    "짜장면"
+   ],
+   "sido": "서울",
+   "sigungu": "성북구",
+   "gu": null,
+   "dong": "보문동1가",
+   "roadAddress": null,
+   "jibunAddress": "서울 성북구 보문동1가 53",
+   "entityKey": "안동반점@서울|성북구|보문동1가|53",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1054:안동반점",
+     "episode": 1054,
+     "title": "은둔식달-보문동 3대 중식당 이야기",
+     "postedAt": "2026-11-09",
+     "airDate": "2026-11-09",
+     "boardNo": "7599",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7599",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-7bf1f17b",
+   "name": "베이스 이즈 나이스",
+   "branch": null,
+   "menu": [
+    "베지테리안"
+   ],
+   "sido": "서울",
+   "sigungu": "마포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 마포구 도화2길 20",
+   "jibunAddress": null,
+   "entityKey": "베이스이즈나이스@서울|마포구|도화2길|20",
+   "lat": 37.53958,
+   "lng": 126.94908,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:base-is-nice",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/base-is-nice",
+     "checkedAt": "2026-11-20"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-7f18a90f",
+   "name": "미토우",
+   "branch": null,
+   "menu": [
+    "일식"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 도산대로70길 24",
+   "jibunAddress": null,
+   "entityKey": "미토우@서울|강남구|도산대로70길|24",
+   "lat": 37.52206,
+   "lng": 127.04502,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:mitou",
+     "distinction": "2star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mitou",
+     "checkedAt": "2026-11-19"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-800f25b8",
+   "name": "밍글스",
+   "branch": null,
+   "menu": [
+    "한식"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 도산대로67길 19",
+   "jibunAddress": null,
+   "entityKey": "밍글스@서울|강남구|도산대로67길|19",
+   "lat": 37.52535,
+   "lng": 127.04426,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:mingles",
+     "distinction": "3star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mingles",
+     "checkedAt": "2026-11-21"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-82105eeb",
+   "name": "앙꼬",
+   "branch": null,
+   "menu": [
+    "과일 찹쌀떡"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 학동로56길 32",
+   "jibunAddress": null,
+   "entityKey": "앙꼬@서울|강남구|학동로56길|32",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1053:앙꼬",
+     "episode": 1053,
+     "title": "빵의 전쟁 - 서울•경기 최고의 과일 찹쌀떡",
+     "postedAt": "2026-11-03",
+     "airDate": "2026-11-02",
+     "boardNo": "7582",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7582",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-845dc5cf",
+   "name": "꼬내과자점",
+   "branch": null,
+   "menu": [
+    "치즈케이크"
+   ],
+   "sido": "서울",
+   "sigungu": "마포구",
+   "gu": null,
+   "dong": "연남동",
+   "roadAddress": null,
+   "jibunAddress": "서울 마포구 연남동 385-6",
+   "entityKey": "꼬내과자점@서울|마포구|연남동|385-6",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1043:꼬내과자점",
+     "episode": 1043,
+     "title": "빵의 전쟁 – 서울 최고의 치즈케이크 2부",
+     "postedAt": "2026-08-10",
+     "airDate": "2026-08-10",
+     "boardNo": "7562",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7562",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-8962d41f",
+   "name": "제로 컴플렉스",
+   "branch": null,
+   "menu": [
+    "이노베이티브"
+   ],
+   "sido": "서울",
+   "sigungu": "용산구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 용산구 서빙고로59길 11-8",
+   "jibunAddress": null,
+   "entityKey": "제로컴플렉스@서울|용산구|서빙고로59길|11-8",
+   "lat": 37.52079,
+   "lng": 126.99285,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:zero-complex",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/zero-complex",
+     "checkedAt": "2026-07-04"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-8b11bd3c",
+   "name": "자하 손만두",
+   "branch": null,
+   "menu": [
+    "만두"
+   ],
+   "sido": "서울",
+   "sigungu": "종로구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 종로구 백석동길 12",
+   "jibunAddress": null,
+   "entityKey": "자하손만두@서울|종로구|백석동길|12",
+   "lat": 37.59309,
+   "lng": 126.96603,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:jaha-son-mandu",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/jaha-son-mandu",
+     "checkedAt": "2026-11-06"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-8b623666",
+   "name": "호라파",
+   "branch": null,
+   "menu": [
+    "타이"
+   ],
+   "sido": "서울",
+   "sigungu": "종로구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 종로구 자하문로 37-1",
+   "jibunAddress": null,
+   "entityKey": "호라파@서울|종로구|자하문로|37-1",
+   "lat": 37.57938,
+   "lng": 126.9711,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:horapa",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/horapa",
+     "checkedAt": "2026-07-03"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-953807a4",
+   "name": "이쿠라",
+   "branch": "더현대서울점",
+   "menu": [
+    "철판 오므라이스"
+   ],
+   "sido": "서울",
+   "sigungu": "영등포구",
+   "gu": null,
+   "dong": "여의도동",
+   "roadAddress": null,
+   "jibunAddress": "서울 영등포구 여의도동 22",
+   "entityKey": "이쿠라@서울|영등포구|여의도동|22",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1052:이쿠라더현대서울점",
+     "episode": 1052,
+     "title": "후쿠오카 철판 오므라이스 달인",
+     "postedAt": "2026-11-02",
+     "airDate": "2026-10-26",
+     "boardNo": "7577",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7577",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-96e8838d",
+   "name": "소수헌",
+   "branch": null,
+   "menu": [
+    "스시"
+   ],
+   "sido": "서울",
+   "sigungu": "중구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 중구 만리재로21길 8",
+   "jibunAddress": null,
+   "entityKey": "소수헌@서울|중구|만리재로21길|8",
+   "lat": 37.55294,
+   "lng": 126.9634,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:sosuheon",
+     "distinction": "2star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/sosuheon",
+     "checkedAt": "2026-11-10"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-9b7e8ff7",
+   "name": "고사리 익스프레스",
+   "branch": null,
+   "menu": [
+    "비건"
+   ],
+   "sido": "서울",
+   "sigungu": "중구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 중구 퇴계로85길 12-10",
+   "jibunAddress": null,
+   "entityKey": "고사리익스프레스@서울|중구|퇴계로85길|12-10",
+   "lat": 37.56626,
+   "lng": 127.02001,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:gosari-express",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gosari-express",
+     "checkedAt": "2026-08-20"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-9d443e12",
+   "name": "오일제",
+   "branch": null,
+   "menu": [
+    "한식"
+   ],
+   "sido": "서울",
+   "sigungu": "용산구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 용산구 한강대로62다길 29",
+   "jibunAddress": null,
+   "entityKey": "오일제@서울|용산구|한강대로62다길|29",
+   "lat": 37.53254,
+   "lng": 126.97473,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:oilje",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/oilje",
+     "checkedAt": "2026-11-21"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-a2975e2c",
+   "name": "옛진미칼국수",
+   "branch": null,
+   "menu": [
+    "칼국수"
+   ],
+   "sido": "경기",
+   "sigungu": "광명시",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "경기 광명시 오리로 932",
+   "jibunAddress": null,
+   "entityKey": "옛진미칼국수@경기|광명시|오리로|932",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1050:옛진미칼국수",
+     "episode": 1050,
+     "title": "은둔식달 - 40년 세월을 지켜온 서민의 칼국수",
+     "postedAt": "2026-10-12",
+     "airDate": "2026-10-12",
+     "boardNo": "7569",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7569",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-a313dcfe",
+   "name": "안덕",
+   "branch": null,
+   "menu": [
+    "한식"
+   ],
+   "sido": "서울",
+   "sigungu": "종로구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 종로구 자하문로17길 18",
+   "jibunAddress": null,
+   "entityKey": "안덕@서울|종로구|자하문로17길|18",
+   "lat": 37.58143,
+   "lng": 126.96969,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:andeok",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/andeok",
+     "checkedAt": "2026-08-17"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-a5b5489e",
+   "name": "역전회관",
+   "branch": null,
+   "menu": [
+    "불고기"
+   ],
+   "sido": "서울",
+   "sigungu": "마포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 마포구 토정로37길 47",
+   "jibunAddress": null,
+   "entityKey": "역전회관@서울|마포구|토정로37길|47",
+   "lat": 37.566,
+   "lng": 126.947,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:yukjeon-hoekwan",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/yukjeon-hoekwan",
+     "checkedAt": "2026-11-10"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-a601da52",
+   "name": "오레노 라멘",
+   "branch": null,
+   "menu": [
+    "라멘"
+   ],
+   "sido": "서울",
+   "sigungu": "마포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 마포구 독막로8길 16",
+   "jibunAddress": null,
+   "entityKey": "오레노라멘@서울|마포구|독막로8길|16",
+   "lat": 37.54725,
+   "lng": 126.91781,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:oreno-ramen",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/oreno-ramen",
+     "checkedAt": "2026-11-21"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-a6a3c048",
+   "name": "빈호",
+   "branch": null,
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 학동로43길 38",
+   "jibunAddress": null,
+   "entityKey": "빈호@서울|강남구|학동로43길|38",
+   "lat": 37.51866,
+   "lng": 127.03814,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:vinho",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/vinho",
+     "checkedAt": "2025-10-29"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-a82cfe29",
+   "name": "소울",
+   "branch": null,
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "sido": "서울",
+   "sigungu": "용산구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 용산구 신흥로26길 35",
+   "jibunAddress": null,
+   "entityKey": "소울@서울|용산구|신흥로26길|35",
+   "lat": 37.54533,
+   "lng": 126.98443,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:soul-dining",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/soul-dining",
+     "checkedAt": "2026-11-13"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-ab21eae9",
+   "name": "신진원",
+   "branch": null,
+   "menu": [
+    "중식",
+    "짜장면"
+   ],
+   "sido": "서울",
+   "sigungu": "성북구",
+   "gu": null,
+   "dong": "보문동5가",
+   "roadAddress": null,
+   "jibunAddress": "서울 성북구 보문동5가 51",
+   "entityKey": "신진원@서울|성북구|보문동5가|51",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1054:신진원",
+     "episode": 1054,
+     "title": "은둔식달-보문동 3대 중식당 이야기",
+     "postedAt": "2026-11-09",
+     "airDate": "2026-11-09",
+     "boardNo": "7599",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7599",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-abcb2290",
+   "name": "유한",
+   "branch": null,
+   "menu": [
+    "타이"
+   ],
+   "sido": "서울",
+   "sigungu": "용산구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 용산구 대사관로5길 10-5",
+   "jibunAddress": null,
+   "entityKey": "유한@서울|용산구|대사관로5길|10-5",
+   "lat": 37.53482,
+   "lng": 127.00108,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:youhan",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/youhan",
+     "checkedAt": "2026-06-26"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-acffb32f",
+   "name": "누누타코야끼",
+   "branch": null,
+   "menu": [
+    "타코야키"
+   ],
+   "sido": "서울",
+   "sigungu": "관악구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 관악구 신림로 344 1층 148호",
+   "jibunAddress": null,
+   "entityKey": "누누타코야끼@서울|관악구|신림로|344",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1043:누누타코야끼",
+     "episode": 1043,
+     "title": "타코야키 청년 달인",
+     "postedAt": "2026-08-10",
+     "airDate": "2026-08-10",
+     "boardNo": "7562",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7562",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-ad319128",
+   "name": "황금콩밭",
+   "branch": null,
+   "menu": [
+    "두부"
+   ],
+   "sido": "서울",
+   "sigungu": "마포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 마포구 마포대로16길 9",
+   "jibunAddress": null,
+   "entityKey": "황금콩밭@서울|마포구|마포대로16길|9",
+   "lat": 37.5509,
+   "lng": 126.9567,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:hwanggeum-kongbat",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/hwanggeum-kongbat",
+     "checkedAt": "2026-11-10"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-ae393f00",
+   "name": "트키도산",
+   "branch": null,
+   "menu": [
+    "치즈케이크"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": "신사동",
+   "roadAddress": null,
+   "jibunAddress": "서울 강남구 신사동 651-2",
+   "entityKey": "트키도산@서울|강남구|신사동|651-2",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1042:트키도산",
+     "episode": 1042,
+     "title": "빵의 전쟁 – 서울 최고의 치즈케이크",
+     "postedAt": "2026-08-03",
+     "airDate": "2026-08-03",
+     "boardNo": "7561",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7561",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-ae906965",
+   "name": "뛰뚜아멍",
+   "branch": null,
+   "menu": [
+    "프렌치"
+   ],
+   "sido": "서울",
+   "sigungu": "성동구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 성동구 광나루로11길 20",
+   "jibunAddress": null,
+   "entityKey": "뛰뚜아멍@서울|성동구|광나루로11길|20",
+   "lat": 37.54969,
+   "lng": 127.0666,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:tutoiement",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/tutoiement",
+     "checkedAt": "2026-01-28"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-b050748c",
+   "name": "레귬",
+   "branch": null,
+   "menu": [
+    "비건",
+    "베지테리안"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 강남대로 652",
+   "jibunAddress": null,
+   "entityKey": "레귬@서울|강남구|강남대로|652",
+   "lat": 37.51938,
+   "lng": 127.01932,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:legume",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/legume",
+     "checkedAt": "2026-01-02"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-b47ef90a",
+   "name": "수원만두",
+   "branch": null,
+   "menu": [
+    "군만두"
+   ],
+   "sido": "경기",
+   "sigungu": "수원시",
+   "gu": "팔달구",
+   "dong": null,
+   "roadAddress": "경기 수원시 팔달구 창룡대로8번길 6",
+   "jibunAddress": null,
+   "entityKey": "수원만두@경기|수원시|팔달구|창룡대로8번길|6",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1047:수원만두",
+     "episode": 1047,
+     "title": "은둔식달 - 군만두의 정석 수원 군만두의 달인",
+     "postedAt": "2026-09-07",
+     "airDate": "2026-09-07",
+     "boardNo": "7566",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7566",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-b59052bb",
+   "name": "정과자점",
+   "branch": null,
+   "menu": [
+    "치즈케이크"
+   ],
+   "sido": "서울",
+   "sigungu": "마포구",
+   "gu": null,
+   "dong": "연남동",
+   "roadAddress": null,
+   "jibunAddress": "서울 마포구 연남동 390-3",
+   "entityKey": "정과자점@서울|마포구|연남동|390-3",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1042:정과자점",
+     "episode": 1042,
+     "title": "빵의 전쟁 – 서울 최고의 치즈케이크",
+     "postedAt": "2026-08-03",
+     "airDate": "2026-08-03",
+     "boardNo": "7561",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7561",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-b8691764",
+   "name": "서령",
+   "branch": null,
+   "menu": [
+    "메밀국수"
+   ],
+   "sido": "서울",
+   "sigungu": "중구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 중구 소월로 10",
+   "jibunAddress": null,
+   "entityKey": "서령@서울|중구|소월로|10",
+   "lat": 37.55857,
+   "lng": 126.97546,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:seoryung",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/seoryung",
+     "checkedAt": "2026-07-03"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-bb9471de",
+   "name": "3대 삼계장인",
+   "branch": null,
+   "menu": [
+    "삼계탕"
+   ],
+   "sido": "서울",
+   "sigungu": "서초구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 서초구 반포대로28길 56-3",
+   "jibunAddress": null,
+   "entityKey": "3대삼계장인@서울|서초구|반포대로28길|56-3",
+   "lat": 37.49135,
+   "lng": 127.01155,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:3rd-samgyetang",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/3rd-samgyetang",
+     "checkedAt": "2026-11-14"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-bdbf8e31",
+   "name": "온지음",
+   "branch": null,
+   "menu": [
+    "한식"
+   ],
+   "sido": "서울",
+   "sigungu": "종로구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 종로구 효자로 49",
+   "jibunAddress": null,
+   "entityKey": "온지음@서울|종로구|효자로|49",
+   "lat": 37.58048,
+   "lng": 126.97345,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:onjium",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/onjium",
+     "checkedAt": "2026-08-18"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-be0499d0",
+   "name": "담택",
+   "branch": null,
+   "menu": [
+    "라멘"
+   ],
+   "sido": "서울",
+   "sigungu": "마포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 마포구 동교로12안길 51",
+   "jibunAddress": null,
+   "entityKey": "담택@서울|마포구|동교로12안길|51",
+   "lat": 37.55448,
+   "lng": 126.91512,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:damtaek",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/damtaek",
+     "checkedAt": "2026-08-19"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-bf3e9ece",
+   "name": "꿉당",
+   "branch": null,
+   "menu": [
+    "바비큐"
+   ],
+   "sido": "서울",
+   "sigungu": "서초구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 서초구 강남대로 615",
+   "jibunAddress": null,
+   "entityKey": "꿉당@서울|서초구|강남대로|615",
+   "lat": 37.5166307,
+   "lng": 127.0188926,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:ggupdang",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/ggupdang",
+     "checkedAt": "2026-07-03"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-c257f21b",
+   "name": "사루카메",
+   "branch": null,
+   "menu": [
+    "라멘"
+   ],
+   "sido": "서울",
+   "sigungu": "마포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 마포구 연남로 15",
+   "jibunAddress": null,
+   "entityKey": "사루카메@서울|마포구|연남로|15",
+   "lat": 37.56103,
+   "lng": 126.92267,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:sarukame",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/sarukame",
+     "checkedAt": "2026-11-09"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-c2c8bdb9",
+   "name": "에빗",
+   "branch": null,
+   "menu": [
+    "이노베이티브",
+    "한식"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 도산대로45길 10-5",
+   "jibunAddress": null,
+   "entityKey": "에빗@서울|강남구|도산대로45길|10-5",
+   "lat": 37.52334,
+   "lng": 127.0362,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:evett",
+     "distinction": "2star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/evett",
+     "checkedAt": "2026-07-03"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-c55c6984",
+   "name": "기와강",
+   "branch": null,
+   "menu": [
+    "코리안 컨템퍼러리"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 논현로152길 9",
+   "jibunAddress": null,
+   "entityKey": "기와강@서울|강남구|논현로152길|9",
+   "lat": 37.52107,
+   "lng": 127.02893,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:giwakang",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/giwakang",
+     "checkedAt": "2025-08-21"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-c6908414",
+   "name": "개성만두 궁",
+   "branch": null,
+   "menu": [
+    "만두"
+   ],
+   "sido": "서울",
+   "sigungu": "종로구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 종로구 인사동10길 11-3",
+   "jibunAddress": null,
+   "entityKey": "개성만두궁@서울|종로구|인사동10길|11-3",
+   "lat": 37.57423,
+   "lng": 126.98539,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:gaeseong-mandu-koong",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gaeseong-mandu-koong",
+     "checkedAt": "2026-11-08"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-cc1c864d",
+   "name": "소바키리 스즈",
+   "branch": null,
+   "menu": [
+    "소바"
+   ],
+   "sido": "서울",
+   "sigungu": "중구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 중구 동호로12길 98",
+   "jibunAddress": null,
+   "entityKey": "소바키리스즈@서울|중구|동호로12길|98",
+   "lat": 37.55949,
+   "lng": 127.01243,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:sobakeeri-suzu",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/sobakeeri-suzu",
+     "checkedAt": "2026-07-10"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-d158ddc2",
+   "name": "황생가 칼국수",
+   "branch": null,
+   "menu": [
+    "칼국수"
+   ],
+   "sido": "서울",
+   "sigungu": "종로구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 종로구 북촌로5길 78",
+   "jibunAddress": null,
+   "entityKey": "황생가칼국수@서울|종로구|북촌로5길|78",
+   "lat": 37.58003,
+   "lng": 126.98065,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:hwangsaengga-kalguksu",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/hwangsaengga-kalguksu",
+     "checkedAt": "2026-11-08"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-d163ab14",
+   "name": "왓어브레드",
+   "branch": null,
+   "menu": [
+    "치즈케이크"
+   ],
+   "sido": "서울",
+   "sigungu": "용산구",
+   "gu": null,
+   "dong": "한강로3가",
+   "roadAddress": null,
+   "jibunAddress": "서울 용산구 한강로3가 40-642",
+   "entityKey": "왓어브레드@서울|용산구|한강로3가|40-642",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1042:왓어브레드",
+     "episode": 1042,
+     "title": "빵의 전쟁 – 서울 최고의 치즈케이크",
+     "postedAt": "2026-08-03",
+     "airDate": "2026-08-03",
+     "boardNo": "7561",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7561",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-d1f87958",
+   "name": "대마에스시",
+   "branch": null,
+   "menu": [
+    "초밥"
+   ],
+   "sido": "서울",
+   "sigungu": "노원구",
+   "gu": null,
+   "dong": "공릉동",
+   "roadAddress": null,
+   "jibunAddress": "서울 노원구 공릉동 323-10",
+   "entityKey": "대마에스시@서울|노원구|공릉동|323-10",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1054:대마에스시",
+     "episode": 1054,
+     "title": "반지하에 숨은 내공 초밥 달인",
+     "postedAt": "2026-11-09",
+     "airDate": "2026-11-09",
+     "boardNo": "7599",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7599",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-d2c24ffe",
+   "name": "대성집",
+   "branch": null,
+   "menu": [
+    "도가니탕"
+   ],
+   "sido": "서울",
+   "sigungu": "종로구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 종로구 사직로 5",
+   "jibunAddress": null,
+   "entityKey": "대성집@서울|종로구|사직로|5",
+   "lat": 37.57269,
+   "lng": 126.96091,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:daesungjip",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/daesungjip",
+     "checkedAt": "2026-11-07"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-d3dfd741",
+   "name": "니시무라멘",
+   "branch": null,
+   "menu": [
+    "라멘"
+   ],
+   "sido": "서울",
+   "sigungu": "마포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 마포구 동교로 265",
+   "jibunAddress": null,
+   "entityKey": "니시무라멘@서울|마포구|동교로|265",
+   "lat": 37.56337,
+   "lng": 126.92526,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:nishimuramen",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/nishimuramen",
+     "checkedAt": "2025-12-14"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-d4c32b85",
+   "name": "합정옥",
+   "branch": null,
+   "menu": [
+    "곰탕"
+   ],
+   "sido": "서울",
+   "sigungu": "마포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 마포구 양화로1길 21",
+   "jibunAddress": null,
+   "entityKey": "합정옥@서울|마포구|양화로1길|21",
+   "lat": 37.54944,
+   "lng": 126.91037,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:hapjeongok",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/hapjeongok",
+     "checkedAt": "2026-11-22"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-d7273915",
+   "name": "화해당",
+   "branch": null,
+   "menu": [
+    "게장"
+   ],
+   "sido": "서울",
+   "sigungu": "영등포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 영등포구 국회대로62길 15",
+   "jibunAddress": null,
+   "entityKey": "화해당@서울|영등포구|국회대로62길|15",
+   "lat": 37.52689,
+   "lng": 126.91706,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:hwa-hae-dang",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/hwa-hae-dang",
+     "checkedAt": "2026-11-11"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-d8d98d28",
+   "name": "정식당",
+   "branch": null,
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 선릉로158길 11",
+   "jibunAddress": null,
+   "entityKey": "정식당@서울|강남구|선릉로158길|11",
+   "lat": 37.525584,
+   "lng": 127.041069,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:jungsik511965",
+     "distinction": "2star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/jungsik511965",
+     "checkedAt": "2026-11-11"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-d9124a2c",
+   "name": "옥동식",
+   "branch": null,
+   "menu": [
+    "돼지국밥"
+   ],
+   "sido": "서울",
+   "sigungu": "마포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 마포구 양화로7길 44-10",
+   "jibunAddress": null,
+   "entityKey": "옥동식@서울|마포구|양화로7길|44-10",
+   "lat": 37.55261,
+   "lng": 126.91449,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:okdongsik",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/okdongsik",
+     "checkedAt": "2026-11-10"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-dc1e3985",
+   "name": "에스콘디도",
+   "branch": null,
+   "menu": [
+    "멕시칸"
+   ],
+   "sido": "서울",
+   "sigungu": "용산구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 용산구 한남대로20길 61-7",
+   "jibunAddress": null,
+   "entityKey": "에스콘디도@서울|용산구|한남대로20길|61-7",
+   "lat": 37.53517,
+   "lng": 127.01046,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:escondido",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/escondido",
+     "checkedAt": "2026-07-04"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-df613ee1",
+   "name": "알트에이",
+   "branch": null,
+   "menu": [
+    "비건",
+    "중식"
+   ],
+   "sido": "서울",
+   "sigungu": "용산구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 용산구 보광로 109",
+   "jibunAddress": null,
+   "entityKey": "알트에이@서울|용산구|보광로|109",
+   "lat": 37.53245,
+   "lng": 126.99446,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:alt-a",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/alt-a",
+     "checkedAt": "2026-11-21"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-e0bc2efd",
+   "name": "옛날중국집",
+   "branch": null,
+   "menu": [
+    "중식"
+   ],
+   "sido": "서울",
+   "sigungu": "성북구",
+   "gu": null,
+   "dong": "성북동",
+   "roadAddress": "서울 성북구 성북로8길 8",
+   "jibunAddress": null,
+   "entityKey": "옛날중국집@서울|성북구|성북로8길|8",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "baeknyeon",
+     "sourceKey": "baeknyeon:manual:옛날중국집",
+     "year": null,
+     "sourceUrl": "https://www.sbiz.or.kr/hdst/main/ohndMarketListSmba.do",
+     "checkedAt": "2026-11-24",
+     "note": "백년가게 누리집 현황보기 목록"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-e1e7ba75",
+   "name": "익스퀴진",
+   "branch": null,
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 삼성로140길 6",
+   "jibunAddress": null,
+   "entityKey": "익스퀴진@서울|강남구|삼성로140길|6",
+   "lat": 37.5211374,
+   "lng": 127.04969,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:exquisine",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/exquisine",
+     "checkedAt": "2026-11-22"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-e27d25c7",
+   "name": "곰탕랩",
+   "branch": null,
+   "menu": [
+    "곰탕"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 테헤란로 517",
+   "jibunAddress": null,
+   "entityKey": "곰탕랩@서울|강남구|테헤란로|517",
+   "lat": 37.50859,
+   "lng": 127.05971,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:gomtang-lab",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gomtang-lab",
+     "checkedAt": "2026-07-10"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-e3f74ba5",
+   "name": "권숙수",
+   "branch": null,
+   "menu": [
+    "한식"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 압구정로80길 37",
+   "jibunAddress": null,
+   "entityKey": "권숙수@서울|강남구|압구정로80길|37",
+   "lat": 37.52437,
+   "lng": 127.04355,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:kwonsooksoo",
+     "distinction": "2star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/kwonsooksoo",
+     "checkedAt": "2026-11-15"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-e6d3fbff",
+   "name": "서교난면방",
+   "branch": null,
+   "menu": [
+    "국수"
+   ],
+   "sido": "서울",
+   "sigungu": "마포구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 마포구 동교로12길 16",
+   "jibunAddress": null,
+   "entityKey": "서교난면방@서울|마포구|동교로12길|16",
+   "lat": 37.55359,
+   "lng": 126.91231,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:seokyonanmyunbang",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/seokyonanmyunbang",
+     "checkedAt": "2026-07-04"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-e9e2a641",
+   "name": "써이포차나",
+   "branch": null,
+   "menu": [
+    "태국 쌀국수",
+    "미고렝"
+   ],
+   "sido": "서울",
+   "sigungu": "도봉구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 도봉구 도봉로169나길 42 1층",
+   "jibunAddress": null,
+   "entityKey": "써이포차나@서울|도봉구|도봉로169나길|42",
+   "lat": null,
+   "lng": null,
+   "coordSource": null,
+   "badges": [
+    {
+     "guide": "lifemaster",
+     "sourceKey": "lifemaster:1048:써이포차나",
+     "episode": 1048,
+     "title": "태국 쌀국수·미고렝 달인",
+     "postedAt": "2026-09-14",
+     "airDate": "2026-09-14",
+     "boardNo": "7567",
+     "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7567",
+     "checkedAt": "2026-11-24"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-eca597ef",
+   "name": "광화문 국밥",
+   "branch": null,
+   "menu": [
+    "돼지국밥"
+   ],
+   "sido": "서울",
+   "sigungu": "중구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 중구 세종대로21길 53",
+   "jibunAddress": null,
+   "entityKey": "광화문국밥@서울|중구|세종대로21길|53",
+   "lat": 37.5689,
+   "lng": 126.97541,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:gwanghwamun-gukbap",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gwanghwamun-gukbap",
+     "checkedAt": "2026-11-21"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-ed5563a1",
+   "name": "미진",
+   "branch": null,
+   "menu": [
+    "메밀국수"
+   ],
+   "sido": "서울",
+   "sigungu": "종로구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 종로구 종로 19",
+   "jibunAddress": null,
+   "entityKey": "미진@서울|종로구|종로|19",
+   "lat": 37.5708,
+   "lng": 126.97985,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:mijin",
+     "distinction": "bib",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mijin",
+     "checkedAt": "2026-11-11"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-ed886eda",
+   "name": "비채나",
+   "branch": null,
+   "menu": [
+    "한식"
+   ],
+   "sido": "서울",
+   "sigungu": "송파구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 송파구 올림픽로 300",
+   "jibunAddress": null,
+   "entityKey": "비채나@서울|송파구|올림픽로|300",
+   "lat": 37.5126,
+   "lng": 127.10253,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:bicena",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/bicena",
+     "checkedAt": "2026-11-09"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-f24d5887",
+   "name": "이타닉 가든",
+   "branch": null,
+   "menu": [
+    "코리안 컨템퍼러리"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 테헤란로 231",
+   "jibunAddress": null,
+   "entityKey": "이타닉가든@서울|강남구|테헤란로|231",
+   "lat": 37.50304,
+   "lng": 127.04158,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:eatanic-garden",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/eatanic-garden",
+     "checkedAt": "2026-11-09"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-f2f90f8c",
+   "name": "스와니예",
+   "branch": null,
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 강남대로 652",
+   "jibunAddress": null,
+   "entityKey": "스와니예@서울|강남구|강남대로|652",
+   "lat": 37.51933,
+   "lng": 127.01903,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:soigne",
+     "distinction": "2star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/soigne",
+     "checkedAt": "2026-07-11"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-f757d846",
+   "name": "하쿠시",
+   "branch": null,
+   "menu": [
+    "일식"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 언주로157길 8-4",
+   "jibunAddress": null,
+   "entityKey": "하쿠시@서울|강남구|언주로157길|8-4",
+   "lat": 37.52414,
+   "lng": 127.03227,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:hakusi",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/hakusi",
+     "checkedAt": "2026-11-16"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-fac36c20",
+   "name": "윤서울",
+   "branch": null,
+   "menu": [
+    "한식"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 선릉로 805",
+   "jibunAddress": null,
+   "entityKey": "윤서울@서울|강남구|선릉로|805",
+   "lat": 37.52416,
+   "lng": 127.03906,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:yun",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/yun",
+     "checkedAt": "2026-11-15"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-fb06ec7a",
+   "name": "가겐 바이 최준호",
+   "branch": null,
+   "menu": [
+    "일식"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 압구정로80길 19-1",
+   "jibunAddress": null,
+   "entityKey": "가겐바이최준호@서울|강남구|압구정로80길|19-1",
+   "lat": 37.52451,
+   "lng": 127.04523,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:gaggen",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gaggen",
+     "checkedAt": "2026-02-14"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-fc2db7c2",
+   "name": "스시 카네사카",
+   "branch": null,
+   "menu": [
+    "스시"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 테헤란로 521",
+   "jibunAddress": null,
+   "entityKey": "스시카네사카@서울|강남구|테헤란로|521",
+   "lat": 37.50904,
+   "lng": 127.06089,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:sushi-kanesaka-1244365",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/sushi-kanesaka-1244365",
+     "checkedAt": "2026-11-16"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  },
+  {
+   "id": "gm-fd6ff5a4",
+   "name": "강민철 레스토랑",
+   "branch": null,
+   "menu": [
+    "프렌치 컨템퍼러리"
+   ],
+   "sido": "서울",
+   "sigungu": "강남구",
+   "gu": null,
+   "dong": null,
+   "roadAddress": "서울 강남구 도산대로63길 18",
+   "jibunAddress": null,
+   "entityKey": "강민철레스토랑@서울|강남구|도산대로63길|18",
+   "lat": 37.5249,
+   "lng": 127.04365,
+   "coordSource": "michelin",
+   "badges": [
+    {
+     "guide": "michelin",
+     "sourceKey": "michelin:kang-minchul-restaurant",
+     "distinction": "1star",
+     "year": 2026,
+     "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/kang-minchul-restaurant",
+     "checkedAt": "2026-07-06"
+    }
+   ],
+   "firstSeen": "2026-11-24"
+  }
+ ],
+ "retired": [],
+ "idAliases": {}
+}

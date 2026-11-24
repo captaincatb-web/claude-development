@@ -1,0 +1,11 @@
+{
+ "source": "bluer",
+ "status": "unlicensed",
+ "lastAttempt": "2026-11-24",
+ "note": "블루리본 데이터 이용 권한 미확보",
+ "sourceUrls": [
+  "https://www.bluer.co.kr"
+ ],
+ "records": [],
+ "scope": "이용 권한이 있는 블루리본 데이터를 넣은 경우에만"
+}

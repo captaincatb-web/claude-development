@@ -1,0 +1,520 @@
+{
+ "source": "lifemaster",
+ "status": "ok",
+ "lastSuccess": "2026-11-24",
+ "lastAttempt": "2026-11-24",
+ "note": "초기 자료: SBS 생활의 달인 공식 방송정보 게시판 1041~1054회의 방송협조 주소(서울·경기 음식점)",
+ "sourceUrls": [
+  "https://programs.sbs.co.kr/culture/lifemaster/boards/55736?cmd=list"
+ ],
+ "extraMissing": [
+  "1040회 이전 회차, 1044·1046·1051회(서울·경기 음식점 없음), 1055회 이후는 다음 갱신 때 추가"
+ ],
+ "records": [
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1054:영순관",
+   "name": "영순관",
+   "address": "서울 성북구 보문동2가 122",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "중식"
+   ],
+   "badge": {
+    "episode": 1054,
+    "title": "은둔식달-보문동 3대 중식당 이야기",
+    "postedAt": "2026-11-09",
+    "airDate": "2026-11-09",
+    "boardNo": "7599",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7599",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1054:신진원",
+   "name": "신진원",
+   "address": "서울 성북구 보문동5가 51",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "중식",
+    "짜장면"
+   ],
+   "badge": {
+    "episode": 1054,
+    "title": "은둔식달-보문동 3대 중식당 이야기",
+    "postedAt": "2026-11-09",
+    "airDate": "2026-11-09",
+    "boardNo": "7599",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7599",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1054:안동반점",
+   "name": "안동반점",
+   "address": "서울 성북구 보문동1가 53",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "중식",
+    "짜장면"
+   ],
+   "badge": {
+    "episode": 1054,
+    "title": "은둔식달-보문동 3대 중식당 이야기",
+    "postedAt": "2026-11-09",
+    "airDate": "2026-11-09",
+    "boardNo": "7599",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7599",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1054:대마에스시",
+   "name": "대마에스시",
+   "address": "서울 노원구 공릉동 323-10",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "초밥"
+   ],
+   "badge": {
+    "episode": 1054,
+    "title": "반지하에 숨은 내공 초밥 달인",
+    "postedAt": "2026-11-09",
+    "airDate": "2026-11-09",
+    "boardNo": "7599",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7599",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1053:앙꼬",
+   "name": "앙꼬",
+   "address": "서울특별시 강남구 학동로 56 길 32",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "과일 찹쌀떡"
+   ],
+   "badge": {
+    "episode": 1053,
+    "title": "빵의 전쟁 - 서울•경기 최고의 과일 찹쌀떡",
+    "postedAt": "2026-11-03",
+    "airDate": "2026-11-02",
+    "boardNo": "7582",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7582",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1052:이쿠라더현대서울점",
+   "name": "이쿠라 더현대서울점",
+   "address": "서울 영등포구 여의도동 22",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "철판 오므라이스"
+   ],
+   "badge": {
+    "episode": 1052,
+    "title": "후쿠오카 철판 오므라이스 달인",
+    "postedAt": "2026-11-02",
+    "airDate": "2026-10-26",
+    "boardNo": "7577",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7577",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1050:옛진미칼국수",
+   "name": "옛진미칼국수",
+   "address": "경기 광명시 오리로 932",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "칼국수"
+   ],
+   "badge": {
+    "episode": 1050,
+    "title": "은둔식달 - 40년 세월을 지켜온 서민의 칼국수",
+    "postedAt": "2026-10-12",
+    "airDate": "2026-10-12",
+    "boardNo": "7569",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7569",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1049:교다이야",
+   "name": "교다이야",
+   "address": "서울특별시 마포구 성지길 39 1 층",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "우동"
+   ],
+   "badge": {
+    "episode": 1049,
+    "title": "은둔식달 - 9년 연속 M슐랭 강북 최고 우동",
+    "postedAt": "2026-10-06",
+    "airDate": "2026-10-05",
+    "boardNo": "7568",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7568",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1048:대관원",
+   "name": "대관원",
+   "address": "서울 영등포구 당산로37길 1",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "간짜장"
+   ],
+   "badge": {
+    "episode": 1048,
+    "title": "은둔식달 – 서울 3대 간짜장 달인",
+    "postedAt": "2026-09-14",
+    "airDate": "2026-09-14",
+    "boardNo": "7567",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7567",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1048:써이포차나",
+   "name": "써이포차나",
+   "address": "서울 도봉구 도봉로169나길 42 1층",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "태국 쌀국수",
+    "미고렝"
+   ],
+   "badge": {
+    "episode": 1048,
+    "title": "태국 쌀국수·미고렝 달인",
+    "postedAt": "2026-09-14",
+    "airDate": "2026-09-14",
+    "boardNo": "7567",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7567",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1047:수원만두",
+   "name": "수원만두",
+   "address": "경기 수원시 팔달구 창룡대로 8 번길 6",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "군만두"
+   ],
+   "badge": {
+    "episode": 1047,
+    "title": "은둔식달 - 군만두의 정석 수원 군만두의 달인",
+    "postedAt": "2026-09-07",
+    "airDate": "2026-09-07",
+    "boardNo": "7566",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7566",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1045:고향맛깔김치나물",
+   "name": "고향맛깔김치 나물",
+   "address": "서울 양천구 목동 615-1",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "김치",
+    "나물"
+   ],
+   "badge": {
+    "episode": 1045,
+    "title": "서울 최고 김치 달인 양념 비법 최초 공개",
+    "postedAt": "2026-08-24",
+    "airDate": "2026-08-24",
+    "boardNo": "7564",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7564",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1045:안중풍년떡집",
+   "name": "안중풍년떡집",
+   "address": "경기 평택시 안중읍 안중로 117 번길 1 1 층",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "호박시루떡"
+   ],
+   "badge": {
+    "episode": 1045,
+    "title": "호박떡의 성지 평택 안중 호박시루떡 달인",
+    "postedAt": "2026-08-24",
+    "airDate": "2026-08-24",
+    "boardNo": "7564",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7564",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1043:모아냉면",
+   "name": "모아냉면",
+   "address": "경기 파주시 문산읍 방촌로 1622",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "냉면"
+   ],
+   "badge": {
+    "episode": 1043,
+    "title": "은둔식달 – 파주 냉면",
+    "postedAt": "2026-08-10",
+    "airDate": "2026-08-10",
+    "boardNo": "7562",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7562",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1043:누누타코야끼",
+   "name": "누누타코야끼",
+   "address": "서울 관악구 신림로 344 1 층 148 호",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "타코야키"
+   ],
+   "badge": {
+    "episode": 1043,
+    "title": "타코야키 청년 달인",
+    "postedAt": "2026-08-10",
+    "airDate": "2026-08-10",
+    "boardNo": "7562",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7562",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1043:진켈란젤로",
+   "name": "진켈란젤로",
+   "address": "서울 영등포구 국회대로 29 길 14 1 층",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "치즈케이크"
+   ],
+   "badge": {
+    "episode": 1043,
+    "title": "빵의 전쟁 – 서울 최고의 치즈케이크 2부",
+    "postedAt": "2026-08-10",
+    "airDate": "2026-08-10",
+    "boardNo": "7562",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7562",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1043:도산제과",
+   "name": "도산제과",
+   "address": "서울 금천구 독산동 1007-13",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "치즈케이크"
+   ],
+   "badge": {
+    "episode": 1043,
+    "title": "빵의 전쟁 – 서울 최고의 치즈케이크 2부",
+    "postedAt": "2026-08-10",
+    "airDate": "2026-08-10",
+    "boardNo": "7562",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7562",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1043:꼬내과자점",
+   "name": "꼬내과자점",
+   "address": "서울 마포구 연남동 385-6",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "치즈케이크"
+   ],
+   "badge": {
+    "episode": 1043,
+    "title": "빵의 전쟁 – 서울 최고의 치즈케이크 2부",
+    "postedAt": "2026-08-10",
+    "airDate": "2026-08-10",
+    "boardNo": "7562",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7562",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1043:페리엔서울치즈케이크",
+   "name": "페리엔서울치즈케이크",
+   "address": "서울 성동구 성수동1가 656-1659",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "치즈케이크"
+   ],
+   "badge": {
+    "episode": 1043,
+    "title": "빵의 전쟁 – 서울 최고의 치즈케이크 2부",
+    "postedAt": "2026-08-10",
+    "airDate": "2026-08-10",
+    "boardNo": "7562",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7562",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1042:서천칼국수",
+   "name": "서천칼국수",
+   "address": "서울 중랑구 면목동 50-34",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "콩국수"
+   ],
+   "badge": {
+    "episode": 1042,
+    "title": "은둔식달 – 서울 3대 콩국수",
+    "postedAt": "2026-08-03",
+    "airDate": "2026-08-03",
+    "boardNo": "7561",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7561",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1042:엄지손칼국수",
+   "name": "엄지손칼국수",
+   "address": "서울 송파구 송파동 148-3",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "콩국수"
+   ],
+   "badge": {
+    "episode": 1042,
+    "title": "은둔식달 – 서울 3대 콩국수",
+    "postedAt": "2026-08-03",
+    "airDate": "2026-08-03",
+    "boardNo": "7561",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7561",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1042:왓어브레드",
+   "name": "왓어브레드",
+   "address": "서울 용산구 한강로3가 40-642",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "치즈케이크"
+   ],
+   "badge": {
+    "episode": 1042,
+    "title": "빵의 전쟁 – 서울 최고의 치즈케이크",
+    "postedAt": "2026-08-03",
+    "airDate": "2026-08-03",
+    "boardNo": "7561",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7561",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1042:정과자점",
+   "name": "정과자점",
+   "address": "서울 마포구 연남동 390-3",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "치즈케이크"
+   ],
+   "badge": {
+    "episode": 1042,
+    "title": "빵의 전쟁 – 서울 최고의 치즈케이크",
+    "postedAt": "2026-08-03",
+    "airDate": "2026-08-03",
+    "boardNo": "7561",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7561",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1042:트키도산",
+   "name": "트키도산",
+   "address": "서울 강남구 신사동 651-2",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "치즈케이크"
+   ],
+   "badge": {
+    "episode": 1042,
+    "title": "빵의 전쟁 – 서울 최고의 치즈케이크",
+    "postedAt": "2026-08-03",
+    "airDate": "2026-08-03",
+    "boardNo": "7561",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7561",
+    "checkedAt": "2026-11-24"
+   }
+  },
+  {
+   "source": "lifemaster",
+   "sourceKey": "lifemaster:1041:러셀도넛",
+   "name": "러셀 도넛",
+   "address": "서울 강동구 양재대로 89 길 60 1 층 102 호",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "이탈리아식 도넛"
+   ],
+   "badge": {
+    "episode": 1041,
+    "title": "이탈리아식 도넛 달인",
+    "postedAt": "2026-07-27",
+    "airDate": "2026-07-27",
+    "boardNo": "7560",
+    "sourceUrl": "https://programs.sbs.co.kr/culture/lifemaster/board/55736?cmd=view&page=1&board_no=7560",
+    "checkedAt": "2026-11-24"
+   }
+  }
+ ],
+ "scope": "서울·경기. SBS 공식 방송정보 게시판에 방송협조 주소가 공개된 회차만"
+}

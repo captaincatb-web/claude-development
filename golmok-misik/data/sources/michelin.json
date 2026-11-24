@@ -1,0 +1,1699 @@
+{
+ "source": "michelin",
+ "status": "ok",
+ "lastSuccess": "2026-11-24",
+ "lastAttempt": "2026-11-24",
+ "note": "초기 자료: 미쉐린 가이드 공식 사이트의 서울 2026 셀렉션(빕 구르망 51곳, 스타 42곳) 레스토랑 페이지에서 주소·좌표 확인",
+ "sourceUrls": [
+  "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurants/bib-gourmand",
+  "https://guide.michelin.com/kr/ko/article/michelin-guide-ceremony/all-the-stars-michelin-guide-seoul-busan-2026",
+  "https://guide.michelin.com/kr/ko/article/michelin-guide-ceremony/korea-bib-gourmand-2026"
+ ],
+ "records": [
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:woo-lae-oak",
+   "name": "우래옥",
+   "address": "중구 창경궁로 62-29, Seoul, 04546, 한국",
+   "lat": 37.56815,
+   "lng": 126.99866,
+   "coordSource": "michelin",
+   "menu": [
+    "냉면"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/woo-lae-oak",
+    "checkedAt": "2026-08-13"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:pildong-myeonok",
+   "name": "필동면옥",
+   "address": "중구 서애로 26, Seoul, 04624, 한국",
+   "lat": 37.56035,
+   "lng": 126.99689,
+   "coordSource": "michelin",
+   "menu": [
+    "냉면"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/pildong-myeonok",
+    "checkedAt": "2026-06-24"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:gaeseong-mandu-koong",
+   "name": "개성만두 궁",
+   "address": "종로구 인사동 10길 11-3, Seoul, 03146, 한국",
+   "lat": 37.57423,
+   "lng": 126.98539,
+   "coordSource": "michelin",
+   "menu": [
+    "만두"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gaeseong-mandu-koong",
+    "checkedAt": "2026-11-08"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:mijin",
+   "name": "미진",
+   "address": "종로구 종로 19, 르메이에르 종로타운 116-2호, Seoul, 03157, 한국",
+   "lat": 37.5708,
+   "lng": 126.97985,
+   "coordSource": "michelin",
+   "menu": [
+    "메밀국수"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mijin",
+    "checkedAt": "2026-11-11"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:sobakeeri-suzu",
+   "name": "소바키리 스즈",
+   "address": "중구 동호로 12길 98, Seoul, 04608, 한국",
+   "lat": 37.55949,
+   "lng": 127.01243,
+   "coordSource": "michelin",
+   "menu": [
+    "소바"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/sobakeeri-suzu",
+    "checkedAt": "2026-07-10"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:anam",
+   "name": "안암",
+   "address": "종로구 북촌로 5길 10, Seoul, 03055, 한국",
+   "lat": 37.57939,
+   "lng": 126.98446,
+   "coordSource": "michelin",
+   "menu": [
+    "돼지국밥"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/anam",
+    "checkedAt": "2026-04-25"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:geumdwaeji-sikdang",
+   "name": "금돼지식당",
+   "address": "중구 다산로 149, Seoul, 04607, 한국",
+   "lat": 37.55705,
+   "lng": 127.01165,
+   "coordSource": "michelin",
+   "menu": [
+    "바비큐"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/geumdwaeji-sikdang",
+    "checkedAt": "2026-06-20"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:yurimmyeon",
+   "name": "유림면",
+   "address": "중구 서소문로 139-1, Seoul, 04515, 한국",
+   "lat": 37.56419,
+   "lng": 126.9761,
+   "coordSource": "michelin",
+   "menu": [
+    "메밀국수"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/yurimmyeon",
+    "checkedAt": "2026-11-11"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:gosari-express",
+   "name": "고사리 익스프레스",
+   "address": "중구 퇴계로85길 12-10, Seoul, 04576, 한국",
+   "lat": 37.56626,
+   "lng": 127.02001,
+   "coordSource": "michelin",
+   "menu": [
+    "비건"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gosari-express",
+    "checkedAt": "2026-08-20"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:hwangsaengga-kalguksu",
+   "name": "황생가 칼국수",
+   "address": "종로구 북촌로 5길 78, Seoul, 03053, 한국",
+   "lat": 37.58003,
+   "lng": 126.98065,
+   "coordSource": "michelin",
+   "menu": [
+    "칼국수"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/hwangsaengga-kalguksu",
+    "checkedAt": "2026-11-08"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:seoryung",
+   "name": "서령",
+   "address": "중구 소월로 10, Seoul, 04527, 한국",
+   "lat": 37.55857,
+   "lng": 126.97546,
+   "coordSource": "michelin",
+   "menu": [
+    "메밀국수"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/seoryung",
+    "checkedAt": "2026-07-03"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:halmaejip",
+   "name": "할매집",
+   "address": "종로구 사직로 12길 1-5, Seoul, 03169, 한국",
+   "lat": 37.5755506,
+   "lng": 126.9715631,
+   "coordSource": "michelin",
+   "menu": [
+    "한식"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/halmaejip",
+    "checkedAt": "2026-02-19"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:horapa",
+   "name": "호라파",
+   "address": "종로구 자하문로 37-1, 2층, Seoul, 03040, 한국",
+   "lat": 37.57938,
+   "lng": 126.9711,
+   "coordSource": "michelin",
+   "menu": [
+    "타이"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/horapa",
+    "checkedAt": "2026-07-03"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:yonggeumok",
+   "name": "용금옥",
+   "address": "종로구 자하문로 41-2, Seoul, 03036, 한국",
+   "lat": 37.57972,
+   "lng": 126.97088,
+   "coordSource": "michelin",
+   "menu": [
+    "추어탕"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/yonggeumok",
+    "checkedAt": "2026-07-06"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:daesungjip",
+   "name": "대성집",
+   "address": "종로구 사직로 5, Seoul, 03029, 한국",
+   "lat": 37.57269,
+   "lng": 126.96091,
+   "coordSource": "michelin",
+   "menu": [
+    "도가니탕"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/daesungjip",
+    "checkedAt": "2026-11-07"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:youhan",
+   "name": "유한",
+   "address": "용산구 대사관로 5길 10-5, Seoul, 04400, 한국",
+   "lat": 37.53482,
+   "lng": 127.00108,
+   "coordSource": "michelin",
+   "menu": [
+    "타이"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/youhan",
+    "checkedAt": "2026-06-26"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:jaha-son-mandu",
+   "name": "자하 손만두",
+   "address": "종로구 백석동길 12, Seoul, 03020, 한국",
+   "lat": 37.59309,
+   "lng": 126.96603,
+   "coordSource": "michelin",
+   "menu": [
+    "만두"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/jaha-son-mandu",
+    "checkedAt": "2026-11-06"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:alt-a",
+   "name": "알트에이",
+   "address": "용산구 보광로 109, Seoul, 04391, 한국",
+   "lat": 37.53245,
+   "lng": 126.99446,
+   "coordSource": "michelin",
+   "menu": [
+    "비건",
+    "중식"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/alt-a",
+    "checkedAt": "2026-11-21"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:hwanggeum-kongbat",
+   "name": "황금콩밭",
+   "address": "마포구 마포대로 16길 9, Seoul, 04205, 한국",
+   "lat": 37.5509,
+   "lng": 126.9567,
+   "coordSource": "michelin",
+   "menu": [
+    "두부"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/hwanggeum-kongbat",
+    "checkedAt": "2026-11-10"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:oilje",
+   "name": "오일제",
+   "address": "용산구 한강대로 62다길 29, Seoul, 04382, 한국",
+   "lat": 37.53254,
+   "lng": 126.97473,
+   "coordSource": "michelin",
+   "menu": [
+    "한식"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/oilje",
+    "checkedAt": "2026-11-21"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:yukjeon-hoekwan",
+   "name": "역전회관",
+   "address": "마포구 토정로 37길 47, Seoul, 04155, 한국",
+   "lat": 37.566,
+   "lng": 126.947,
+   "coordSource": "michelin",
+   "menu": [
+    "불고기"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/yukjeon-hoekwan",
+    "checkedAt": "2026-11-10"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:neungdong-minari",
+   "name": "능동미나리",
+   "address": "용산구 한강대로 40길 28, Seoul, 04386, 한국",
+   "lat": 37.53008,
+   "lng": 126.97078,
+   "coordSource": "michelin",
+   "menu": [
+    "곰탕"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/neungdong-minari",
+    "checkedAt": "2026-11-14"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:base-is-nice",
+   "name": "베이스 이즈 나이스",
+   "address": "마포구 도화 2길 20, Seoul, 04171, 한국",
+   "lat": 37.53958,
+   "lng": 126.94908,
+   "coordSource": "michelin",
+   "menu": [
+    "베지테리안"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/base-is-nice",
+    "checkedAt": "2026-11-20"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:kyewol-gomtang",
+   "name": "계월",
+   "address": "성동구 성덕정 3길 8, Seoul, 04774, 한국",
+   "lat": 37.53952,
+   "lng": 127.04762,
+   "coordSource": "michelin",
+   "menu": [
+    "곰탕"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/kyewol-gomtang",
+    "checkedAt": "2026-11-09"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:mattdol",
+   "name": "맷돌",
+   "address": "성동구 성덕정길 63, Seoul, 04775, 한국",
+   "lat": 37.53808,
+   "lng": 127.05065,
+   "coordSource": "michelin",
+   "menu": [
+    "멕시칸"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mattdol",
+    "checkedAt": "2025-11-27"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:mapo-ok",
+   "name": "마포옥",
+   "address": "마포구 토정로 312, Seoul, 04165, 한국",
+   "lat": 37.53983,
+   "lng": 126.94332,
+   "coordSource": "michelin",
+   "menu": [
+    "설렁탕"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mapo-ok",
+    "checkedAt": "2026-11-08"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:mandujip",
+   "name": "만두집",
+   "address": "강남구 압구정로 338, Seoul, 06018, 한국",
+   "lat": 37.52785,
+   "lng": 127.03898,
+   "coordSource": "michelin",
+   "menu": [
+    "만두"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mandujip",
+    "checkedAt": "2026-11-12"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:ggupdang",
+   "name": "꿉당",
+   "address": "서초구 강남대로 615, Seoul, 06524, 한국",
+   "lat": 37.5166307,
+   "lng": 127.0188926,
+   "coordSource": "michelin",
+   "menu": [
+    "바비큐"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/ggupdang",
+    "checkedAt": "2026-07-03"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:myeon-seoul",
+   "name": "면서울",
+   "address": "강남구 선릉로 805, Seoul, 06019, 한국",
+   "lat": 37.52416,
+   "lng": 127.03906,
+   "coordSource": "michelin",
+   "menu": [
+    "국수"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/myeon-seoul",
+    "checkedAt": "2026-11-13"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:nishimuramen",
+   "name": "니시무라멘",
+   "address": "서울 마포구 동교로 265, 4층, Seoul, 03983, 한국",
+   "lat": 37.56337,
+   "lng": 126.92526,
+   "coordSource": "michelin",
+   "menu": [
+    "라멘"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/nishimuramen",
+    "checkedAt": "2025-12-14"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:sarukame",
+   "name": "사루카메",
+   "address": "마포구 연남로 15, Seoul, 03990, 한국",
+   "lat": 37.56103,
+   "lng": 126.92267,
+   "coordSource": "michelin",
+   "menu": [
+    "라멘"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/sarukame",
+    "checkedAt": "2026-11-09"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:jeongmyeon",
+   "name": "정면",
+   "address": "광진구 능동로 13길 88, Seoul, 05012, 한국",
+   "lat": 37.54551,
+   "lng": 127.06866,
+   "coordSource": "michelin",
+   "menu": [
+    "국수"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/jeongmyeon",
+    "checkedAt": "2026-08-23"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:gebang-sikdang",
+   "name": "게방식당",
+   "address": "강남구 선릉로 131길 17, Seoul, 06060, 한국",
+   "lat": 37.51727,
+   "lng": 127.03942,
+   "coordSource": "michelin",
+   "menu": [
+    "게장"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gebang-sikdang",
+    "checkedAt": "2026-11-06"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:oreno-ramen",
+   "name": "오레노 라멘",
+   "address": "마포구 독막로 8길 16, Seoul, 04072, 한국",
+   "lat": 37.54725,
+   "lng": 126.91781,
+   "coordSource": "michelin",
+   "menu": [
+    "라멘"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/oreno-ramen",
+    "checkedAt": "2026-11-21"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:damtaek",
+   "name": "담택",
+   "address": "마포구 동교로12안길 51, Seoul, 04029, 한국",
+   "lat": 37.55448,
+   "lng": 126.91512,
+   "coordSource": "michelin",
+   "menu": [
+    "라멘"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/damtaek",
+    "checkedAt": "2026-08-19"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:jin-jin",
+   "name": "진진",
+   "address": "마포구 월드컵북로 1길 60, Seoul, 04031, 한국",
+   "lat": 37.55777,
+   "lng": 126.91324,
+   "coordSource": "michelin",
+   "menu": [
+    "중식"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/jin-jin",
+    "checkedAt": "2026-11-07"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:okdongsik",
+   "name": "옥동식",
+   "address": "마포구 양화로 7길 44-10, Seoul, 04035, 한국",
+   "lat": 37.55261,
+   "lng": 126.91449,
+   "coordSource": "michelin",
+   "menu": [
+    "돼지국밥"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/okdongsik",
+    "checkedAt": "2026-11-10"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:seokyonanmyunbang",
+   "name": "서교난면방",
+   "address": "마포구 동교로 12길 16, Seoul, 04029, 한국",
+   "lat": 37.55359,
+   "lng": 126.91231,
+   "coordSource": "michelin",
+   "menu": [
+    "국수"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/seokyonanmyunbang",
+    "checkedAt": "2026-07-04"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:mipildam",
+   "name": "미필담",
+   "address": "마포구 성지 3길 22, Seoul, 04083, 한국",
+   "lat": 37.54658,
+   "lng": 126.91419,
+   "coordSource": "michelin",
+   "menu": [
+    "만두"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mipildam",
+    "checkedAt": "2026-02-15"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:kyodaiya",
+   "name": "교다이야",
+   "address": "마포구 성지길 39, Seoul, 04083, 한국",
+   "lat": 37.54681,
+   "lng": 126.91317,
+   "coordSource": "michelin",
+   "menu": [
+    "우동"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/kyodaiya",
+    "checkedAt": "2026-11-10"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:jungin-myeonok",
+   "name": "정인면옥",
+   "address": "영등포구 국회대로 76길 10, Seoul, 07238, 한국",
+   "lat": 37.5307,
+   "lng": 126.92167,
+   "coordSource": "michelin",
+   "menu": [
+    "냉면"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/jungin-myeonok",
+    "checkedAt": "2026-11-15"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:hapjeongok",
+   "name": "합정옥",
+   "address": "마포구 양화로 1길 21, 2층, Seoul, 04026, 한국",
+   "lat": 37.54944,
+   "lng": 126.91037,
+   "coordSource": "michelin",
+   "menu": [
+    "곰탕"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/hapjeongok",
+    "checkedAt": "2026-11-22"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:yangyang-memil-makguksu",
+   "name": "양양 메밀 막국수",
+   "address": "서초구 동광로 15길 10, Seoul, 06561, 한국",
+   "lat": 37.49247,
+   "lng": 126.98826,
+   "coordSource": "michelin",
+   "menu": [
+    "메밀국수"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/yangyang-memil-makguksu",
+    "checkedAt": "2026-11-14"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:hwa-hae-dang",
+   "name": "화해당",
+   "address": "영등포구 국회대로 62길 15, Seoul, 07236, 한국",
+   "lat": 37.52689,
+   "lng": 126.91706,
+   "coordSource": "michelin",
+   "menu": [
+    "게장"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/hwa-hae-dang",
+    "checkedAt": "2026-11-11"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:subaru",
+   "name": "스바루",
+   "address": "서초구 방배중앙로 21길 7, Seoul, 06560, 한국",
+   "lat": 37.49234,
+   "lng": 126.98611,
+   "coordSource": "michelin",
+   "menu": [
+    "소바"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/subaru",
+    "checkedAt": "2026-07-10"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:gomtang-lab",
+   "name": "곰탕랩",
+   "address": "강남구 테헤란로 517, 현대백화점 10층, Seoul, 06164, 한국",
+   "lat": 37.50859,
+   "lng": 127.05971,
+   "coordSource": "michelin",
+   "menu": [
+    "곰탕"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gomtang-lab",
+    "checkedAt": "2026-07-10"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:3rd-samgyetang",
+   "name": "3대 삼계장인",
+   "address": "서초구 반포대로 28길 56-3, Seoul, 06646, 한국",
+   "lat": 37.49135,
+   "lng": 127.01155,
+   "coordSource": "michelin",
+   "menu": [
+    "삼계탕"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/3rd-samgyetang",
+    "checkedAt": "2026-11-14"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:niroumianguan",
+   "name": "진중 우육면관",
+   "address": "종로구 청계천로 75-2, Seoul, 03190, 한국",
+   "lat": 37.56854,
+   "lng": 126.98612,
+   "coordSource": "michelin",
+   "menu": [
+    "국수"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/niroumianguan",
+    "checkedAt": "2026-01-18"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:gwanghwamun-gukbap",
+   "name": "광화문 국밥",
+   "address": "중구 세종대로 21길 53, Seoul, 04519, 한국",
+   "lat": 37.5689,
+   "lng": 126.97541,
+   "coordSource": "michelin",
+   "menu": [
+    "돼지국밥"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gwanghwamun-gukbap",
+    "checkedAt": "2026-11-21"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:limbyungjoo-sandong-kalguksu",
+   "name": "임병주 산동 칼국수",
+   "address": "서초구 강남대로 37길 65, Seoul, 06734, 한국",
+   "lat": 37.48458,
+   "lng": 127.02988,
+   "coordSource": "michelin",
+   "menu": [
+    "칼국수"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/limbyungjoo-sandong-kalguksu",
+    "checkedAt": "2026-11-07"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:andeok",
+   "name": "안덕",
+   "address": "종로구 자하문로 17길 18, Seoul, 03035, 한국",
+   "lat": 37.58143,
+   "lng": 126.96969,
+   "coordSource": "michelin",
+   "menu": [
+    "한식"
+   ],
+   "badge": {
+    "distinction": "bib",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/andeok",
+    "checkedAt": "2026-08-17"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:mingles",
+   "name": "밍글스",
+   "address": "강남구 도산대로 67길 19, 2층, Seoul, 06016, 한국",
+   "lat": 37.52535,
+   "lng": 127.04426,
+   "coordSource": "michelin",
+   "menu": [
+    "한식"
+   ],
+   "badge": {
+    "distinction": "3star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mingles",
+    "checkedAt": "2026-11-21"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:kwonsooksoo",
+   "name": "권숙수",
+   "address": "강남구 압구정로 80길 37, 4층, Seoul, 06016, 한국",
+   "lat": 37.52437,
+   "lng": 127.04355,
+   "coordSource": "michelin",
+   "menu": [
+    "한식"
+   ],
+   "badge": {
+    "distinction": "2star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/kwonsooksoo",
+    "checkedAt": "2026-11-15"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:la-yeon",
+   "name": "라연",
+   "address": "중구 동호로 249, 신라호텔 23층, Seoul, 04605, 한국",
+   "lat": 37.555813,
+   "lng": 127.00517,
+   "coordSource": "michelin",
+   "menu": [
+    "한식",
+    "컨템퍼러리"
+   ],
+   "badge": {
+    "distinction": "2star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/la-yeon",
+    "checkedAt": "2026-11-14"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:restaurant-allen",
+   "name": "레스토랑 알렌",
+   "address": "강남구 테헤란로 231, 센터필드 East 2층 E205호, Seoul, 06142, 한국",
+   "lat": 37.5036,
+   "lng": 127.0418,
+   "coordSource": "michelin",
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "badge": {
+    "distinction": "2star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/restaurant-allen",
+    "checkedAt": "2026-11-10"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:mosu",
+   "name": "모수",
+   "address": "서울시 용산구 회나무로 41길 4, Seoul, 04344, 한국",
+   "lat": 37.54115,
+   "lng": 126.99615,
+   "coordSource": "michelin",
+   "menu": [
+    "모던 요리"
+   ],
+   "badge": {
+    "distinction": "2star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mosu",
+    "checkedAt": "2026-11-08"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:mitou",
+   "name": "미토우",
+   "address": "강남구 도산대로 70길 24, Seoul, 06064, 한국",
+   "lat": 37.52206,
+   "lng": 127.04502,
+   "coordSource": "michelin",
+   "menu": [
+    "일식"
+   ],
+   "badge": {
+    "distinction": "2star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mitou",
+    "checkedAt": "2026-11-19"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:soigne",
+   "name": "스와니예",
+   "address": "강남구 강남대로 652, 신사스퀘어 2층 201호, Seoul, 06027, 한국",
+   "lat": 37.51933,
+   "lng": 127.01903,
+   "coordSource": "michelin",
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "badge": {
+    "distinction": "2star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/soigne",
+    "checkedAt": "2026-07-11"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:sosuheon",
+   "name": "소수헌",
+   "address": "중구 만리재로 21길 8, Seoul, 04500, 한국",
+   "lat": 37.55294,
+   "lng": 126.9634,
+   "coordSource": "michelin",
+   "menu": [
+    "스시"
+   ],
+   "badge": {
+    "distinction": "2star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/sosuheon",
+    "checkedAt": "2026-11-10"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:evett",
+   "name": "에빗",
+   "address": "강남구 도산대로 45길 10-5, Seoul, 06021, 한국",
+   "lat": 37.52334,
+   "lng": 127.0362,
+   "coordSource": "michelin",
+   "menu": [
+    "이노베이티브",
+    "한식"
+   ],
+   "badge": {
+    "distinction": "2star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/evett",
+    "checkedAt": "2026-07-03"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:jungsik511965",
+   "name": "정식당",
+   "address": "강남구 선릉로 158길 11, Seoul, 06014, 한국",
+   "lat": 37.525584,
+   "lng": 127.041069,
+   "coordSource": "michelin",
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "badge": {
+    "distinction": "2star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/jungsik511965",
+    "checkedAt": "2026-11-11"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:gaggen",
+   "name": "가겐 바이 최준호",
+   "address": "강남구 압구정로 80길 19-1, 2층, Seoul, 06015, 한국",
+   "lat": 37.52451,
+   "lng": 127.04523,
+   "coordSource": "michelin",
+   "menu": [
+    "일식"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gaggen",
+    "checkedAt": "2026-02-14"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:kang-minchul-restaurant",
+   "name": "강민철 레스토랑",
+   "address": "강남구 도산대로 63길 18, 5층, Seoul, 06064, 한국",
+   "lat": 37.5249,
+   "lng": 127.04365,
+   "coordSource": "michelin",
+   "menu": [
+    "프렌치 컨템퍼러리"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/kang-minchul-restaurant",
+    "checkedAt": "2026-07-06"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:goryori-ken",
+   "name": "고료리 켄",
+   "address": "강남구 언주로 152길 15-3, 2층, Seoul, 06021, 한국",
+   "lat": 37.52298,
+   "lng": 127.03478,
+   "coordSource": "michelin",
+   "menu": [
+    "컨템퍼러리",
+    "재패니즈 컨템퍼러리"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/goryori-ken",
+    "checkedAt": "2026-01-23"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:gigas",
+   "name": "기가스",
+   "address": "중구 퇴계로 6가길 30, 3층, Seoul, 04635, 한국",
+   "lat": 37.55696,
+   "lng": 126.97809,
+   "coordSource": "michelin",
+   "menu": [
+    "지중해식"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gigas",
+    "checkedAt": "2026-11-16"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:giwakang",
+   "name": "기와강",
+   "address": "강남구 논현로 152길 9, 4층, Seoul, 한국",
+   "lat": 37.52107,
+   "lng": 127.02893,
+   "coordSource": "michelin",
+   "menu": [
+    "코리안 컨템퍼러리"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/giwakang",
+    "checkedAt": "2025-08-21"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:collage",
+   "name": "꼴라쥬",
+   "address": "강남구 논현로 136길 11, 아난티 앳 강남 2층, Seoul, 06051, 한국",
+   "lat": 37.51619,
+   "lng": 127.03099,
+   "coordSource": "michelin",
+   "menu": [
+    "프렌치 컨템퍼러리"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/collage",
+    "checkedAt": "2026-07-03"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:tutoiement",
+   "name": "뛰뚜아멍",
+   "address": "성동구 광나루로 11길 20, Seoul, 04801, 한국",
+   "lat": 37.54969,
+   "lng": 127.0666,
+   "coordSource": "michelin",
+   "menu": [
+    "프렌치"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/tutoiement",
+    "checkedAt": "2026-01-28"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:l-amant-secret",
+   "name": "라망 시크레",
+   "address": "중구 퇴계로 67, 레스케이프 호텔 26층, Seoul, 04529, 한국",
+   "lat": 37.55983,
+   "lng": 126.97949,
+   "coordSource": "michelin",
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/l-amant-secret",
+    "checkedAt": "2026-11-09"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:l-amitie",
+   "name": "라미띠에",
+   "address": "강남구 도산대로 67길 30, 2층, Seoul, 06015, 한국",
+   "lat": 37.52591,
+   "lng": 127.04455,
+   "coordSource": "michelin",
+   "menu": [
+    "프렌치"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/l-amitie",
+    "checkedAt": "2026-08-25"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:legume",
+   "name": "레귬",
+   "address": "강남구 강남대로 652, 신사 스퀘어 2층, Seoul, 06027, 한국",
+   "lat": 37.51938,
+   "lng": 127.01932,
+   "coordSource": "michelin",
+   "menu": [
+    "비건",
+    "베지테리안"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/legume",
+    "checkedAt": "2026-01-02"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:san",
+   "name": "레스토랑 산",
+   "address": "강남구 언주로 168길 6, 지하1층, Seoul, 06020, 한국",
+   "lat": 37.52631,
+   "lng": 127.03391,
+   "coordSource": "michelin",
+   "menu": [
+    "이노베이티브"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/san",
+    "checkedAt": "2026-07-06"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:restaurant-jueun",
+   "name": "레스토랑 주은",
+   "address": "서울 종로구 경희궁길 36, 경희당 8층, Seoul, 03175, 한국",
+   "lat": 37.57276,
+   "lng": 126.96991,
+   "coordSource": "michelin",
+   "menu": [
+    "한식",
+    "클래식 퀴진"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/restaurant-jueun",
+    "checkedAt": "2026-11-08"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:muni",
+   "name": "무니",
+   "address": "강남구 도산대로 72길 16, Seoul, 06063, 한국",
+   "lat": 37.52291,
+   "lng": 127.04545,
+   "coordSource": "michelin",
+   "menu": [
+    "일식"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/muni",
+    "checkedAt": "2026-06-15"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:muoki",
+   "name": "무오키",
+   "address": "강남구 학동로 55길 12-12, 2층, Seoul, 06065, 한국",
+   "lat": 37.51896,
+   "lng": 127.04222,
+   "coordSource": "michelin",
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/muoki",
+    "checkedAt": "2026-11-13"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:bicena",
+   "name": "비채나",
+   "address": "송파구 올림픽로 300, 롯데월드 타워 81층, Seoul, 05551, 한국",
+   "lat": 37.5126,
+   "lng": 127.10253,
+   "coordSource": "michelin",
+   "menu": [
+    "한식"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/bicena",
+    "checkedAt": "2026-11-09"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:vinho",
+   "name": "빈호",
+   "address": "강남구 학동로 43길 38, 논현웰스톤 162호, Seoul, 06059, 한국",
+   "lat": 37.51866,
+   "lng": 127.03814,
+   "coordSource": "michelin",
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/vinho",
+    "checkedAt": "2025-10-29"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:7th-door",
+   "name": "세븐스도어",
+   "address": "강남구 학동로 97길 41, 4층, Seoul, 06072, 한국",
+   "lat": 37.52237,
+   "lng": 127.05429,
+   "coordSource": "michelin",
+   "menu": [
+    "코리안 컨템퍼러리"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/7th-door",
+    "checkedAt": "2026-11-14"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:soseoul-hannam",
+   "name": "소설한남",
+   "address": "용산구 한남대로 20길 21-18, 지하 1층, Seoul, 04419, 한국",
+   "lat": 37.53528,
+   "lng": 127.00914,
+   "coordSource": "michelin",
+   "menu": [
+    "한식"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/soseoul-hannam",
+    "checkedAt": "2026-01-22"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:soul-dining",
+   "name": "소울",
+   "address": "용산구 신흥로 26길 35, 지하 2층, Seoul, 04337, 한국",
+   "lat": 37.54533,
+   "lng": 126.98443,
+   "coordSource": "michelin",
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/soul-dining",
+    "checkedAt": "2026-11-13"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:solbam",
+   "name": "솔밤",
+   "address": "강남구 학동로 231, 2층, Seoul, 06053, 한국",
+   "lat": 37.51575,
+   "lng": 127.03411,
+   "coordSource": "michelin",
+   "menu": [
+    "컨템퍼러리",
+    "코리안 컨템퍼러리"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/solbam",
+    "checkedAt": "2026-11-20"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:sushi-matsumoto-1195338",
+   "name": "스시 마츠모토",
+   "address": "강남구 도산대로 75길 24, Seoul, 06015, 한국",
+   "lat": 37.52535,
+   "lng": 127.04573,
+   "coordSource": "michelin",
+   "menu": [
+    "스시"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/sushi-matsumoto-1195338",
+    "checkedAt": "2026-07-03"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:sushi-kanesaka-1244365",
+   "name": "스시 카네사카",
+   "address": "강남구 테헤란로 521, 그랜드 인터컨티넨탈 서울 파르나스 1층, Seoul, 06164, 한국",
+   "lat": 37.50904,
+   "lng": 127.06089,
+   "coordSource": "michelin",
+   "menu": [
+    "스시"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/sushi-kanesaka-1244365",
+    "checkedAt": "2026-11-16"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:escondido",
+   "name": "에스콘디도",
+   "address": "용산구 한남대로 20길 61-7, 지하 1층, Seoul, 04419, 한국",
+   "lat": 37.53517,
+   "lng": 127.01046,
+   "coordSource": "michelin",
+   "menu": [
+    "멕시칸"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/escondido",
+    "checkedAt": "2026-07-04"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:onjium",
+   "name": "온지음",
+   "address": "종로구 효자로 49, 4층, Seoul, 03043, 한국",
+   "lat": 37.58048,
+   "lng": 126.97345,
+   "coordSource": "michelin",
+   "menu": [
+    "한식"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/onjium",
+    "checkedAt": "2026-08-18"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:yu-yuan",
+   "name": "유 유안",
+   "address": "종로구 새문안로 97, 포시즌스 호텔 11층, Seoul, 03183, 한국",
+   "lat": 37.57049,
+   "lng": 126.97545,
+   "coordSource": "michelin",
+   "menu": [
+    "중식"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/yu-yuan",
+    "checkedAt": "2026-11-10"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:yun",
+   "name": "윤서울",
+   "address": "강남구 선릉로 805, Seoul, 06019, 한국",
+   "lat": 37.52416,
+   "lng": 127.03906,
+   "coordSource": "michelin",
+   "menu": [
+    "한식"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/yun",
+    "checkedAt": "2026-11-15"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:y-east",
+   "name": "이스트",
+   "address": "강남구 언주로 170길 26-6, 3층, Seoul, 06017, 한국",
+   "lat": 37.5263,
+   "lng": 127.03556,
+   "coordSource": "michelin",
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/y-east",
+    "checkedAt": "2026-06-27"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:eatanic-garden",
+   "name": "이타닉 가든",
+   "address": "강남구 테헤란로 231, 조선팰리스 호텔 36층, Seoul, 06142, 한국",
+   "lat": 37.50304,
+   "lng": 127.04158,
+   "coordSource": "michelin",
+   "menu": [
+    "코리안 컨템퍼러리"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/eatanic-garden",
+    "checkedAt": "2026-11-09"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:exquisine",
+   "name": "익스퀴진",
+   "address": "강남구 삼성로 140길 6, Seoul, 06073, 한국",
+   "lat": 37.5211374,
+   "lng": 127.04969,
+   "coordSource": "michelin",
+   "menu": [
+    "컨템퍼러리"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/exquisine",
+    "checkedAt": "2026-11-22"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:zero-complex",
+   "name": "제로 컴플렉스",
+   "address": "용산구 서빙고로 59길 11-8, Seoul, 04384, 한국",
+   "lat": 37.52079,
+   "lng": 126.99285,
+   "coordSource": "michelin",
+   "menu": [
+    "이노베이티브"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/zero-complex",
+    "checkedAt": "2026-07-04"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:hakusi",
+   "name": "하쿠시",
+   "address": "강남구 언주로 157길 8-4, 2층, Seoul, 06024, 한국",
+   "lat": 37.52414,
+   "lng": 127.03227,
+   "coordSource": "michelin",
+   "menu": [
+    "일식"
+   ],
+   "badge": {
+    "distinction": "1star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/hakusi",
+    "checkedAt": "2026-11-16"
+   }
+  },
+  {
+   "source": "michelin",
+   "sourceKey": "michelin:alla-prima",
+   "name": "알라 프리마",
+   "address": "강남구 학동로 17길 13, Seoul, 06045, 한국",
+   "lat": 37.51346,
+   "lng": 127.02602,
+   "coordSource": "michelin",
+   "menu": [
+    "이노베이티브"
+   ],
+   "badge": {
+    "distinction": "2star",
+    "year": 2026,
+    "sourceUrl": "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/alla-prima",
+    "checkedAt": "2026-06-06"
+   }
+  }
+ ],
+ "scope": "서울(미쉐린 가이드 서울 & 부산). 경기도는 미쉐린 가이드 발간 지역이 아님",
+ "extraMissing": [
+  "12곳(할매집·맷돌·니시무라멘·미필담·진중 우육면관·가겐·고료리 켄·기와강·뛰뚜아멍·레귬·빈호·소설한남)은 2026 목록 수록은 확인했지만 주소·좌표 페이지는 2026년 3월 발표 이전 사본으로 확인 — 다음 갱신 때 재확인"
+ ]
+}

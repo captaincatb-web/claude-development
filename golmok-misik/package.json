@@ -1,0 +1,16 @@
+{
+  "name": "golmok-misik",
+  "version": "1.0.0",
+  "private": true,
+  "description": "서울·경기 가이드 맛집 지도 — 미쉐린, 블루리본, 생활의 달인, 백년가게",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node scripts/serve.mjs 8080",
+    "update": "node scripts/update.mjs",
+    "update:offline": "node scripts/update.mjs --offline",
+    "update:check": "node scripts/update.mjs --dry-run",
+    "test": "node --test tests/unit/*.test.mjs",
+    "test:e2e": "node --test --test-concurrency=1 tests/e2e/*.test.mjs"
+  }
+}

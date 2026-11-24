@@ -1,0 +1,89 @@
+{
+ "source": "baeknyeon",
+ "status": "manual",
+ "lastAttempt": "2026-11-24",
+ "note": "초기 자료: 공공데이터 파일을 아직 반영하지 못해 백년가게 누리집·발표 자료에서 직접 확인한 4곳만 수록",
+ "sourceUrls": [
+  "https://www.data.go.kr/data/15132695/fileData.do",
+  "https://www.sbiz.or.kr/hdst/main/ohndMarketListSmba.do"
+ ],
+ "records": [
+  {
+   "source": "baeknyeon",
+   "origin": "manual",
+   "sourceKey": "baeknyeon:manual:용금옥",
+   "name": "용금옥",
+   "address": "서울특별시 종로구 자하문로 41-2 (통인동)",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "추어탕"
+   ],
+   "badge": {
+    "year": 2022,
+    "sourceUrl": "https://m.bravo.etoday.co.kr/view/atc_view.php?varAtcId=13626",
+    "checkedAt": "2026-11-24",
+    "note": "2022년 6월 중기부 백년가게 선정 발표(서울 종로구 용금옥, 업력 39년). 다동 본점(중구)이 아니라 종로구 통인동 지점임을 소재지·전화(02-777-4749)로 확인. 주소는 서울시 공식 관광정보(VisitSeoul) 기준",
+    "evidenceUrls": [
+     "https://korean.visitseoul.net/restaurants/%EC%9A%A9%EA%B8%88%EC%98%A5-kr/KOP010312"
+    ]
+   }
+  },
+  {
+   "source": "baeknyeon",
+   "origin": "manual",
+   "sourceKey": "baeknyeon:manual:도투리샤브칼국수불광천",
+   "name": "도투리 샤브칼국수 불광천",
+   "address": "서울특별시 은평구 증산로 303 (증산동, 태광아파트)",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "샤브칼국수"
+   ],
+   "badge": {
+    "year": null,
+    "sourceUrl": "https://www.sbiz.or.kr/hdst/main/ohndMarketListSmba.do",
+    "checkedAt": "2026-11-24",
+    "note": "백년가게 누리집 현황보기 목록"
+   }
+  },
+  {
+   "source": "baeknyeon",
+   "origin": "manual",
+   "sourceKey": "baeknyeon:manual:옛날중국집",
+   "name": "옛날중국집",
+   "address": "서울특별시 성북구 성북로8길 8 (성북동)",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "중식"
+   ],
+   "badge": {
+    "year": null,
+    "sourceUrl": "https://www.sbiz.or.kr/hdst/main/ohndMarketListSmba.do",
+    "checkedAt": "2026-11-24",
+    "note": "백년가게 누리집 현황보기 목록"
+   }
+  },
+  {
+   "source": "baeknyeon",
+   "origin": "manual",
+   "sourceKey": "baeknyeon:manual:완산정",
+   "name": "완산정",
+   "address": "경기도 군포시 번영로 508(금정동)",
+   "lat": null,
+   "lng": null,
+   "menu": [
+    "순대국",
+    "콩나물 해장국"
+   ],
+   "badge": {
+    "year": null,
+    "sourceUrl": "https://www.sbiz.or.kr/hdst/main/ohndMarketListSmba.do",
+    "checkedAt": "2026-11-24",
+    "note": "백년가게 누리집 현황보기 목록"
+   }
+  }
+ ],
+ "scope": "서울·경기 음식점업 백년가게"
+}
