@@ -209,7 +209,7 @@ dialog::backdrop { background: rgb(0 0 0 / 45%); }
 
 /* 데스크톱: 왼쪽 목록, 오른쪽 지도 */
 @media (min-width: 900px) {
-  body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+  body { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
   .top { position: static; padding: 12px 20px; }
   .controls { grid-template-columns: minmax(260px, 1.4fr) minmax(280px, 1fr); align-items: center; }
   .chips { grid-column: 1 / -1; }
